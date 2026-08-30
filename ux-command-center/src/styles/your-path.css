@@ -1,0 +1,264 @@
+/*
+  "Your Path" (Forecast) — scoped adaptation of the Claude Design system's
+  reports/app.css component classes (internal implementation notes).
+
+  Imported ONLY by the "Your Path" tab components — never added to index.css.
+  The vendored original (kept internally, not part of this repo) cannot be
+  loaded globally: it carries bare `html, body` / `*` / `main` / `table` /
+  `th` / `td` / `.pos` / `.neg` / `.neutral` selectors that would restyle
+  every table in the app (Operations, Cash Flow Classification, holdings, ...).
+
+  Every rule below is scoped under `.your-path` (the page wrapper class).
+  Dropped entirely: the shell/sidebar/brand/nav/side-tool/side-user block
+  (the real Layout.tsx provides app chrome) and the `html, body` / `*` /
+  `main` globals. Design tokens (--color-*, --font-mono, --shadow-*, ...)
+  already load globally via index.css -> ./src/styles/colors_and_type.css
+  — not redeclared here.
+
+  postcss here is tailwindcss + autoprefixer only (no nesting plugin) — every
+  selector is written out explicitly, no `&` nesting.
+*/
+
+.your-path {
+  font-family: var(--font-sans);
+  color: var(--color-fg-1);
+  padding: 20px 32px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.your-path a { color: var(--color-primary); }
+.your-path a:hover { color: var(--color-primary-hover); }
+.your-path input[type="range"] { accent-color: var(--color-primary); }
+
+/* ---------- Card ---------- */
+.your-path .card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.your-path .card-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+.your-path .card-title {
+  font-size: 13px; font-weight: 700; color: var(--color-fg-1);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.your-path .card-title .material-symbols-outlined { font-size: 16px !important; color: var(--color-primary); }
+.your-path .card-hint {
+  font-size: 10px; color: var(--color-fg-4); font-family: var(--font-mono);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.your-path .card-head-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.your-path .card-body { padding: 18px 20px; }
+
+/* ---------- KPI strip ---------- */
+.your-path .kpi-row { display: grid; gap: 16px; }
+.your-path .kpi-row.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.your-path .kpi-row.cols-4 .kpi-card { min-width: 0; }
+.your-path .kpi-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  padding: 14px 18px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.your-path .kpi-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--color-fg-3);
+}
+.your-path .kpi-value {
+  font-family: var(--font-mono); font-weight: 700;
+  font-size: 22px; color: var(--color-fg-1);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  display: flex; align-items: center; gap: 8px;
+  min-width: 0; overflow-wrap: break-word;
+}
+.your-path .kpi-value.pos { color: var(--color-success); }
+.your-path .kpi-value.neg { color: var(--color-danger); }
+.your-path .kpi-value.accent { color: var(--color-primary); }
+.your-path .kpi-value.warn { color: var(--zone-yellow-fg); }
+.your-path .kpi-sub { font-size: 11px; color: var(--color-fg-3); font-family: var(--font-mono); }
+
+/* segmented range toggle */
+.your-path .seg { display: inline-flex; border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; }
+.your-path .seg button {
+  border: none; background: var(--color-card); cursor: pointer;
+  font-family: var(--font-mono); font-size: 11px; color: var(--color-fg-3);
+  padding: 5px 12px; border-right: 1px solid var(--color-border);
+}
+.your-path .seg button:last-child { border-right: none; }
+.your-path .seg button.on { background: var(--fill-primary-soft); color: var(--color-primary); font-weight: 600; }
+
+/* legend */
+.your-path .legend {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-size: 10px; color: var(--color-fg-3); font-family: var(--font-mono);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.your-path .legend .lg-item { display: inline-flex; align-items: center; gap: 5px; }
+.your-path .legend .lg-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ---------- Table ---------- */
+.your-path table { width: 100%; border-collapse: collapse; }
+.your-path th {
+  text-align: left;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--color-fg-3);
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--color-border-soft);
+  white-space: nowrap;
+}
+.your-path th.num { text-align: right; }
+.your-path td {
+  padding: 10px 20px;
+  font-size: 12px;
+  color: var(--color-fg-2);
+  border-bottom: 1px solid var(--color-border-soft);
+  vertical-align: middle;
+}
+.your-path tbody tr:last-child td { border-bottom: none; }
+.your-path tbody tr { transition: background-color 120ms ease; }
+.your-path tbody tr:hover { background: rgb(241 245 249 / 0.5); }
+.your-path td.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 500; color: var(--color-fg-1); }
+.your-path td.mono { font-family: var(--font-mono); font-size: 11px; color: var(--color-fg-3); }
+.your-path .pos { color: var(--color-success); }
+.your-path .neg { color: var(--color-danger); }
+.your-path .neutral { color: var(--zone-yellow-fg); }
+
+/* ---------- Signal chips ---------- */
+.your-path .sig {
+  display: inline-flex; align-items: center;
+  padding: 2px 8px; border-radius: 4px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+}
+.your-path .sig--danger  { background: var(--fill-danger-soft);  color: var(--zone-red-fg); }
+.your-path .sig--success { background: var(--fill-success-soft); color: var(--zone-green-fg); }
+.your-path .sig--warning { background: var(--fill-warning-soft); color: var(--zone-yellow-fg); }
+.your-path .sig--primary { background: var(--fill-primary-soft); color: var(--color-primary); }
+.your-path .sig--neutral { background: var(--fill-neutral-soft); color: var(--color-fg-3); font-weight: 500; }
+
+/* ---------- Buttons ---------- */
+.your-path .btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px;
+  font-size: 12px; font-weight: 600;
+  border: 1px solid var(--color-border);
+  background: var(--color-card);
+  color: var(--color-fg-2);
+  cursor: pointer; transition: background-color 120ms ease;
+}
+.your-path .btn:hover { background: var(--color-border-soft); }
+.your-path .btn .material-symbols-outlined { font-size: 16px !important; }
+.your-path .btn--primary {
+  background: var(--color-primary); color: #fff; border-color: transparent;
+  box-shadow: var(--shadow-primary-glow);
+}
+.your-path .btn--primary:hover { background: var(--color-primary-hover); }
+.your-path .btn--ghost { background: transparent; border-color: transparent; color: var(--color-fg-3); padding: 7px 8px; }
+.your-path .btn--ghost:hover { background: var(--color-border-soft); color: var(--color-fg-1); }
+
+/* ---------- Footer stamp ---------- */
+.your-path .stamp-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 6px 2px;
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--color-fg-4);
+}
+.your-path .stamp-row .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--color-fg-5); }
+
+/* ---------- Chart hover: crosshair + tooltip ---------- */
+.your-path .chart-wrap { position: relative; }
+.your-path .chart-tip {
+  position: absolute; left: 0; top: 0;
+  pointer-events: none; z-index: 20;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  padding: 9px 11px;
+  font-family: var(--font-mono);
+  min-width: 148px;
+  transform: translate(-50%, calc(-100% - 16px));
+  opacity: 0; transition: opacity 100ms ease;
+}
+.your-path .chart-tip.on { opacity: 1; }
+.your-path .chart-tip-x {
+  font-size: 10px; color: var(--color-fg-3);
+  letter-spacing: 0.04em; margin-bottom: 7px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--color-border-soft);
+}
+.your-path .chart-tip-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 2.5px 0; font-size: 11px;
+}
+.your-path .chart-tip-row .k { display: inline-flex; align-items: center; gap: 6px; color: var(--color-fg-2); }
+.your-path .chart-tip-row .k i { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.your-path .chart-tip-row .v { font-weight: 600; color: var(--color-fg-1); font-variant-numeric: tabular-nums; }
+.your-path .xh-line { stroke: var(--color-fg-4); stroke-width: 1; stroke-dasharray: 3 3; opacity: 0.55; }
+.your-path .xh-dot { stroke: var(--color-card); stroke-width: 1.6; }
+
+/* Renamed from the vendored `pulse` to avoid colliding with Tailwind's own
+   `animate-pulse` utility (same global keyframe name, used elsewhere in the
+   app — keyframes are NOT scoped by ancestor selector). */
+@keyframes your-path-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgb(34 197 94 / 0.15); }
+  50% { box-shadow: 0 0 0 5px rgb(34 197 94 / 0.05); }
+}
+.your-path .live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--color-success);
+  box-shadow: 0 0 0 3px rgb(34 197 94 / 0.15);
+  animation: your-path-pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+/* =========================================================================
+   Page-specific CSS (design-record §1) — not part of reports/app.css.
+   ========================================================================= */
+.your-path .lv-row {
+  display: grid; grid-template-columns: 260px 1fr 130px; gap: 18px; align-items: center;
+  padding: 16px 22px; border-bottom: 1px solid var(--color-border-soft);
+}
+.your-path .lv-row:last-child { border-bottom: none; }
+.your-path .lv-row.combined {
+  background: var(--fill-primary-soft); border-top: 2px solid var(--color-primary);
+  border-bottom: none;
+}
+.your-path .lv-track {
+  height: 8px; border-bottom: 1.5px solid var(--color-border-soft);
+  display: flex; align-items: flex-end;
+}
+.your-path .lv-fill {
+  height: 8px; border-radius: 3px 3px 0 0; background: var(--color-primary);
+  transition: width 160ms ease;
+}
+.your-path .lv-fill.combined { background: var(--color-success); }
+.your-path .lv-slider { width: 200px; height: 4px; }
+
+.your-path .method-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--color-border);
+  color: var(--color-fg-3); background: var(--color-card); cursor: pointer;
+}
+.your-path .method-btn .material-symbols-outlined { font-size: 13px !important; }
+.your-path .method-pop {
+  position: absolute; z-index: 30; top: 26px; right: 0; width: 320px;
+  background: var(--color-card); border: 1px solid var(--color-border);
+  border-radius: 10px; box-shadow: var(--shadow-lg); padding: 14px 16px;
+  font-size: 11.5px; color: var(--color-fg-2); line-height: 1.6;
+}
+.your-path .method-pop b { color: var(--color-fg-1); }
+
+.your-path .adv-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; cursor: pointer;
+}

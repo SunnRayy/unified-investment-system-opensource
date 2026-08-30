@@ -1,0 +1,25 @@
+type_map:
+- raw: 申购
+  type: buy
+- raw: 赎回
+  type: sell
+- raw: 现金分红
+  type: dividend_cash
+- raw: 红利再投资
+  type: dividend_reinvest
+- raw: 活期宝即充即用
+  type: buy
+- raw: 快速取现
+  type: sell
+- raw: 超级转换-转入
+  type: transfer_in
+- raw: 超级转换-转出
+  type: transfer_out
+- raw: 超级转换份额调增
+  type: transfer_in
+- raw: 超级转换份额调减
+  type: transfer_out
+- raw: 卖基金
+  type: sell
+- raw: 买基金
+  type: buy

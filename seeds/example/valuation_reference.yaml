@@ -1,0 +1,48 @@
+# Example valuation reference bands (Program OSR WS-3a) — PE/yield thresholds
+# for the persona household's actual holdings (tools/demo_data/persona.yaml).
+# Values are illustrative placeholders for demonstrating the shape, not
+# real market-calibrated thresholds — a real deployment should replace these.
+
+valuation_reference:
+  - ticker: "AAPL"
+    metric: "pe_forward"
+    low_threshold: 20.0
+    high_threshold: 32.0
+    historical_mean: 26.0
+    rate_sensitive: true
+    notes: "Example threshold — replace with a real calibration for production use."
+  - ticker: "BRK-B"
+    metric: "pe_ttm"
+    low_threshold: 16.0
+    high_threshold: 24.0
+    historical_mean: 20.0
+    rate_sensitive: false
+    notes: "Example threshold — conglomerate PE, illustrative range only."
+  - ticker: "VOO"
+    metric: "pe_forward"
+    low_threshold: 17.0
+    high_threshold: 21.0
+    historical_mean: 18.9
+    rate_sensitive: false
+    notes: "Example threshold — S&P 500 forward PE, illustrative range only."
+  - ticker: "QQQ"
+    metric: "pe_forward"
+    low_threshold: 22.0
+    high_threshold: 32.0
+    historical_mean: 26.0
+    rate_sensitive: true
+    notes: "Example threshold — Nasdaq-100 forward PE, illustrative range only."
+  - ticker: "BND"
+    metric: "sec_yield"
+    low_threshold: 1.0
+    high_threshold: 5.0
+    historical_mean: 2.8
+    rate_sensitive: false
+    notes: "Example threshold — aggregate bond yield, illustrative range only."
+  - ticker: "110020"
+    metric: "pe_ttm"
+    low_threshold: 10.0
+    high_threshold: 15.0
+    historical_mean: 12.5
+    rate_sensitive: false
+    notes: "Example threshold — CSI300 tracker, illustrative range only."

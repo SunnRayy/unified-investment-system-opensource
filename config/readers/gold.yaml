@@ -1,0 +1,115 @@
+# Config-driven reader config for Gold_Excel (B1).
+#
+# CRITICAL: This reader emits asset IDs like GOLD_PAPER_CMB, GOLD_PAPER_ICBC,
+# GOLD_ETF_*, etc.  The downstream rename to ALTS_Paper_Gold happens in
+# src/sync/orchestrator.py (_normalize_transactions_df).  NEVER add that rename
+# here — it belongs downstream.
+
+identity:
+  source_key: gold
+  source_system: Gold_Excel
+  display_label: "黄金 (Paper Gold)"
+  display_name: "Gold"
+  asset_prefixes:
+    - GOLD_
+  allowed_extensions:
+    - .xlsx
+    - .xls
+  category: reader
+  validator: validate_gold_format
+
+parsing:
+  format: excel
+  snapshot_date:
+    strategy: file_mtime
+
+  sheets:
+    # -----------------------------------------------------------------------
+    # Holdings sheet — 黄金持仓
+    # -----------------------------------------------------------------------
+    - name: 黄金持仓
+      target: holdings
+
+      rename:
+        标的名称: asset_name
+        持有数量: quantity
+        单位: unit
+        平均成本价: cost_price
+        单价: market_price_unit
+        当前市值: market_value
+        未实现盈亏: unrealized_pnl
+        交易账户: account
+
+      # id_template: GOLD_{asset_name}_{account}
+      # asset_name map: 纸黄金→PAPER, 黄金ETF→ETF  (unknown: raw value used)
+      # account map:    招行→CMB, 工行→ICBC, 中行→BOC, 建行→CCB  (unknown: raw)
+      id_template: "GOLD_{asset_name}_{account}"
+      id_field_maps:
+        asset_name:
+          纸黄金: PAPER
+          黄金ETF: ETF
+        account:
+          招行: CMB
+          工行: ICBC
+          中行: BOC
+          建行: CCB
+
+      output_columns:
+        - asset_id
+        - asset_name
+        - quantity
+        - unit
+        - cost_price
+        - market_price_unit
+        - market_value
+        - account
+        - snapshot_date
+        - source_system
+
+    # -----------------------------------------------------------------------
+    # Transactions sheet — 黄金交易记录
+    # -----------------------------------------------------------------------
+    - name: 黄金交易记录
+      target: transactions
+
+      rename:
+        交易日期: transaction_date
+        标的名称: asset_name
+        交易类型: raw_type
+        金额: amount
+        数量: quantity
+        价格: price
+        手续费: fees
+        交易账户: account
+
+      # Map raw_type → transaction_type; unknown values → "other"
+      value_maps:
+        raw_type:
+          map:
+            买入: buy
+            卖出: sell
+            结息: interest
+          fillna: "other"
+          target_column: transaction_type
+
+      id_template: "GOLD_{asset_name}_{account}"
+      id_field_maps:
+        asset_name:
+          纸黄金: PAPER
+          黄金ETF: ETF
+        account:
+          招行: CMB
+          工行: ICBC
+          中行: BOC
+          建行: CCB
+
+      output_columns:
+        - asset_id
+        - transaction_date
+        - transaction_type
+        - amount
+        - quantity
+        - price
+        - fees
+        - account
+        - source_system

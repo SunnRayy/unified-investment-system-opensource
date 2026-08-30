@@ -1,0 +1,313 @@
+fs_column:
+  mapped:
+  - excel_col: RMB现金现金
+    asset_id: CASH_Cash_CNY
+    asset_name: 现金 (CNY)
+    currency: CNY
+  - excel_col: RMB存款_中行
+    asset_id: CASH_Deposit_BOC_CNY
+    asset_name: 中行存款 (CNY)
+    currency: CNY
+  - excel_col: RMB存款_招行
+    asset_id: CASH_Deposit_CMB_CNY
+    asset_name: 招行存款 (CNY)
+    currency: CNY
+  - excel_col: RMB存款_北京银行
+    asset_id: CASH_Deposit_BOB_CNY
+    asset_name: 北京银行存款 (CNY)
+    currency: CNY
+  - excel_col: RMB存款_工行
+    asset_id: CASH_Deposit_ICBC_CNY
+    asset_name: 工行存款 (CNY)
+    currency: CNY
+  - excel_col: 美元存款_中行
+    asset_id: CASH_Deposit_BOC_USD
+    asset_name: 中行存款 (USD)
+    currency: CNY
+  - excel_col: 美元存款_Chase
+    asset_id: CASH_Deposit_Chase_USD
+    asset_name: Chase存款 (USD)
+    currency: CNY
+  - excel_col: 美元存款_Discover/Citi
+    asset_id: CASH_Deposit_Discover_USD
+    asset_name: Discover存款 (USD)
+    currency: CNY
+  - excel_col: HKD存款_HSBC
+    asset_id: CASH_Deposit_HSBC_HKD
+    asset_name: HSBC存款 (HKD)
+    currency: CNY
+  - excel_col: 美元存款_HSBC
+    asset_id: CASH_Deposit_HSBC_USD
+    asset_name: HSBC存款 (USD)
+    currency: CNY
+  - excel_col: 固定资产_房产_阳光花园
+    asset_id: Property_阳光花园
+    asset_name: 阳光花园房产
+    currency: CNY
+  - excel_col: 投资资产_银行理财_招行
+    asset_id: Wealth_CMB
+    asset_name: 招行理财
+    currency: CNY
+  - excel_col: 投资资产_存款基金_个人养老金
+    asset_id: Pension_Personal
+    asset_name: 个人养老金
+    currency: CNY
+  ignored:
+  - excel_col: 投资资产_股票基金_美股基金_Schwab
+    reason: Schwab reader is authoritative
+  - excel_col: 投资资产_股票基金_美股基金_IBKR
+    reason: IBKR reader is authoritative
+  - excel_col: 投资资产_公司RSU_Amazon Stock
+    reason: RSU_Excel reader is authoritative
+  - excel_col: 投资资产_公司RSU_Google Stock
+    reason: RSU_Excel reader is authoritative
+  - excel_col: 投资资产_黄金_纸黄金(元)
+    reason: Gold_Excel reader is authoritative
+  - excel_col: 投资资产_黄金_纸黄金(克)
+    reason: Gold_Excel reader is authoritative
+  - excel_col: 投资资产_黄金_黄金ETF
+    reason: Gold_Excel reader is authoritative
+  - excel_col: 投资资产_长期保险_安泰人生
+    reason: Insurance_Excel reader is authoritative
+  - excel_col: 投资资产_另类投资_公司股份投资
+    reason: owner-reviewed, no reader coverage yet
+  - excel_col: Amazon Stock
+    reason: legacy duplicate, superseded by 投资资产_公司RSU_Amazon Stock
+ie_column:
+- excel_col: 收入_主动收入_工资
+  role: income
+  bucket: null
+  currency: CNY
+  group: active_income
+- excel_col: 收入_主动收入_RSU
+  role: income
+  bucket: null
+  currency: CNY
+  group: active_income
+- excel_col: 收入_主动收入_RSU_USD
+  role: income
+  bucket: null
+  currency: USD
+- excel_col: 收入_主动收入_报销
+  role: pass_through
+  bucket: inflow
+  currency: CNY
+  group: active_income
+- excel_col: 收入_主动收入_福利
+  role: income
+  bucket: null
+  currency: CNY
+  group: active_income
+- excel_col: 收入_主动收入_公积金
+  role: income
+  bucket: null
+  currency: CNY
+  group: active_income
+- excel_col: 收入_主动收入_其他偶然
+  role: income
+  bucket: null
+  currency: CNY
+  group: active_income
+- excel_col: 收入_被动收入_基金赎回
+  role: redemption
+  bucket: cn_fund
+  currency: CNY
+  group: passive_income
+- excel_col: 收入_被动收入_黄金卖出
+  role: redemption
+  bucket: gold
+  currency: CNY
+  group: passive_income
+- excel_col: 收入_被动收入_银行理财
+  role: redemption
+  bucket: bank_wealth
+  currency: CNY
+  group: passive_income
+- excel_col: 收入_被动收入_黄金卖出(克)
+  role: reference
+  bucket: null
+  currency: CNY
+- excel_col: 收入_被动收入_股票卖出收益
+  role: income
+  bucket: null
+  currency: CNY
+  group: passive_income
+- excel_col: 收入_被动收入_股票卖出收益_USD
+  role: income
+  bucket: null
+  currency: USD
+- excel_col: 主动收入合计
+  role: computed
+  bucket: null
+  currency: CNY
+  validates:
+    groups:
+    - active_income
+- excel_col: 被动收入合计
+  role: computed
+  bucket: null
+  currency: CNY
+  validates:
+    groups:
+    - passive_income
+- excel_col: 总收入合计
+  role: computed
+  bucket: null
+  currency: CNY
+  validates:
+    groups:
+    - active_income
+    - passive_income
+- excel_col: 必要开支_日常支出_餐饮娱乐
+  role: expense
+  bucket: null
+  currency: CNY
+  group: essential_expense
+- excel_col: 必要开支_日常支出_房租水电
+  role: expense
+  bucket: null
+  currency: CNY
+  group: essential_expense
+- excel_col: 必要开支_日常支出_交通
+  role: expense
+  bucket: null
+  currency: CNY
+  group: essential_expense
+- excel_col: 必要开支_保险_安泰人生
+  role: expense
+  bucket: null
+  currency: CNY
+  group: essential_expense
+- excel_col: 必要开支_保险_公司团险
+  role: expense
+  bucket: null
+  currency: CNY
+  group: essential_expense
+- excel_col: 必要开支_保险_互联网保险
+  role: expense
+  bucket: null
+  currency: CNY
+  group: essential_expense
+- excel_col: 必要开支_贷款_房贷
+  role: expense
+  bucket: null
+  currency: CNY
+  group: essential_expense
+- excel_col: 必要开支_家庭及临时支出
+  role: expense
+  bucket: null
+  currency: CNY
+  group: essential_expense
+- excel_col: 非必要开支_旅行出游
+  role: expense
+  bucket: null
+  currency: CNY
+  group: discretionary_expense
+- excel_col: 非必要开支_护肤衣物
+  role: expense
+  bucket: null
+  currency: CNY
+  group: discretionary_expense
+- excel_col: 非必要开支_电子产品
+  role: expense
+  bucket: null
+  currency: CNY
+  group: discretionary_expense
+- excel_col: 非必要开支_运动健身健康
+  role: expense
+  bucket: null
+  currency: CNY
+  group: discretionary_expense
+- excel_col: 非必要开支_其他/娱乐
+  role: expense
+  bucket: null
+  currency: CNY
+  group: discretionary_expense
+- excel_col: 工作开支_出差/团建（全额报销）
+  role: pass_through
+  bucket: outflow
+  currency: CNY
+  group: work_expense
+- excel_col: 投资理财_股票基金_天天基金
+  role: invested
+  bucket: cn_fund
+  currency: CNY
+- excel_col: 投资理财_股票基金_Schawab
+  role: invested
+  bucket: us_schwab
+  currency: CNY
+- excel_col: 投资理财_股票基金_Schawab_USD
+  role: invested
+  bucket: us_schwab
+  currency: USD
+- excel_col: 投资理财_股票基金_IBKR
+  role: invested
+  bucket: us_ibkr
+  currency: CNY
+- excel_col: 投资理财_股票基金_IBKR_USD
+  role: invested
+  bucket: us_ibkr
+  currency: USD
+- excel_col: 投资理财_黄金_招行纸黄金
+  role: invested
+  bucket: gold
+  currency: CNY
+- excel_col: 投资理财_黄金_黄金ETF
+  role: invested
+  bucket: gold
+  currency: CNY
+- excel_col: 投资理财_银行理财_招行
+  role: invested
+  bucket: bank_wealth
+  currency: CNY
+- excel_col: 必要支出
+  role: computed
+  bucket: null
+  currency: CNY
+  validates:
+    groups:
+    - essential_expense
+- excel_col: 非必要支出
+  role: computed
+  bucket: null
+  currency: CNY
+  validates:
+    groups:
+    - discretionary_expense
+- excel_col: 工作支出
+  role: computed
+  bucket: null
+  currency: CNY
+  validates:
+    groups:
+    - work_expense
+- excel_col: 理财
+  role: computed
+  bucket: null
+  currency: CNY
+  validates:
+    roles:
+    - invested
+- excel_col: 总支出
+  role: computed
+  bucket: null
+  currency: CNY
+  validates:
+    groups:
+    - essential_expense
+    - discretionary_expense
+    - work_expense
+    roles:
+    - invested
+- excel_col: 参考_黄金价格_克价
+  role: reference
+  bucket: null
+  currency: CNY
+- excel_col: 参考_Amazon Stock Price
+  role: reference
+  bucket: null
+  currency: USD
+- excel_col: 参考_美元汇率
+  role: reference
+  bucket: null
+  currency: CNY

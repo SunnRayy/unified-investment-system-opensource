@@ -1,0 +1,180 @@
+# Huinsight example configuration — copy to config/settings.local.yaml and edit,
+# or pass --config config/settings.local.yaml to main.py / set UIS_CONFIG_PATH
+# for the API server. See docs/quickstart.md for the full walkthrough.
+#
+# config/settings.yaml (this project's OWN real config) is git-tracked and
+# points at the owner's real data directory — it is NOT a template for you to
+# copy values from. This file is the template.
+#
+# 中文：Huinsight 示例配置文件——复制为 config/settings.local.yaml 后再编辑，
+# 或者用 --config config/settings.local.yaml 传给 main.py／给 API 服务
+# 设置环境变量 UIS_CONFIG_PATH。完整流程见 docs/quickstart.zh-CN.md。
+#
+# config/settings.yaml（本项目自己真实使用的配置）已被 git 追踪，指向的是
+# 所有者自己的真实数据目录——它不是给你抄值用的模板。这份 .example.yaml
+# 文件才是模板。
+
+profile:
+  display_name: "Demo User"
+  # No avatar_url key here on purpose — this project's own real settings.yaml
+  # embeds one as base64, and that's exactly the kind of thing an example
+  # config should never carry a placeholder for (an empty key invites
+  # "just paste your photo here"). Omit it entirely; the UI falls back to a
+  # generic icon when unset.
+  #
+  # 中文：这里故意不写 avatar_url 这个键——本项目自己真实的 settings.yaml
+  # 里内嵌了一个 base64 编码的头像，而这恰恰是示例配置绝不该留占位符的
+  # 那种字段（留一个空键，等于是在邀请你「把照片粘贴在这里」）。直接不写
+  # 这个键即可；不设置时界面会回退到一个通用图标。
+
+# Deployment-default language for the UI and for AI-advisor output:
+# 'en' or 'zh-CN'. Language and currency are INDEPENDENT axes — an English UI
+# reporting CNY amounts is a valid, supported combination.
+#
+# Precedence, highest first:
+#   1. the request's locale (what the browser UI is showing right now)
+#   2. user_profile.language in the database (survives restarts, and is the
+#      only source a SCHEDULED job has — a cron run has no browser locale)
+#   3. this key
+#   4. 'en'
+#
+# Leave it commented out unless you want a deployment-wide default.
+#
+# 中文：这个键设置的是整个部署的默认语言——同时控制界面语言和 AI 顾问的
+# 输出语言，取值为 'en' 或 'zh-CN'。语言和币种是两个互相独立的维度——
+# 用英文界面展示 CNY 金额，是完全合法、受支持的组合。
+#
+# 生效优先级，从高到低：
+#   1. 本次请求携带的 locale（也就是浏览器界面此刻正在显示的语言）
+#   2. 数据库里的 user_profile.language（重启后依然生效，也是定时任务
+#      唯一能拿到的语言来源——一次 cron 运行没有浏览器 locale 可言）
+#   3. 这个键
+#   4. 兜底值 'en'
+#
+# 除非你确实需要一个「整个部署统一」的默认语言，否则保持注释掉即可。
+# language: en
+
+currency:
+  base_currency: CNY
+  fallback_rates:
+    USD_CNY: 7.0
+    HKD_CNY: 0.9
+  fx_rate_source: api
+
+database:
+  path: data/unified.duckdb
+  type: duckdb
+
+# Every reader's data_dir below points at ONE shared folder containing all of
+# your source files (or the demo data generator's output — see quickstart).
+# Only enable the readers you actually have files for; a disabled reader is
+# silently skipped, not an error (Program OSR WS-2 step 4 — a missing reader
+# degrades, it doesn't crash the sync).
+#
+# 中文：下面每个 reader（数据源）的 data_dir，都指向同一个共享文件夹，
+# 里面存放你所有的原始数据文件（或者演示数据生成器的输出——见
+# quickstart）。只启用你确实有对应文件的数据源即可；被禁用的数据源会被
+# 静默跳过，不会报错（Program OSR WS-2 step 4——缺失的数据源只会降级，
+# 不会导致同步崩溃）。
+finance_dir: ./data/import
+
+source_registry:
+  schwab:
+    enabled: true
+    data_dir: ./data/import
+    asset_prefixes: [US_STK_, US_ETF_, CASH_USD]
+    file_patterns:
+      positions: "Individual-Positions-*.csv"
+      transactions: "Individual_*_Transactions_*.csv"
+    reader: schwab_reader
+  ibkr:
+    enabled: true
+    data_dir: ./data/import
+    asset_prefixes: [US_STK_, US_ETF_, CASH_USD]
+    file_patterns:
+      flexquery: "IBKR_UIS_Report*.csv"
+    reader: ibkr_reader
+  cn_fund:
+    enabled: true
+    data_dir: ./data/import
+    asset_prefixes: [CN_FUND_]
+    file_patterns:
+      workbook: funding_transactions.xlsx
+    reader: cn_fund_reader
+  gold:
+    enabled: true
+    data_dir: ./data/import
+    asset_prefixes: [GOLD_]
+    file_patterns:
+      workbook: Gold_transactions.xlsx
+    reader: gold_reader
+  insurance:
+    enabled: true
+    data_dir: ./data/import
+    asset_prefixes: [INS_]
+    file_patterns:
+      workbook: Insurance_Portfolio.xlsx
+    reader: insurance_reader
+  rsu:
+    enabled: true
+    data_dir: ./data/import
+    asset_prefixes: [RSU_]
+    file_patterns:
+      workbook: RSU_transactions.xlsx
+    reader: rsu_reader
+  financial_summary:
+    enabled: true
+    data_dir: ./data/import
+    file_patterns:
+      workbook: Financial_Summary_new.xlsx
+    reader: financial_summary_reader
+
+# All optional — the app runs fully without any of these. Values are read
+# from environment variables (put them in a .env file, which is gitignored),
+# never written here directly.
+#
+# 中文：以下全部可选——就算一个都不配，应用也能完整运行。这些值都是从
+# 环境变量里读取的（把它们放进 .env 文件，该文件已被 gitignore），绝不
+# 直接写在这个配置文件里。
+api:
+  primary: gemini      # LLM used for AI Advisor briefs/reviews. Optional feature.
+                        # 中文：AI 顾问（简报/复盘）使用的 LLM。可选功能。
+  backup: deepseek
+llm:
+  gemini:
+    api_key_env: GEMINI_API_KEY
+  deepseek:
+    api_key_env: DEEPSEEK_API_KEY
+market_data:
+  fred:
+    api_key_env: FRED_API_KEY   # US10Y / macro indicators. Optional.
+                                 # 中文：美国十年期国债收益率／宏观指标。可选。
+
+verification:
+  benchmark_code: '000300'
+  default_period: monthly
+  # Market-regime benchmark proxies, tried in order. market_daily stores
+  # whatever code your price source uses, so list the tracker you actually
+  # hold ahead of the index itself.
+  benchmark_proxy_codes: ['000300', 'CSI300', 'SPY', '^GSPC']
+
+# The AI Advisor's daily-Brief prompt is fully owner-authored — this project's
+# own real settings.yaml has several paragraphs tuned to one specific
+# portfolio's exact tickers and valuation priorities. There's no generic
+# version of that; write your own once you know what you actually want
+# tracked daily. This is a minimal placeholder so the feature has something
+# to run on demo data — replace it.
+#
+# 中文：AI 顾问每日简报（daily Brief）用的 prompt 完全由所有者自己撰写——
+# 本项目自己真实的 settings.yaml 里有好几段文字，是针对某一个具体投资
+# 组合的具体股票代码和估值优先级调过的。这种东西没有通用版本；等你想清楚
+# 自己每天到底想追踪什么之后，请写你自己的版本。这里只是一个最简占位符，
+# 让这个功能在演示数据上能有东西可跑——请替换掉它。
+prompts:
+  brief_instructions:
+    text: >
+      Generate today's portfolio brief. Summarize: (1) valuation signals for
+      any assets with a configured reference range, (2) allocation drift vs.
+      target, (3) any holdings with no recent price update, (4) one action
+      item if the portfolio is meaningfully off-target. Keep it under 200
+      words.

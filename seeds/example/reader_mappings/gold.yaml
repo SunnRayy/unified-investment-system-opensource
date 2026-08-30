@@ -1,0 +1,19 @@
+id_field_map:
+- field: asset_name
+  label: 纸黄金
+  code: PAPER
+- field: asset_name
+  label: 黄金ETF
+  code: ETF
+- field: account
+  label: 招行
+  code: CMB
+- field: account
+  label: 工行
+  code: ICBC
+- field: account
+  label: 中行
+  code: BOC
+- field: account
+  label: 建行
+  code: CCB

@@ -1,0 +1,109 @@
+{
+  "appName": "慧眼",
+  "actions": {
+    "logout": "退出登录"
+  },
+  "currency": {
+    "rateApprox": "约 · 1 美元 = {{rate}} 人民币",
+    "rateApproxAsOf": "约 · 1 美元 = {{rate}} 人民币 · 截至 {{date}}",
+    "rateApproxFallback": "约 · 1 美元 = {{rate}} 人民币（回退汇率）",
+    "switchToCny": "切换币种",
+    "switchToUsd": "切换币种"
+  },
+  "dashboard": {
+    "exportAiContext": "导出 AI 上下文",
+    "filterDataError": "部分仪表盘数据加载失败，服务器返回了错误。",
+    "hoursAgo": "{{count}} 小时前",
+    "lastSynced": "上次同步：{{time}}",
+    "marketRefreshFailed": "市场行情刷新失败",
+    "marketRefreshed": "市场情绪已刷新",
+    "minutesAgo": "{{count}} 分钟前",
+    "never": "从未",
+    "priceRefreshFailed": "价格刷新失败",
+    "pricesRefreshed": "价格已刷新：更新了 {{count}} 项资产",
+    "refreshMarkets": "刷新市场",
+    "refreshPrices": "刷新价格",
+    "streamConnectionLost": "连接已断开",
+    "syncAll": "全部同步",
+    "syncFiles": "同步文件",
+    "syncTerminal": "同步终端",
+    "syncingEllipsis": "同步中…"
+  },
+  "filters": {
+    "demo": "演示",
+    "demoModeAria": "演示模式",
+    "demoModeTitle": "演示模式：模糊 ¥ 金额",
+    "illiquid": "固定资产",
+    "includeIlliquidAria": "包含固定资产",
+    "includeIlliquidTitle": "包含固定资产（房产与保险）"
+  },
+  "login": {
+    "authenticate": "慧眼 · 身份验证",
+    "connectionError": "连接错误，请检查网络。",
+    "footer": "慧眼 — 自托管个人财务仪表盘",
+    "incorrectPassword": "密码错误，请重试。",
+    "passwordPlaceholder": "密码",
+    "signIn": "登录",
+    "signingIn": "登录中…",
+    "subtitle": "登录账户"
+  },
+  "nav": {
+    "aiAdvisor": "AI 顾问",
+    "aiModels": "AI 模型",
+    "aiPrompts": "AI 提示词",
+    "assetAudit": "资产审计",
+    "assetCaseFiles": "资产档案",
+    "assetClassAudit": "资产类别审计",
+    "balanceSheet": "资产负债表",
+    "cashFlowClassification": "现金流分类",
+    "compassReport": "资产配置报告",
+    "dataSources": "数据源",
+    "decisionHub": "决策中枢",
+    "forecast": "预测",
+    "incomeExpense": "收支",
+    "marketSentiment": "市场情绪",
+    "monthlyAttribution": "月度归因",
+    "performance": "业绩",
+    "portfolioAudit": "组合审计",
+    "reviewCenter": "复盘中心",
+    "riskMatrix": "风险矩阵",
+    "riskProfiles": "风险偏好配置",
+    "rules": "分类规则",
+    "settings": "设置",
+    "strategyAlignment": "策略对齐",
+    "syncHistory": "同步历史",
+    "taxonomy": "分类体系",
+    "tierAudit": "梯队审计",
+    "transactions": "交易记录",
+    "unifiedPortfolio": "综合持仓",
+    "valuation": "估值",
+    "valueTrapReviews": "价值陷阱复盘",
+    "wealthOS": "WealthOS"
+  },
+  "profile": {
+    "avatarAlt": "头像",
+    "setYourName": "设置你的名字"
+  },
+  "section": {
+    "aiAdvisors": "AI 顾问",
+    "management": "管理",
+    "operations": "运营",
+    "portfolio": "投资组合",
+    "reports": "报告",
+    "system": "系统"
+  },
+  "settings": {
+    "chinese": "中文",
+    "english": "English",
+    "language": "语言",
+    "languageCode": "中",
+    "toggleLanguageAria": "切换语言",
+    "toggleLanguageTitle": "切换语言"
+  },
+  "theme": {
+    "day": "日间",
+    "night": "夜间",
+    "switchToDay": "切换到日间模式",
+    "switchToNight": "切换到夜间模式"
+  }
+}

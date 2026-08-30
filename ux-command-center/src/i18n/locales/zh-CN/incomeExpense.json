@@ -1,0 +1,41 @@
+{
+  "pageTitle": "收支",
+  "latestLabel": "最新：{{date}}",
+  "kpi": {
+    "latestMonthIncome": "本月收入",
+    "latestMonthExpense": "本月支出",
+    "latestMonthInvestment": "本月投资",
+    "latestMonthNet": "本月净额",
+    "latestMonthFallback": "最新月份",
+    "savingsRateLabel": "储蓄率（{{month}}）",
+    "savingsRateSubtext": "收入减去支出 ÷ 收入，基于后端的收支分类计算——报销和赎回不计入其中，因此可能与上方的「净额 ÷ 收入」不同。近12个月：{{ttmSaved}} 已储蓄，{{ttmInvested}} 进入投资账户。"
+  },
+  "trends": {
+    "title": "月度趋势",
+    "last12m": "近12个月",
+    "last36m": "近36个月",
+    "allTime": "全部时间",
+    "noData": "暂无趋势数据",
+    "axisThousands": "¥{{value}}k"
+  },
+  "averages": {
+    "title": "平均值",
+    "avgIncome": "平均收入",
+    "avgExpense": "平均支出",
+    "avgInvestment": "平均投资",
+    "avgNet": "平均净额",
+    "months": "月数"
+  },
+  "detail": {
+    "title": "本月明细",
+    "income": "收入",
+    "noIncomeRecords": "暂无收入记录",
+    "expense": "支出",
+    "noExpenseRecords": "暂无支出记录",
+    "investment": "投资",
+    "noInvestmentRecords": "暂无投资记录"
+  },
+  "errors": {
+    "load": "收支数据加载失败，请刷新重试。"
+  }
+}

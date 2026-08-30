@@ -1,0 +1,88 @@
+# Config-driven reader config for RSU_Excel (B2 — full parsing config).
+#
+# Holdings are DERIVED from transactions (groupby + net_qty), which cannot
+# be expressed declaratively.  The optional holdings_hook field delegates
+# holdings derivation to derive_rsu_holdings in src/sources/reader_hooks.py.
+#
+# reader_engine is still "legacy" in config/settings.yaml — the flip to
+# "config" is the Lead's gate task, not this sitting.
+
+identity:
+  source_key: rsu
+  source_system: RSU_Excel
+  display_label: "RSU (Amazon)"
+  display_name: "RSU"
+  asset_prefixes:
+    - RSU_
+  allowed_extensions:
+    - .xlsx
+    - .xls
+  category: reader
+  validator: validate_rsu_format
+
+parsing:
+  format: excel
+  # read_timestamp mirrors legacy RSUReader: SourceData is built with
+  # datetime.now() and no "snapshot_date" key in metadata, so
+  # rsu_transformer.transform_holdings falls back to read_timestamp (today).
+  # Using read_timestamp here makes the config engine produce the same
+  # sync-date string as the legacy path in production.
+  snapshot_date:
+    strategy: read_timestamp
+
+  # holdings_hook: derive holdings from transactions via the named hook.
+  # Absent hook = declarative path (unaffected for all other sources).
+  holdings_hook: derive_rsu_holdings
+
+  sheets:
+    # -----------------------------------------------------------------------
+    # Transactions sheet
+    # -----------------------------------------------------------------------
+    - name: Transactions
+      target: transactions
+
+      rename:
+        交易日期: transaction_date
+        资产名称: asset_name
+        交易类型: raw_type
+        单位: unit
+        数量: quantity
+        单位价格_USD: price_usd
+        总金额_USD: amount_usd
+        手续费_USD: fees_usd
+        备注: memo
+
+      # Map raw_type → transaction_type; unknown values → "other"
+      value_maps:
+        raw_type:
+          map:
+            "RSU Vest": vest
+            "Sell": sell
+          fillna: "other"
+          target_column: transaction_type
+
+      # Build canonical_id: "Amazon RSU" → RSU_AMZN; fallback: RSU_{asset_name}
+      # with spaces replaced by underscores (handled by engine raw-value fallback
+      # — id_field_maps replaces known names, raw value used for unknowns).
+      # Note: space→underscore in raw fallback is NOT automatic in the engine;
+      # all known RSU asset names are mapped explicitly here.
+      id_template: "RSU_{asset_name}"
+      id_field_maps:
+        asset_name:
+          "Amazon RSU": AMZN
+
+      # currency constant matches legacy RSUReader
+      constants:
+        currency: USD
+
+      output_columns:
+        - asset_id
+        - transaction_date
+        - transaction_type
+        - quantity
+        - price_usd
+        - amount_usd
+        - fees_usd
+        - currency
+        - memo
+        - source_system

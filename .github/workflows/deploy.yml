@@ -1,0 +1,171 @@
+name: Deploy Cloud Run
+
+on:
+  push:
+    branches:
+      - deploy
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: "3.11"
+  # Deployment-specific, not secret — set via repo Settings > Secrets and
+  # variables > Actions > Variables. Program OSR (open-source release prep):
+  # a fork's own region/service/Artifact Registry repo name, not this
+  # project's. Falls back to the values this repo has always deployed with,
+  # so the owner's own deploy needs zero new configuration.
+  REGION: ${{ vars.UIS_DEPLOY_REGION || 'us-central1' }}
+  SERVICE_NAME: ${{ vars.UIS_DEPLOY_SERVICE_NAME || 'uis-dashboard' }}
+  AR_REPO: ${{ vars.UIS_DEPLOY_AR_REPO || 'uis' }}
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Initialize test database
+        env:
+          UIS_SKIP_DB_STARTUP_VALIDATION: "1"
+        run: |
+          mkdir -p data
+          python main.py --init
+
+      - name: Run tests
+        env:
+          UIS_SKIP_DB_STARTUP_VALIDATION: "1"
+        run: |
+          bash scripts/run-tests.sh
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+          fetch-depth: 0
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Resolve version tag
+        id: version
+        run: |
+          # Read canonical version from the VERSION file (always bumped in the
+          # pre-merge checklist alongside version.ts). Avoids requiring a manual
+          # git tag at HEAD for correct APP_VERSION.
+          TAG="V$(cat VERSION | tr -d '[:space:]')"
+          echo "tag=${TAG}" >> "${GITHUB_OUTPUT}"
+          echo "sha=${{ github.sha }}" >> "${GITHUB_OUTPUT}"
+          echo "Deploying tag=${TAG} sha=${{ github.sha }}"
+
+      - name: Build and push image
+        env:
+          PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+        run: |
+          IMAGE="${{ env.REGION }}-docker.pkg.dev/${PROJECT_ID}/${{ env.AR_REPO }}/uis:${{ github.sha }}"
+          echo "IMAGE=${IMAGE}" >> "${GITHUB_ENV}"
+          gcloud auth configure-docker "${{ env.REGION }}-docker.pkg.dev" --quiet
+          docker build \
+            --build-arg APP_VERSION="${{ steps.version.outputs.tag }}" \
+            --build-arg APP_SHA="${{ github.sha }}" \
+            -t "${IMAGE}" .
+          docker push "${IMAGE}"
+
+      - name: Deploy to Cloud Run
+        env:
+          PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          # Reveal this deployment's real GCP project ID (embedded in the SA
+          # email) and its live Cloud Run URL — unlike REGION/SERVICE_NAME/
+          # AR_REPO above, these are not given a same-as-today fallback.
+          # Program OSR: the repo owner must set both in Settings > Secrets
+          # and variables > Actions > Secrets before the next deploy; see
+          # docs/operations.md.
+          SCHEDULER_SA_EMAIL: ${{ secrets.UIS_SCHEDULER_SA_EMAIL }}
+          SCHEDULER_AUDIENCE: ${{ secrets.UIS_SCHEDULER_AUDIENCE }}
+        run: |
+          # Fail loudly rather than deploying a silently-broken scheduler.
+          # These two have no same-as-today fallback (they embed the real
+          # project ID and Cloud Run URL), so an unset secret would expand to
+          # an empty string and gcloud would happily set UIS_SCHEDULER_*="" —
+          # breaking OIDC auth for the nightly job with no error anywhere.
+          for v in SCHEDULER_SA_EMAIL SCHEDULER_AUDIENCE; do
+            if [ -z "${!v}" ]; then
+              echo "::error::Required secret UIS_${v} is unset. Set it under" \
+                   "Settings > Secrets and variables > Actions before deploying:" \
+                   "gh secret set UIS_${v}  (see docs/operations.md)"
+              exit 1
+            fi
+          done
+
+          gcloud run deploy "${{ env.SERVICE_NAME }}" \
+            --project "${PROJECT_ID}" \
+            --region "${{ env.REGION }}" \
+            --image "${IMAGE}" \
+            --allow-unauthenticated \
+            --cpu-boost \
+            --no-cpu-throttling \
+            --max-instances=1 \
+            --min-instances=0 \
+            --memory=2Gi \
+            --cpu=1 \
+            --timeout=900 \
+            --concurrency=40 \
+            --set-secrets UIS_GCS_BUCKET=UIS_GCS_BUCKET:latest,FRED_API_KEY=FRED_API_KEY:latest,GEMINI_API_KEY=GEMINI_API_KEY:latest,DEEPSEEK_API_KEY=DEEPSEEK_API_KEY:latest,UIS_AUTH_TOKEN=UIS_AUTH_TOKEN:latest,UIS_ALLOWED_ORIGIN=UIS_ALLOWED_ORIGIN:latest,IBKR_FLEX_TOKEN=IBKR_FLEX_TOKEN:latest,IBKR_FLEX_QUERY_ID=IBKR_FLEX_QUERY_ID:latest \
+            --set-env-vars "UIS_SERVE_STATIC=1,UIS_FINANCE_DIR=/tmp/sources,UIS_DB_PATH=/tmp/data/unified.duckdb,APP_VERSION=${{ steps.version.outputs.tag }},APP_SHA=${{ github.sha }},UIS_SCHEDULER_SA_EMAIL=${SCHEDULER_SA_EMAIL},UIS_SCHEDULER_AUDIENCE=${SCHEDULER_AUDIENCE}"
+
+          SERVICE_URL="$(gcloud run services describe "${{ env.SERVICE_NAME }}" \
+            --project "${PROJECT_ID}" \
+            --region "${{ env.REGION }}" \
+            --format='value(status.url)')"
+          echo "SERVICE_URL=${SERVICE_URL}" >> "${GITHUB_ENV}"
+          echo "Deployed to: ${SERVICE_URL}"
+
+      - name: Smoke test
+        env:
+          PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+        run: |
+          echo "Service URL: ${SERVICE_URL}"
+          echo "Expected version: ${{ steps.version.outputs.tag }} | sha: ${{ github.sha }}"
+
+          # Retry up to 8 times (Cloud Run cold start can take ~30s)
+          for i in $(seq 1 8); do
+            echo "Attempt ${i}/8 — GET ${SERVICE_URL}/health"
+            RESPONSE="$(curl -sf --max-time 15 "${SERVICE_URL}/health" 2>/dev/null || true)"
+            if [ -n "${RESPONSE}" ]; then
+              echo "Response: ${RESPONSE}"
+              STATUS="$(echo "${RESPONSE}" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('status',''))" 2>/dev/null || true)"
+              VERSION="$(echo "${RESPONSE}" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('version',''))" 2>/dev/null || true)"
+              if [ "${STATUS}" = "ok" ]; then
+                echo "Health check passed — status=ok version=${VERSION}"
+                exit 0
+              fi
+            fi
+            echo "Not ready yet, waiting 10s..."
+            sleep 10
+          done
+
+          echo "ERROR: Smoke test failed after 8 attempts"
+          exit 1

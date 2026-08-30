@@ -1,0 +1,30 @@
+identity:
+  source_key: ibkr
+  source_system: Broker_IBKR
+  display_label: "IBKR (US Stocks/ETFs)"
+  display_name: "IBKR"
+  account_name: "IBKR"
+  asset_prefixes:
+    - US_STK_
+    - US_ETF_
+    - CASH_USD
+  allowed_extensions:
+    - .csv
+  category: reader
+  validator: validate_ibkr_format
+
+parsing:
+  format: flex_csv
+  snapshot_date:
+    strategy: file_mtime   # overridden in flex branch by POST ReportDate
+  sheets:
+    - name: POST
+      target: holdings
+      file_glob: "IBKR_UIS_Report*.csv"
+      select: latest
+    - name: TRNT
+      target: transactions
+      file_glob: "IBKR_UIS_Report*.csv"
+      select: latest
+  holdings_from_sheet_hook: ibkr_holdings_from_flex
+  transactions_from_sheet_hook: ibkr_transactions_from_flex

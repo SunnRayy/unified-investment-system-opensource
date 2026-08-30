@@ -1,0 +1,61 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: uis-dashboard
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: "1"
+        autoscaling.knative.dev/minScale: "0"
+        run.googleapis.com/cpu-throttling: "false"
+    spec:
+      # maxScale stays 1 (DuckDB is single-writer → one instance/process only).
+      # Concurrency must be >1: one process serves many simultaneous HTTP requests
+      # (the dashboard fires ~10-15 parallel API calls on load). concurrency=1
+      # caused "no available instance" aborts → load-time 500s + dead Sync button.
+      containerConcurrency: 40
+      timeoutSeconds: 900
+      containers:
+        - image: PLACEHOLDER_IMAGE
+          resources:
+            limits:
+              memory: 2Gi
+              cpu: "1"
+          env:
+            - name: UIS_SERVE_STATIC
+              value: "1"
+            - name: UIS_FINANCE_DIR
+              value: /tmp/sources
+            - name: UIS_DB_PATH
+              value: /tmp/data/unified.duckdb
+            - name: UIS_GCS_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: UIS_GCS_BUCKET
+                  key: latest
+            - name: FRED_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: FRED_API_KEY
+                  key: latest
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: GEMINI_API_KEY
+                  key: latest
+            - name: DEEPSEEK_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: DEEPSEEK_API_KEY
+                  key: latest
+            - name: UIS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: UIS_AUTH_TOKEN
+                  key: latest
+            - name: UIS_ALLOWED_ORIGIN
+              valueFrom:
+                secretKeyRef:
+                  name: UIS_ALLOWED_ORIGIN
+                  key: latest

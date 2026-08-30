@@ -1,0 +1,836 @@
+{
+  "riskMatrix": {
+    "breadcrumbDashboard": "仪表盘",
+    "breadcrumbRiskMatrix": "风险矩阵",
+    "title": "风险矩阵与敏感性分析",
+    "lastCalculation": "最近一次 AI 计算：{{time}}",
+    "method": "方法：{{method}}",
+    "comingSoon": "即将上线",
+    "share": "分享",
+    "exportAiContext": "导出 AI 上下文",
+    "notAvailable": "N/A",
+    "risk": "风险",
+    "portfolioVolatility": "组合波动率",
+    "annualizedStdDev": "年化标准差",
+    "diversificationScore": "分散度评分",
+    "diversification": {
+      "good": "良好",
+      "avg": "一般",
+      "low": "偏低"
+    },
+    "basedOnCorrelation": "基于资产相关性计算",
+    "sharpeRatio": "夏普比率",
+    "riskAdjustedReturn": "风险调整后收益指标",
+    "valueAtRisk": "风险价值（95%）",
+    "dailyLossEstimate": "单日潜在最大损失估算",
+    "correlationMatrix": "资产相关性矩阵",
+    "topClass": "大类",
+    "subClass": "子类",
+    "lowConfidence": "置信度低",
+    "coverageWarning": "多数类别配对的历史数据不足以计算相关性，仅展示可用结果。",
+    "windowSummary": "窗口：{{start}} 至 {{end}}，最小重叠期数：{{minOverlap}}，剔除跳变点：{{jumpExclusions}}，缩尾处理：{{winsorLow}}%-{{winsorHigh}}%",
+    "correlationLegend": "0.00 = 数据计算出的近零相关；– = 重叠收益期数不足。",
+    "loadingMatrix": "相关性矩阵加载中...",
+    "portfolioBeta": "组合 Beta",
+    "vsSp500": "对比标普 500",
+    "betaLower": "与大盘相关性较低",
+    "betaHigher": "与大盘相关性较高",
+    "betaModerate": "与大盘相关性中等",
+    "errors": {
+      "load": "风险矩阵数据加载失败，请刷新重试。"
+    }
+  },
+  "balanceSheet": {
+    "title": "资产负债表",
+    "latest": "最新：{{date}}",
+    "totalAssets": "总资产",
+    "totalLiabilities": "总负债",
+    "netWorth": "净资产",
+    "snapshots": "快照数",
+    "netWorthTrend": "净资产走势",
+    "noTrendData": "暂无走势数据",
+    "detailTable": "明细表",
+    "assets": "资产",
+    "noAssetRecords": "暂无资产记录",
+    "liabilities": "负债",
+    "noLiabilityRecords": "暂无负债记录",
+    "axisThousands": "¥{{value}}k",
+    "errors": {
+      "load": "资产负债表数据加载失败，请刷新重试。"
+    }
+  },
+  "forecast": {
+    "breadcrumb": "报告 / 预测",
+    "title": "预测与规划",
+    "subtitle": "如何实现目标，以及什么在改变达成日期。",
+    "tabYourPath": "你的路径",
+    "tabGoals": "目标",
+    "confirmDeleteGoal": "确定要删除这个目标吗？",
+    "errors": {
+      "load": "预测数据加载失败，请刷新重试。",
+      "createGoal": "创建目标失败",
+      "updateGoal": "更新目标失败"
+    },
+    "goals": {
+      "monitoredGoals": "跟踪中的目标",
+      "newGoal": "新建目标",
+      "noActiveGoals": "暂无进行中的目标",
+      "noActiveGoalsDesc": "创建你的第一个财务目标，跟踪预测进度、投入节奏和达成概率。",
+      "setUpAGoal": "设置一个目标",
+      "editGoal": "编辑目标",
+      "deleteGoal": "删除目标",
+      "target": "目标金额",
+      "current": "当前金额",
+      "monthly": "每月投入",
+      "unavailable": "— 暂不可用",
+      "successProb": "达成概率",
+      "calculating": "计算中...",
+      "progress": "进度",
+      "monthsLeft": "剩余月数",
+      "viewYourPath": "查看你的路径",
+      "createNewGoal": "创建新目标",
+      "goalName": "目标名称",
+      "goalNamePlaceholder": "例如：梦想购房首付",
+      "targetCny": "目标金额（¥）",
+      "targetDate": "目标日期",
+      "currentCny": "当前金额（¥）",
+      "monthlyInputCny": "每月投入（¥）",
+      "category": "分类",
+      "notesOptional": "备注（可选）",
+      "notesPlaceholder": "在此添加详细说明...",
+      "cancel": "取消",
+      "saveGoal": "保存目标",
+      "status": "状态",
+      "liveValueDisclaimer": "当前组合价值与每月投入均由你的实时数据计算得出，无法在此编辑——请前往「你的路径」标签页查看。",
+      "saveChanges": "保存修改",
+      "categories": {
+        "retirement": "退休",
+        "majorPurchase": "大额消费",
+        "education": "教育",
+        "emergencyFund": "应急基金",
+        "other": "其他"
+      },
+      "statuses": {
+        "active": "进行中",
+        "completed": "已完成",
+        "archived": "已归档"
+      }
+    },
+    "onTrackTiles": {
+      "title": "你是否走在正轨上？",
+      "hint": "支撑上方数字的习惯指标——并非第二套预测",
+      "timeInMarket": "在场时间",
+      "loading": "加载中…",
+      "notEnoughData": "积累中。",
+      "monthsFullyInvested": "{{inMonths}}/{{totalMonths}} 个月满仓",
+      "participation": "投入参与度",
+      "monthsWithContribution": "有投入的月份数"
+    },
+    "advancedSimulation": {
+      "title": "高级：自定义模拟",
+      "years": "年数",
+      "expectedReturn": "预期年化收益率 %",
+      "volatility": "年化波动率 %",
+      "monthlyContribution": "每月投入 ¥",
+      "defaultsHint": "默认取自实时投入速率",
+      "perMonth": "/月",
+      "running": "运行中…",
+      "runSimulation": "运行模拟",
+      "mean": "均值",
+      "median": "中位数",
+      "worst": "最差 (P1)",
+      "best": "最佳 (P99)"
+    },
+    "fanChart": {
+      "title": "组合目标预测",
+      "p10p90": "P10–P90",
+      "p25p75": "P25–P75",
+      "median": "中位数",
+      "computing": "正在计算你的路径…",
+      "noData": "暂无扇形图数据。",
+      "years": "年",
+      "goal": "目标 {{value}}",
+      "today": "今天",
+      "medianYears": "中位数 {{years}}y"
+    },
+    "yourPath": {
+      "errors": {
+        "levers": "预测调节项加载失败，请刷新重试。",
+        "contributions": "资金投入数据加载失败，请刷新重试。",
+        "projection": "组合预测数据加载失败，请刷新重试。"
+      },
+      "stampBasis": "以收益中位数为基准",
+      "stampTz": "tz Asia/Shanghai",
+      "stampVersion": "your-path.v2"
+    },
+    "whereToFocus": {
+      "title": "聚焦重点",
+      "hint": "按节省年数排序",
+      "computing": "正在计算调节项…",
+      "unavailable": "调节项数据不可用。",
+      "currentPace": "当前节奏",
+      "currentPaceDetail": "{{money}}/月 · 收益率 {{returnPct}} · 波动率 {{volPct}}",
+      "saveMore": "增加储蓄",
+      "saveMoreDetail": "每月+{{pct}}% → {{amount}}",
+      "ariaSave": "提高每月储蓄比例",
+      "cashFlowLink": "现金流 →",
+      "earnMore": "提高收益",
+      "earnMoreDetail": "收益率 +{{pp}}pp → {{pct}}",
+      "higherVariance": "波动更大",
+      "ariaEarn": "提高预期收益率",
+      "performanceRiskLink": "业绩与风险 →",
+      "deRisk": "降低风险",
+      "deRiskDetail": "波动率 −{{pp}}pp → {{pct}}",
+      "freeSameReturn": "零成本——收益不变",
+      "ariaDerisk": "降低波动率",
+      "combined": "综合",
+      "yearsSuffix": "y"
+    },
+    "contributionsRSU": {
+      "destLabels": {
+        "cnFund": "国内基金",
+        "usSchwab": "美股Schwab",
+        "gold": "黄金",
+        "bankWealth": "银行理财",
+        "usIbkr": "美股IBKR"
+      },
+      "netNewInvested": "净新增投入",
+      "fixed12mBasis": "固定12个月口径 · 收入投入占比 {{pct}}",
+      "contributionRunRate": "资金投入速率",
+      "perMonth": "/月",
+      "trailing12m": "近12个月",
+      "rsuVested": "RSU归属",
+      "trailing12mInvested": "近12个月，已投入",
+      "rsuRetained": "RSU留存",
+      "trendTitle": "净新增投入——趋势",
+      "range12m": "12M",
+      "range36m": "36M",
+      "rangeAll": "全部",
+      "noHistory": "暂无资金投入历史数据。"
+    },
+    "answerSection": {
+      "methodology": "计算方法",
+      "methodologyTitle": "计算方式说明",
+      "methodBasis": "<b>计算基础</b>——标题中的年数是按经波动率损耗调整后的收益中位数计算的：<code>exp(ln(1+r) − σ²/2) − 1</code>，而非原始预期收益率。",
+      "methodLikelyRange": "<b>可能区间</b>——<i>到达时点</i>的第25–75百分位：即投资组合价值在该年达到或超过目标的概率为25%/75%所对应的年份。这<b>并非</b>首次触及时间（投资组合首次触及目标的时间，总是更早）。",
+      "methodApproximation": "该区间是对20,000路径蒙特卡洛模拟的解析近似，并非精确的置信区间——尾部误差通常在5–9%左右，因此区间保留一位小数。",
+      "methodLiquidNw": "<b>流动净资产</b>不包含房产、保险与养老金。",
+      "computing": "正在计算你的路径…",
+      "unavailable": "预测数据不可用。",
+      "yearsTo": "距{{goalName}}年数",
+      "goalFallback": "目标",
+      "years": "年",
+      "goalNotReachable": "当前输入下无法实现目标",
+      "likelyRange": "可能区间 {{low}}–{{high}}——到达时点的第25至75百分位",
+      "noRetirementGoal": "未设置退休目标——使用后备目标。前往「目标」创建 →",
+      "chipGoal": "目标金额",
+      "chipLiquidNw": "流动净资产",
+      "chipContribution": "资金投入",
+      "perMonth": "/月",
+      "chipReturnVol": "收益率 / 波动率"
+    }
+  },
+  "verification": {
+    "errors": {
+      "load": "核验数据加载失败，请刷新重试。",
+      "run": "核验操作失败，请重试。"
+    },
+    "loading": "核验数据加载中...",
+    "portfolio": "组合",
+    "benchmark": "基准",
+    "title": "复盘中心",
+    "subtitle": "关于采纳率、判定结果与偏离的核验仪表盘。",
+    "running": "运行中...",
+    "runVerification": "运行核验",
+    "adoptionRate": "采纳率",
+    "verdictHitRate": "判定命中率",
+    "maxDrift": "最大偏离",
+    "totalInsights": "洞察总数",
+    "adoptionRateHistory": "采纳率历史",
+    "noAdoptionHistory": "暂无采纳率历史数据",
+    "portfolioVsBenchmark": "组合对比基准",
+    "insufficientData": "数据不足。请在同步业绩数据<br/><em>之后</em>运行核验",
+    "verdictBreakdown": "按月判定明细",
+    "columns": {
+      "month": "月份",
+      "goodCalls": "正确判断",
+      "regrets": "错失",
+      "missed": "遗漏机会",
+      "totalScored": "已评分总数"
+    },
+    "notAvailable": "N/A",
+    "series": "系列",
+    "return": "收益"
+  },
+  "compass": {
+    "errors": {
+      "load": "资产配置报告加载失败，服务器返回错误。"
+    },
+    "loading": "资产配置报告加载中...",
+    "noData": "暂无数据。",
+    "breadcrumb": "报告 / 再平衡",
+    "pageTitle": "分层资产配置报告",
+    "portfolioLine": "组合：Unified Global Value Alpha (UGVA) · 最近分析：{{time}}",
+    "comingSoon": "即将上线",
+    "export": "导出",
+    "sendToAiAdvisor": "发送给 AI 顾问",
+    "totalNetWorth": "总净资产",
+    "currentDriftIndex": "当前偏离指数",
+    "thresholdLine": "阈值 5.00% · {{status}}",
+    "breached": "已超出",
+    "ok": "正常",
+    "classesInDrift": "偏离的类别数",
+    "allWithinRange": "全部在范围内",
+    "lastSync": "最近同步",
+    "assetClassAllocation": "资产类别配置与偏离分析",
+    "driftOverTolerance": "偏离 > 容差",
+    "withinRange": "在范围内",
+    "pendingTradesTitle": "查看待验证交易会如何影响配置。这些数字为估算值，尚未核实。",
+    "includePendingTrades": "包含待验证交易",
+    "includePendingTradesCn": "显示待验证交易",
+    "provisional": "估算中",
+    "provisionalBannerOne": "包含 <strong>{{count}}</strong> 笔待验证交易——下方数字为估算值，待交易核实后可能变动。",
+    "provisionalBannerOther": "包含 <strong>{{count}}</strong> 笔待验证交易——下方数字为估算值，待交易核实后可能变动。",
+    "aiAdvisor": "AI 顾问",
+    "classesOutsideToleranceOne": "{{count}} 个类别超出容差——AI 轮动分析即将上线。",
+    "classesOutsideToleranceOther": "{{count}} 个类别超出容差——AI 轮动分析即将上线。",
+    "openInAiAdvisor": "在 AI 顾问中打开",
+    "columns": {
+      "assetClass": "资产类别／子类",
+      "currentValue": "当前市值",
+      "currentPct": "当前占比",
+      "provisionalPct": "估算占比",
+      "pendingSuffix": "（待定）",
+      "deltaCny": "差额（CNY）",
+      "targetPct": "目标占比",
+      "drift": "偏离",
+      "status": "状态"
+    },
+    "est": "估算",
+    "allocationLens": "配置透镜",
+    "withinTolerance": "±2.5% 容差内",
+    "overTarget": "超出目标",
+    "underTarget": "低于目标",
+    "currentVsTargetMix": "当前与目标配置对比",
+    "pctOfNetWorth": "占净资产比例",
+    "current": "当前",
+    "now": "当前",
+    "target": "目标",
+    "goal": "目标",
+    "driftVsTarget": "相对目标的偏离",
+    "tolerance25": "容差±2.5%",
+    "driftAxisLabel": "偏离",
+    "allocationSnapshot": "配置快照",
+    "copied": "已复制！",
+    "copyMarkdown": "复制 Markdown",
+    "pasteHint": "粘贴到任意 LLM 对话框以获取再平衡建议",
+    "generated": "生成于 {{time}}",
+    "footerTolerance": "容差±2.5% · 5大类分类体系",
+    "footerVersion": "UGVA · {{version}}"
+  },
+  "unforcedErrors": {
+    "title": "非受迫性失误",
+    "subtitle": "违反纪律的操作与执行失误",
+    "loading": "加载中…",
+    "noneLoggedYet": "暂无非受迫性失误记录。",
+    "columns": {
+      "date": "日期",
+      "description": "描述",
+      "estCost": "估算成本",
+      "rule": "关联规则"
+    },
+    "save": "保存",
+    "cancel": "取消",
+    "unknown": "未知",
+    "editHistory": "编辑历史：\n{{entries}}",
+    "editedTag": "（已编辑）",
+    "editEstimatedCost": "编辑估算成本",
+    "logNewEntry": "记录新条目",
+    "form": {
+      "date": "日期 *",
+      "description": "描述 *",
+      "descriptionPlaceholder": "发生了什么问题？",
+      "estCost": "估算成本（¥）",
+      "optional": "可选"
+    },
+    "saving": "保存中…",
+    "add": "添加",
+    "amountPlaceholder": "¥ 金额",
+    "errors": {
+      "load": "非受迫性失误加载失败，请刷新重试。",
+      "updateCost": "更新成本失败，请重试。",
+      "saveEntry": "保存条目失败，请检查表单后重试。"
+    }
+  },
+  "monthlyAttribution": {
+    "breadcrumb": "报告 › 月度归因",
+    "title": "月度归因",
+    "priceOrFlows": "本月价值变动是由<strong1>价格波动</strong1>驱动，还是<strong2>资金流动</strong2>驱动？Δmv = 价格 + 交易 + 转账 + 收益 + 残差。",
+    "from": "起始月",
+    "to": "结束月",
+    "optional": "（可选）",
+    "clearRange": "清除区间",
+    "recomputing": "重新计算中…",
+    "recompute": "重新计算",
+    "rangeInvalid": "「结束月」必须晚于或等于「起始月」（且均不早于 {{minMonth}}）——已显示上一个有效选择。",
+    "rangeMode": {
+      "title": "区间模式",
+      "body": "正在显示 <strong>{{rangeCaption}}</strong> 的汇总分解。逐月储蓄率／投资比例／净流入仅适用于单月——区间总计请见下方瀑布图。"
+    },
+    "summaryTitle": "{{month}} 汇总",
+    "loadingSummary": "汇总数据加载中…",
+    "noSummaryData": "{{month}} 暂无汇总数据——该月业绩归因可能尚未计算。",
+    "kpi": {
+      "totalDelta": "总变动 Δ",
+      "priceEffect": "价格影响",
+      "netFlows": "净资金流",
+      "netFlowsSub": "流入 {{in}} · 流出 {{out}}",
+      "noClassifiedFlows": "暂无已分类的资金流",
+      "incomeEffect": "收益影响",
+      "savingsRate12m": "储蓄率（12个月）",
+      "savingsRateSub": "（收入 − 支出）÷ 收入",
+      "savingsRateTooltip": "储蓄率——未花掉的部分：（收入 − 支出）÷ 收入，基于收支台账最近12个数据月计算。收入口径不含赎回及报销／工作开支的往返部分；支出不含已投资的资金。",
+      "investmentRate12m": "投资率（12个月）",
+      "investmentRateSub": "净新增投资 ÷ 收入",
+      "investmentRateTooltip": "投资率——实际进入投资账户的收入占比：（净新增外部资金 + 留存的RSU）÷ 同一收入口径。与储蓄率的差额即为已储蓄但尚未投入的现金。",
+      "undeployedCash12m": "未部署现金（12个月）",
+      "undeployedCashSub": "已储蓄，尚未投资",
+      "undeployedCashTooltip": "已储蓄但尚未部署——以金额表示的储蓄率与投资率之差：收入 − 支出 − （净新增外部资金 + 留存的RSU），同样基于最近12个数据月。",
+      "investRatio": "投资比例",
+      "dqFlags": "数据质量标记"
+    },
+    "contributionsNote": "组合投入与储蓄数据来自你的月度「投资理财」台账（收支分类）；下方的资金流向标签为逐笔交易视图。",
+    "waterfall": {
+      "title": "瀑布图",
+      "description": "起点／终点 = 月度区间边界的总市值。<strong>残差</strong> = 无法由价格、交易、转账或收益解释的变动部分——通常是数据覆盖缺口（快照早于月末交易、来源切换，或资产本月首次纳入）。将鼠标悬停在表格中的数据质量标记上可查看具体原因。",
+      "loading": "瀑布图加载中…",
+      "noData": "暂无可绘制的业绩归因数据。"
+    },
+    "decomposition": {
+      "title": "分解明细",
+      "loading": "业绩归因数据加载中…",
+      "unableToLoad": "业绩归因明细行加载失败。",
+      "noRows": "{{caption}}在{{level}}层级暂无业绩归因明细行。"
+    },
+    "reset": "重置",
+    "flaggedAssets": "本月有 {{count}} 项资产被标记：{{names}}",
+    "computing": "计算中…",
+    "computeAttribution": "计算业绩归因",
+    "footer": {
+      "totalsDelta": "总计 Δ：<strong>{{value}}</strong>",
+      "price": "价格：{{value}}",
+      "trade": "交易：{{value}}",
+      "transfer": "转账：{{value}}",
+      "income": "收益：{{value}}",
+      "residual": "残差：{{value}}"
+    },
+    "columns": {
+      "mvEnd": "期末市值（{{currency}}）",
+      "delta": "Δ",
+      "dq": "数据质量"
+    },
+    "flagged": "已标记",
+    "effects": {
+      "price": "价格",
+      "trade": "交易",
+      "transfer": "转账",
+      "income": "收益",
+      "residual": "残差",
+      "start": "起点",
+      "end": "终点"
+    },
+    "levels": {
+      "topClass": "大类",
+      "subClass": "子类",
+      "asset": "资产",
+      "total": "总计"
+    },
+    "errors": {
+      "loadMonth": "该月业绩归因数据加载失败，请重试。",
+      "loadSummary": "汇总数据加载失败。",
+      "recompute": "重新计算业绩归因失败，请重试。"
+    }
+  },
+  "northStar": {
+    "errors": {
+      "load": "North Star 面板加载失败，请刷新重试。"
+    },
+    "loading": "正在加载 North Star 面板…",
+    "glidePathTo": "通向{{target}}的路径",
+    "insufficientData": "数据不足，无法生成路径预测。",
+    "glideDemandParagraph": "各时间跨度所需的收益率，对比你的投资组合实际交付的<val>{{twr}}</val>。若某个跨度所需收益率远高于此，那就不是计划，而是奢望。",
+    "scenarioLabel": "每月投入情景（¥/月）",
+    "recalculating": "重新计算中…",
+    "allColumnsIdentical": "投入速率与情景均为¥0——三列所需收益率完全相同。请在上方输入每月投入情景以观察差异。",
+    "table": {
+      "horizon": "时间跨度",
+      "atZero": "@ ¥0/月",
+      "atRunRate": "@ 投入速率（{{amount}}/月）",
+      "runRateUnavailable": "投入速率不可用",
+      "noContributionData": "暂无投入数据",
+      "atScenario": "@ 情景（{{amount}}/月）",
+      "horizonYears": "{{years}}y",
+      "equalsZero": "= ¥0/月"
+    },
+    "footnote": {
+      "twrBasis": "TWR 基准：{{basis}}",
+      "runRateBasis": "投入速率基准：{{basis}}"
+    },
+    "runRateUnavailablePointer": "⚠ 投入速率不可用{{status}}",
+    "unclassifiedFlows_one": "{{count}} 笔资金流水尚未分类（不影响上方投入速率，但会影响归因）",
+    "unclassifiedFlows_other": "{{count}} 笔资金流水尚未分类（不影响上方投入速率，但会影响归因）",
+    "timTitle": "在场时间",
+    "timInsufficientData": "数据不足{{reason}}",
+    "timSummary": "{{inMonths}}/{{totalMonths}} 个月 ≥ 下限 {{floor}}（目标 {{target}} − {{bandPP}}pp）",
+    "quarterLabel": "Q{{q}}",
+    "tooltipData": "{{month}} · 已投入 {{weight}}% · 下限 {{floor}} · 目标 {{target}} · {{state}}",
+    "tooltipNoData": "{{month}}：无数据",
+    "legend": {
+      "atAboveTarget": "达到/超过目标",
+      "inBand": "区间内",
+      "belowFloor": "低于下限",
+      "noData": "无数据"
+    },
+    "historyFooter": "历史：{{months}} 个月——随快照积累而趋于稳定",
+    "timState": {
+      "aboveTarget": "超过目标",
+      "inBand": "区间内",
+      "belowFloor": "低于下限",
+      "noData": "无数据"
+    }
+  },
+  "marketSentiment": {
+    "stale": "陈旧",
+    "refreshFailedDetail": "⚠ 刷新失败：{{detail}}",
+    "lastGoodData": "最近有效数据：",
+    "asOf": "截至：",
+    "fetchFailed": "情绪数据获取失败。",
+    "staleIndicators_one": "{{count}} 项指标显示为最近有效缓存值",
+    "staleIndicators_other": "{{count}} 项指标显示为最近有效缓存值",
+    "unavailableIndicators": "{{count}} 项不可用（无历史数据）",
+    "refreshFailedToast": "刷新失败：{{detail}}。正在显示缓存数据。",
+    "unknownError": "未知错误",
+    "never": "从未",
+    "title": "市场情绪",
+    "lastUpdated": "最近更新：{{date}}",
+    "staleTotal": "{{count}} 项陈旧",
+    "refreshing": "刷新中...",
+    "refresh": "刷新",
+    "noData": "暂无情绪数据，点击「刷新」获取。",
+    "equityMacro": "股票宏观",
+    "goldMarket": "黄金市场",
+    "cryptoMarket": "加密货币市场"
+  },
+  "strategyAlignment": {
+    "errors": {
+      "load": "策略对齐数据加载失败。",
+      "run": "策略复盘运行失败。"
+    },
+    "loading": "正在加载策略对齐…",
+    "title": "策略对齐",
+    "subtitle": "对比实际配置与策略目标及UIS组合范围。",
+    "running": "运行中…",
+    "runReview": "运行复盘",
+    "runReviewNow": "立即运行复盘",
+    "notAvailable": "N/A",
+    "emptyState": {
+      "title": "暂无复盘数据",
+      "hint": "点击「运行复盘」以分析策略对齐情况。"
+    },
+    "status": {
+      "aligned": "已对齐",
+      "drifting": "偏离中",
+      "misaligned": "未对齐"
+    },
+    "strategicTargets": "策略目标",
+    "uisPortfolioScope": "慧眼组合范围",
+    "reviewDate": "复盘日期：{{date}}",
+    "excludedFromScope": "此范围排除项",
+    "behavioralProfile": {
+      "title": "行为概况",
+      "subtitle": "根据投资者活动计算的最新行为指标。"
+    },
+    "allocationDrift": {
+      "title": "配置偏离",
+      "subtitle": "实际配置与策略目标配置对比。"
+    },
+    "actual": "实际",
+    "target": "目标",
+    "class": "类别",
+    "drift": "偏离",
+    "tradingFrequency": {
+      "title": "交易频率",
+      "philosophyThreshold": "策略阈值：每月 <{{threshold}} 笔交易",
+      "days30": "近30天交易",
+      "days60": "近60天交易",
+      "days90": "近90天交易"
+    },
+    "contrarian": {
+      "title": "逆向评分",
+      "subtitle": "卖出择时信号相对市场环境的质量。",
+      "limitedData": "数据有限",
+      "limitedDataDetail": "现有市场K线数据不足以可靠评估近期卖出的信号质量。",
+      "reviewedSells": "已复核卖出：{{sellCount}} | 标记为恐慌性卖出：{{panicCount}}",
+      "outOf100": "满分100",
+      "panicSells_one": "{{count}} 次恐慌性卖出 / 共 {{total}} 次",
+      "panicSells_other": "{{count}} 次恐慌性卖出 / 共 {{total}} 次"
+    }
+  },
+  "decisionHub": {
+    "errors": {
+      "load": "Decision Hub 数据加载失败，请刷新重试。"
+    },
+    "loading": "正在加载 Decision Hub…",
+    "title": "Decision Hub",
+    "subtitle": "AI洞见、交易执行与风险预警的统一记录。",
+    "tabs": {
+      "timeline": "时间线",
+      "scorecard": "评分卡",
+      "intelligence": "洞察"
+    },
+    "stats": {
+      "totalDecisions": "决策总数",
+      "adoptionRate": "采纳率",
+      "pendingActions": "待处理事项",
+      "driftAlerts": "偏离预警"
+    },
+    "timelineFilters": {
+      "all": "全部",
+      "insight": "洞见",
+      "trade": "交易",
+      "drift": "偏离"
+    },
+    "linked": "关联：",
+    "reason": "原因：",
+    "noDecisions": "该筛选条件下未找到决策记录。",
+    "scorecard": {
+      "empty": "暂无已评分交易",
+      "emptyHint": "运行 <code>--sync-verifications</code> 以生成数据。",
+      "cols": {
+        "date": "日期",
+        "asset": "资产",
+        "action": "操作",
+        "source": "来源",
+        "link": "关联",
+        "verification": "核验",
+        "verificationNote": "核验备注",
+        "outcomePct": "结果 %",
+        "verdict": "结论",
+        "grade": "评级"
+      },
+      "matched": "已匹配",
+      "unmatched": "未匹配",
+      "noReview": "该交易暂无复盘记录"
+    },
+    "intelligence": {
+      "decisionPatterns": "决策模式",
+      "noData": "暂无洞察数据。",
+      "growthTimeline": "成长时间线",
+      "noGrowthLessons": "暂无成长经验记录。",
+      "rawInsightSections": "原始洞见片段",
+      "noRawSections": "暂无 Insight.md 原始摘录。",
+      "entries": "{{count}} 条记录",
+      "sourceMix": "来源构成",
+      "sourceMixDetail": "已采纳 {{adopted}} / 待处理 {{pending}} / 已拒绝 {{rejected}} / 关联交易 {{linkedTrades}} 笔",
+      "leaderboard": "排行榜",
+      "noLeaderboard": "暂无来源产生已评分交易，需要建议来源数据。",
+      "scoredFraction": "{{scored}}/{{total}} 已评分"
+    },
+    "verdict": {
+      "goodCall": "正确",
+      "regret": "失误",
+      "missed": "错失",
+      "dodged": "避险"
+    },
+    "verification": {
+      "manuallyVerified": "人工核验",
+      "verifiedBySync": "同步核验",
+      "noMatchingTransaction": "未找到匹配交易",
+      "pending": "待核验"
+    },
+    "funnel": {
+      "totalInsights": "洞见总数",
+      "allRecommendations": "全部建议",
+      "adopted": "已采纳",
+      "adoptionRatePct": "采纳率 {{pct}}%",
+      "scored": "已评分",
+      "withVerification": "含核验",
+      "goodCalls": "正确决策",
+      "hitRatePct": "命中率 {{pct}}%",
+      "linkedTrades": "{{count}} 笔关联交易",
+      "goodCallCount": "{{count}} 次正确决策",
+      "regretCount": "{{count}} 次失误决策",
+      "missedCount": "{{count}} 次错失",
+      "bulletDodgedCount": "{{count}} 次成功避险"
+    },
+    "alerts": {
+      "title": "当前预警",
+      "all": "全部",
+      "none": "暂无预警。"
+    }
+  },
+  "valueTrapReviews": {
+    "breadcrumb": "AI 顾问 / 价值陷阱复盘",
+    "title": "价值陷阱复盘",
+    "subtitle": "亏损侧强制复盘触发器（F2）——价值类资产中，当前批次浮动亏损超过设定阈值的所有资产，合规资产与比例管理资产除外。",
+    "runScanNow": "立即扫描",
+    "scanning": "扫描中…",
+    "loading": "正在加载价值陷阱复盘…",
+    "loadingContext": "正在加载背景信息…",
+    "openCaseFile": "打开案例文件 →",
+    "noOpenReviews": "暂无待处理复盘——没有已评估资产低于触发阈值。",
+    "noRulingsYet": "暂无已裁决记录——保存持有、减仓或清仓决定后将显示于此。",
+    "noScanYet": "尚未运行扫描。点击<b>立即扫描</b>查看延迟资产。",
+    "overdue": "已逾期",
+    "statusOpen": "待处理",
+    "statusRuled": "已裁决",
+    "reArmsAt": "在 {{value}} 重新触发",
+    "staleBanner": "价格数据截至<b>{{priceDate}}</b>已过期——请先刷新再裁决。价格过期期间禁止保存。",
+    "errors": {
+      "load": "价值陷阱复盘加载失败，请刷新重试。",
+      "loadContext": "背景信息加载失败",
+      "scanFailed": "价值陷阱扫描失败，请重试。",
+      "submitRuling": "裁决提交失败。",
+      "draftFailed": "草拟失败。"
+    },
+    "tabs": {
+      "open": "待处理",
+      "ruled": "已裁决",
+      "all": "全部",
+      "deferred": "延迟"
+    },
+    "scanTiles": {
+      "evaluated": "已评估",
+      "thisScan": "本次扫描",
+      "triggered": "已触发",
+      "newOpenReview": "新增待处理复盘",
+      "deferred": "延迟",
+      "staleValuation": "估值过期",
+      "exempt": "豁免",
+      "cashLike": "类现金",
+      "excluded": "已排除",
+      "ruleBucket": "规则分类"
+    },
+    "reconciliation": {
+      "evaluated": "已评估 {{count}}",
+      "deferred": "延迟 {{count}}",
+      "exempt": "豁免 {{count}}",
+      "excluded": "已排除 {{count}}",
+      "zeroCost": "零成本 {{count}}",
+      "holdingsScanned": "已扫描持仓 {{count}} 项",
+      "lastRun": "最近运行 {{ts}}"
+    },
+    "reviewCols": {
+      "asset": "资产",
+      "lossPct": "亏损 %",
+      "escalation": "升级阶梯",
+      "daysOpen": "持续天数",
+      "status": "状态"
+    },
+    "factsStrip": {
+      "currentValue": "当前市值",
+      "snapshot": "快照 {{date}}",
+      "quantity": "数量",
+      "costUnit": "单位成本",
+      "priceAsOf": "价格截至 {{date}}",
+      "freshness": "新鲜度",
+      "fresh": "✓ 新鲜",
+      "staleMark": "✗ 过期",
+      "unrealized": "浮动盈亏",
+      "threshold": "阈值 {{value}}",
+      "daysOpen": "持续天数"
+    },
+    "memoCard": {
+      "valueMemo": "价值备忘录：",
+      "notBackfilled": "备忘录关联尚未回填",
+      "verifyManually": "裁决前请手动核实——该资产早于自动备忘录关联机制。",
+      "verifiedManuallyAck": "我已手动核实——没有适用的关联备忘录，或其内容已反映在下方回答中。",
+      "confirmNoMemoTitle": "仅在人工核实确认无备忘录后使用",
+      "confirming": "确认中…",
+      "ownerConfirmsNoMemo": "所有者确认无备忘录"
+    },
+    "lotDetail": {
+      "title": "批次明细",
+      "openLots_one": "{{count}} 个未平批次 · 平均成本 {{avgCost}}",
+      "openLots_other": "{{count}} 个未平批次 · 平均成本 {{avgCost}}",
+      "reconciles": "（与显示成本一致）",
+      "cols": {
+        "date": "日期",
+        "qty": "数量",
+        "price": "价格（{{currency}}）"
+      },
+      "showingLots": "显示 {{total}} 个未平批次中的 {{shown}} 个",
+      "firstShown": "（显示前200条）"
+    },
+    "decisionHistory": {
+      "title": "决策历史",
+      "showing": "显示 {{total}} 条中的 {{count}} 条",
+      "cols": {
+        "date": "日期",
+        "action": "操作",
+        "qty": "数量",
+        "price": "价格",
+        "bucket": "分类",
+        "status": "状态"
+      }
+    },
+    "deferredPanel": {
+      "none": "最近一次扫描中没有延迟资产。",
+      "cols": {
+        "asset": "资产",
+        "lastPriceDate": "最近价格日期",
+        "freshness": "新鲜度",
+        "dataFixId": "数据修复 ID",
+        "dueDate": "截止日期",
+        "status": "状态"
+      },
+      "staleDays": "已过期 {{days}} 天",
+      "overdue": "已逾期",
+      "withinDueDate": "在截止日期内",
+      "showingAssets": "显示 {{count}} 项延迟资产中的 {{count}} 项。数据源恢复后 data_fix 会自动关闭。"
+    },
+    "structuredReview": {
+      "title": "结构化复盘",
+      "draftBlockedStale": "价格过期期间禁止操作",
+      "draftClearFields": "清空全部三个字段以重新草拟",
+      "draftHint": "基于慧眼背景信息，用 AI 生成的草稿填充全部三个字段",
+      "drafting": "草拟中…",
+      "draftWithAI": "AI 草拟",
+      "noLlmKey": "未配置 LLM 密钥——无法草拟，请在下方手动作答。"
+    },
+    "questions": {
+      "q1Title": "复述论点——最初的判断依据是什么，现在是否仍然成立？",
+      "q1Placeholder": "用你自己的话复述最初的论点…",
+      "q2Title": "证伪检验——什么情况会证明该论点错误，这种情况是否已经发生？",
+      "q2Hint": "价格、亏损百分比与阈值均不能作为证伪依据",
+      "q2Placeholder": "参考关联备忘录中的证伪条件…",
+      "q3Title": "以现在的价格，以你现在所知，你今天还会买入吗？",
+      "q3Hint": "持仓成本不能作为本题依据",
+      "q3Placeholder": "请独立于你最初的买入价格作答…"
+    },
+    "rulingCard": {
+      "ruling": "裁决",
+      "selectRuling": "选择裁决…",
+      "nextReviewDate": "下次复盘日期",
+      "cancel": "取消",
+      "saving": "保存中…",
+      "saveRuling": "保存裁决",
+      "adversarialAck": "我确认这将在清仓最终生效前触发对抗性复核。"
+    },
+    "rulingOptions": {
+      "hold": "持有（论点仍然成立）",
+      "trim": "减仓",
+      "liquidate": "清仓"
+    },
+    "saveExplain": {
+      "stalePrice": "已阻止——价格已过期。请刷新价格数据后继续。",
+      "selectRuling": "请选择一个裁决以启用保存。",
+      "holdNeedsDate": "选择「持有」时必须填写下次复盘日期。",
+      "liquidateNeedsAck": "选择「清仓」时必须确认对抗性复核。",
+      "linkageAckRequired": "裁决前必须确认备忘录关联。"
+    },
+    "stampVersion": "value-trap.v1",
+    "stampContract": "frozen contract: value-trap-reviews.md",
+    "stampMechanism": "反处置效应机制"
+  }
+}

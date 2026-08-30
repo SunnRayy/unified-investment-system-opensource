@@ -1,0 +1,20 @@
+{
+  "//": "Merge into .claude/settings.json. Wires the PreToolUse safety guard and the SessionStart orientation hook. Paths assume hooks were copied into scripts/.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "bash scripts/guard-destructive.sh" }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "bash scripts/session-orient.sh" }
+        ]
+      }
+    ]
+  }
+}

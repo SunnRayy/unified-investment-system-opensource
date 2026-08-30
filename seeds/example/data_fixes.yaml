@@ -1,0 +1,20 @@
+# Example data-fixes backlog (Program OSR WS-3a). Generic product-process
+# entries (not financial data) — shape-matched to schema.sql's data_fixes
+# seed, invented content rather than copied.
+
+data_fixes:
+  - title: "Example: drift metric sanity check"
+    description: "Placeholder entry demonstrating the data_fixes shape — replace with real backlog items."
+    metric_key: "rebalance_discipline"
+    due_days: 30
+    status: "open"
+  - title: "Example: FX source freshness"
+    description: "Placeholder entry — confirm USD/CNY FX source staleness policy for this deployment."
+    metric_key: "fx_usd_cny"
+    due_days: 7
+    status: "open"
+  - title: "Example: resolved dedup bug"
+    description: "Placeholder entry demonstrating a closed fix — replace with real backlog items."
+    metric_key: "rebalance_discipline"
+    due_days: 30
+    status: "done"

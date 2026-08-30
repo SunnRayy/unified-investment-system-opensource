@@ -1,0 +1,2 @@
+src/sync/dsa_sync.py:228:        fx_rates = {"USD": 7.0, "HKD": 0.9}
+src/sync/dsa_sync.py:253:                  e.g. {"USD": 7.0, "HKD": 0.9}. Defaults to config fallback rates.

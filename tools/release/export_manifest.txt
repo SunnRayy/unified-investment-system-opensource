@@ -1,0 +1,193 @@
+# OSR WS-7 — public export manifest.
+#
+# ALLOWLIST, never a denylist: export_public.sh copies exactly what's listed
+# here (files verbatim, directories recursively) into the staging tree.
+# Anything not listed defaults to PRIVATE — a forgotten file stays out, never
+# leaks out. A handful of directories are copied wholesale and then have a
+# small EXCLUDE list applied afterward (see "Subtractive excludes" below) —
+# that's the only place a listed directory doesn't ship 100% verbatim.
+#
+# Format: one repo-relative path per line. Blank lines and lines starting
+# with # are ignored. A path may be a file or a directory.
+
+# ── Source ──────────────────────────────────────────────────────────────
+src
+tests
+ux-command-center
+
+# ── Config ──────────────────────────────────────────────────────────────
+config/readers
+config/settings.example.yaml
+config/reference_sheet.example.yaml
+config/verification.example.yaml
+config/source_authority.yaml
+
+# ── Seed packs (public profiles only — seeds/private-ray/ is gitignored
+#    and never in a clean checkout to begin with) ──────────────────────
+seeds/example
+seeds/empty
+seeds/README.md
+
+# ── Tooling ─────────────────────────────────────────────────────────────
+tools/demo_data
+tools/release
+examples
+plugins
+scripts/verify.sh
+scripts/run-tests.sh
+scripts/maint_db.py
+scripts/docs-audit.sh
+scripts/hook-db-safety-guard.sh
+scripts/git-hooks
+# Checker scripts that verify.sh delegates to. Each is guarded by `[[ -f ... ]]`
+# in verify.sh, so a missing checker does not fail — it prints "skipping" and the
+# check silently stops existing. 2026-08-30: .baseline-mark-dirty.txt shipped
+# here but check_mark_dirty.py did not, so check [k] had been inert in every
+# public clone. Shipping the baseline without its checker is the same
+# green-because-it-cannot-go-red bug as shipping the checker without its
+# baseline. Add BOTH halves whenever a new ratchet lands.
+scripts/check_mark_dirty.py
+scripts/check_ui_button_handlers.py
+# verify.sh's ratchet checks each compare against one of these baselines. A
+# MISSING baseline does not fail the check — the `-f` guard falls to an else
+# branch that prints an informational count — so a public clone got a green
+# tick from guards that could no longer go red. That is the same
+# green-because-it-cannot-go-red class this repo keeps rediscovering, so all
+# ten ship. Every file was scanned in full: plain source paths, rule codes and
+# i18n key names, no owner data in any of them.
+scripts/.baseline-large-files.txt
+scripts/.baseline-currency.txt
+scripts/.baseline-llmclient.txt
+scripts/.baseline-loadconfig-db-path.txt
+scripts/.baseline-mark-dirty.txt
+scripts/.baseline-max-snapshot.txt
+scripts/.baseline-raw-fetch.txt
+scripts/.baseline-ruff.txt
+scripts/.baseline-testclient-no-override.txt
+scripts/.baseline-ui-buttons.txt
+
+# ── CI / deploy ─────────────────────────────────────────────────────────
+.github/workflows
+Dockerfile
+.dockerignore
+deploy
+main.py
+dev.sh
+requirements.txt
+pyproject.toml
+.gitignore
+VERSION
+
+# ── Public docs ─────────────────────────────────────────────────────────
+README.md
+README.zh-CN.md
+LICENSE
+CONTRIBUTING.md
+SECURITY.md
+AGENTS.md
+docs/quickstart.md
+docs/quickstart.zh-CN.md
+docs/adding-a-source.md
+docs/operations.md
+docs/operations.zh-CN.md
+docs/design-retrospective.md
+docs/i18n-glossary.md
+docs/decisions
+docs/api-specs
+docs/architecture
+docs/playbooks/new-repo-kit
+# Brand assets referenced by README.md / README.zh-CN.md. A README that
+# links an image the export does not ship renders a broken box on the
+# repository's front page — the one screen most visitors ever see.
+docs/assets
+
+# BIL WS-6 (2026-08-24): added the three Chinese doc twins above
+# (README.zh-CN.md, docs/quickstart.zh-CN.md, docs/operations.zh-CN.md)
+# and docs/i18n-glossary.md, which WS-1 had flagged as missing here but
+# could not add itself. Checked every file WS-5 created (`git log` for the
+# BIL "(WS-5)" commits, `git show --stat` on each) against this manifest:
+# all of them land under src/, tests/, or ux-command-center/, which are
+# already included wholesale above — no manifest gap found there. The one
+# WS-5 file NOT under a wholesale directory,
+# docs/plans/reports/2026-08-21-bil-ws5-report.md, is an internal
+# workstream report, same category as the WS-1 through WS-4 reports next
+# to it that were never added here either — left out on purpose, not an
+# oversight.
+
+# ===========================================================================
+# Subtractive excludes — applied AFTER the directories above are copied.
+# Every entry has a reason; nothing here is guessed.
+# ===========================================================================
+
+# src/database/mapping_seeds.py mixes generic/structural definitions with the
+# owner's real Financial-Summary column names and historical figures. It
+# cannot simply be dropped (src.database.connector's migrations import it
+# unconditionally on any fresh --init; ~8 other modules import it at module
+# level or via routine lazy imports that bypass UIS_SEED_PROFILE entirely —
+# see the WS-7 report). export_public.sh instead COPIES OVER it with
+# tools/release/mapping_seeds.public.py, the persona-safe structural twin.
+EXCLUDE src/database/mapping_seeds.py
+
+# Real-data analysis script, not part of the shipped product surface.
+EXCLUDE scripts/analyze_template_columns.py
+
+# Tests scripts/backfill_rule_buckets.py, which isn't on the scripts/
+# keeper list above — importing it would ImportError in a fresh clone.
+EXCLUDE tests/scripts/test_backfill_rule_buckets.py
+
+# Contains the exact strings it forbids — publishing it would defeat the gate.
+EXCLUDE tools/release/leak_patterns.txt
+
+# Same reason as leak_patterns.txt: a triaged-safe allowlist necessarily
+# quotes the real strings/figures it's excusing (fund codes, docstring
+# citations) — publishing it would ship exactly what it exists to keep
+# private. A downstream contributor never needs this file; the leaks it
+# tracks are already resolved in what actually ships. Found 2026-08-17 —
+# leak_gate.py's own SELF_EXEMPT only matches by absolute path, so it
+# doesn't cover the staged COPY of accepted_findings.txt either (same gap
+# already worked around for leak_gate.py's own docstring citations).
+EXCLUDE tools/release/accepted_findings.txt
+
+# The staging-only patch script necessarily contains the real strings it
+# find-replaces FROM (the "before" side of each substitution) — same reason
+# leak_patterns.txt is excluded above. It's a one-time build tool that
+# produced this export; a downstream contributor never needs to run it again.
+EXCLUDE tools/release/patch_staging.py
+
+# Design mockups / uploads, not source. Also large binary/HTML files.
+EXCLUDE ux-command-center/designs
+
+# Regenerable output of tools/demo_data/generate.py — not a static artifact.
+EXCLUDE tools/demo_data/out
+
+# Decision (architect, 2026-08-17), not an oversight — a newcomer-readability
+# audit found dangling links from shipped docs into files the manifest
+# excludes, which 404 in a fresh clone. Resolving:
+# agent-handoff.md: pure internal session ritual, zero value to a stranger,
+# 4 dangling links of its own.
+EXCLUDE agent-handoff.md
+# CLAUDE.md: Ray's private working instructions for operating HIS setup, not
+# the software — a third of its Documentation Protocol points at excluded
+# files. A contributor-facing CLAUDE.md is a fine future addition; shipping
+# this one is worse than shipping none.
+EXCLUDE CLAUDE.md
+# docs/known-issues.md was never on the include list above (confirmed, not
+# newly excluded here) — 732 lines of internal incident history with real
+# figures; half-scrubbing it would be worse than omitting it.
+
+# Decision (architect, 2026-08-17): a diagnostic, not a test — compares the
+# live DB against a specific real historical PIS baseline (2026-02-07) with
+# no synthetic equivalent by construction. No meaning in a public repo;
+# shipping it permanently-skipped, with a docstring describing the owner's
+# data, is worse than not shipping it. Stays private, where it's genuinely
+# useful. (Longer-term: move it out of tests/ entirely — not done here.)
+EXCLUDE tests/audit/test_data_quality_audit.py
+
+# Decision (architect, 2026-08-17): even marked requires_live_db (skipped),
+# its assertions/docstrings carry the owner's real fund codes, realized-gain
+# figures, and portfolio counts — a test that can never run and can't be
+# made to pass isn't shipped just because it's inert. Worker-41 documented
+# the synthetic-fixture shape a rewrite would need directly in the file;
+# see docs/design-retrospective.md's roadmap section for that as a proposed
+# first-contribution item instead of excluding-and-forgetting.
+EXCLUDE tests/api/test_wealthos_endpoints.py

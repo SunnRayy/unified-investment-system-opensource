@@ -1,0 +1,76 @@
+# AGENTS.md — Universal Agent Instructions ({{PROJECT_NAME}})
+
+First file any agent (Claude Code, Codex, or other) reads before working in this repo. Rules below are
+**non-negotiable**. Each rule maps to an enforcement mechanism (a `verify.sh` check, a hook, or a CI
+gate) — or is tagged `[convention-only]`. A rule with no enforcement is a wish, not a rule.
+
+---
+
+## ⚡ Core Doctrine: Nothing May Report Success It Cannot Prove
+
+An agent that reports "done" on a green exit code, a missing exception, or a `success=True` it never
+inspected is operating on a false signal.
+
+1. **Verify outcomes, not process.** Code ran ≠ code worked. Inspect the actual result — the numbers, the
+   rendered UI, the structured step statuses.
+2. **Treat `success=True` as provisional** until you've checked the real state.
+3. **Surface errors immediately.** Never swallow with `except: pass` or `return []`/`{}` on failure. Log
+   and return a structured error.
+4. **Make verification machine-readable** (`--json`, exit codes, `/health/deep`).
+
+---
+
+## Non-negotiable rules
+
+> Seeded portable rules — specialize and ADD domain rules (currency, auth, calculations, etc.).
+
+1. No `print`/`console.log` in application code — structured logging only. *(verify.sh)*
+2. Exactly one error envelope; never fabricate success on failure (no `except → return []` HTTP 200). *(verify.sh + review)*
+3. All datastore/external access goes through the designated wrapper; raw clients are banned. *(verify.sh)*
+4. Enforce domain invariants at the schema/type layer, not just at runtime. *(schema constraints + CI)*
+5. File-size budget: no file over {{MAX_FILE_LINES:-400}} lines (baseline exceptions in `scripts/.baseline-large-files.txt`). *(verify.sh)*
+6. Auth uses random server-stored session tokens, never credentials-as-token. *(review + test)*
+7. Every architectural decision gets an ADR before merge. *(review gate)*
+8. Never run destructive/irreversible commands without explicit confirmation. *(guard-destructive.sh PreToolUse hook)*
+9. One source of truth per concern (status, version, config); cross-link, don't duplicate. *(review)*
+10. Every fixed incident produces a mechanical guard (hook/constraint/check), not just a doc note. *(feedback loop)*
+11. No value that lives in code is hand-copied into prose docs — generate it or omit it. *(check-doc-freshness.sh)*
+12. One naming convention for cycles/branches/versions/commits (see "Naming" below). *(commit-msg.sh + branch CI check)*
+13. The fast test subset includes critical-path tests; the default scope never excludes a test dir. *(CI runs full scope)*
+14. Recurring failure classes get promoted from `docs/known-issues.md` into `verify.sh` when automatable. *(feedback loop)*
+15. {{DOMAIN_RULE_1 — e.g. "All monetary values stored in <base currency>; convert at the boundary."}}
+16. {{DOMAIN_RULE_2}}
+
+---
+
+## Naming convention (locked — synonyms banned)
+
+| Level | Word | ID | Example |
+|-------|------|----|---------|
+| Initiative | Program | noun slug | "{{EXAMPLE_PROGRAM}}" |
+| Track | Workstream | capital letter | A, B, C |
+| Chunk | Step | letter+number | A1, B2 |
+| Sub-unit | Task | decimal | A1.1 |
+
+- Branch: `<feat\|chore\|fix\|claude>/<workstream><step>[-slug]`
+- Commit: `<type>(<scope>): <imperative>` — scope = module/doc category, never a planning unit
+- Plan file: `docs/plans/YYYY-MM-DD-<workstream><step>-<slug>.md`
+- Version: semver — major=program · minor=shipped workstream/step · patch=hotfix only
+
+---
+
+## Verification Protocol
+
+**Before marking any task complete, run `bash scripts/verify.sh` and fix all failures.**
+
+| Exit | Meaning | Action |
+|------|---------|--------|
+| 0 | clean | safe to commit |
+| 1 | safety violation | STOP — fix first, do not commit |
+| 2 | logic violation | fix before committing |
+| 3 | quality only | may commit; note what's flagged and why |
+
+Pre-existing violations live in `scripts/.baseline-*.txt` (each with a justification comment). The gate
+blocks only NEW violations; ratchet the baseline down over time.
+
+Full session workflow: [`agent-handoff.md`] — orient → verify → work → sync docs → verify again.

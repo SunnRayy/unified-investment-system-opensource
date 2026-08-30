@@ -1,0 +1,4 @@
+# Empty seed profile — see seeds/README.md. Valid, loads, produces nothing.
+known_etf: []
+symbol_norm: []
+action_map: []

@@ -1,0 +1,131 @@
+{
+  "title": "业绩分析",
+  "liveFeed": "实时数据：{{date}}",
+  "loadingEllipsis": "加载中…",
+  "errorLoadingData": "数据加载失败。",
+  "insufficientData": "数据不足",
+  "exportAiContext": "导出 AI 上下文",
+  "errors": {
+    "overview": "概览数据加载失败，请刷新重试。",
+    "returns": "收益数据加载失败，请刷新重试。",
+    "attribution": "业绩归因数据加载失败，请刷新重试。",
+    "risk": "风险指标数据加载失败，请刷新重试。"
+  },
+  "periods": {
+    "allTime": "全部",
+    "last36m": "近36个月",
+    "last12m": "近12个月"
+  },
+  "tabs": {
+    "overview": "概览",
+    "returns": "收益",
+    "attribution": "业绩归因",
+    "risk": "风险指标"
+  },
+  "waterfall": {
+    "total": "总计"
+  },
+  "overview": {
+    "lifetimePlContribution": "累计盈亏构成",
+    "cumulative": "（累计）",
+    "totalLifetimePl": "累计盈亏合计",
+    "portfolioValue": "组合市值",
+    "unrealizedPl": "浮动盈亏",
+    "realizedPlFifo": "已实现盈亏（FIFO）",
+    "lifetimePl": "累计盈亏",
+    "assetsTracked": "已追踪 {{count}} 项资产 · 最近同步：{{date}}",
+    "performanceByClass": "各资产类别业绩",
+    "realizedPl": "已实现盈亏",
+    "topBottomPerformers": "投资表现最佳／最差资产",
+    "rankTop": "优{{n}}",
+    "rankBottom": "差{{n}}",
+    "columns": {
+      "class": "类别",
+      "value": "市值",
+      "costBasis": "成本",
+      "returnPct": "收益率",
+      "weightPct": "占比",
+      "rank": "排名",
+      "asset": "资产",
+      "cost": "成本",
+      "marketValue": "市值"
+    }
+  },
+  "returns": {
+    "netWorthOverTime": "组合净资产走势",
+    "axisWan": "¥{{value}}万",
+    "noHistoryData": "暂无历史数据。",
+    "twrCumulative": "累计 TWR（时间加权收益率）",
+    "twrCumulativeDesc": "自成立以来的时间加权收益率。剔除资金流入流出的影响——反映组合管理能力。",
+    "twrYtd": "TWR（年初至今）",
+    "twrYtdDesc": "今年1月1日以来的时间加权收益率。",
+    "twr1y": "TWR（近12个月）",
+    "twr1yDesc": "最近12个月的时间加权收益率。",
+    "mwrXirr": "资金加权收益率（XIRR）",
+    "mwrXirrDesc": "资金加权收益率（XIRR）反映投资者的真实经历，包含存取款时点的影响；当出现大额资金流动时，会与TWR产生偏差。"
+  },
+  "attribution": {
+    "noData": "暂无业绩归因数据",
+    "portfolioReturn": "组合收益率",
+    "benchmarkReturn": "基准收益率",
+    "excessReturn": "超额收益率",
+    "byClass": "各类别业绩归因",
+    "allTime": "（全部）",
+    "allocation": "配置效应",
+    "selection": "选股效应",
+    "interaction": "交互效应",
+    "columns": {
+      "portW": "组合权重",
+      "benchW": "基准权重",
+      "portR": "组合收益",
+      "benchR": "基准收益",
+      "total": "总计"
+    },
+    "howToRead": {
+      "title": "如何解读业绩归因",
+      "intro": "此视图展示的是<strong>相对基准的贡献度</strong>，而非绝对盈亏排名。",
+      "formula": "贡献度 = (组合权重 - 基准权重) × (类别收益率 - 基准收益率)",
+      "note1": "如果某类别本身亏损，但你对它的配置权重低于基准（低配），仍可能显示正贡献。",
+      "note2": "如果某类别本身盈利，但你对一个强势的基准类别配置不足（低配），仍可能显示负贡献。",
+      "note3": "如需查看各类别的绝对盈亏，请前往「概览」标签页中的资产类别业绩表格。"
+    }
+  },
+  "risk": {
+    "noData": "暂无风险指标数据",
+    "metrics": {
+      "sharpe": {
+        "title": "夏普比率",
+        "description": "衡量每单位总波动率对应的风险调整后收益。大于1.0为佳。"
+      },
+      "sortino": {
+        "title": "索提诺比率",
+        "description": "衡量每单位下行波动率对应的风险调整后收益。大于2.0为优秀。"
+      },
+      "drawdown": {
+        "title": "最大回撤",
+        "description": "从峰值到谷值的最大跌幅。数值越低越好。"
+      },
+      "calmar": {
+        "title": "卡玛比率",
+        "description": "年化收益率 ÷ 最大回撤。大于1.0为佳。"
+      },
+      "volatility": {
+        "title": "年化波动率",
+        "description": "收益率的年化标准差。数值越低风险越小。"
+      },
+      "return": {
+        "title": "总收益率",
+        "description": "自首个数据点以来的组合整体收益率。"
+      }
+    },
+    "status": {
+      "excellent": "优秀",
+      "monitor": "关注",
+      "warning": "警告"
+    },
+    "limitedDataDrawdown": "可能受限于数据量不足。",
+    "limitedDataVolatility": "较高的波动率可能受限于数据量不足。",
+    "basedOnDataPoints": "基于 {{count}} 个数据点",
+    "insufficientDataNote": "（数据不足——需至少2个月数据）"
+  }
+}

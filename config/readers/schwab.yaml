@@ -1,0 +1,67 @@
+# Config-driven reader config for Schwab_CSV (B2 sitting #4a — faithful CSV migration).
+#
+# FAITHFUL MIGRATION (4a): this config reproduces the legacy sync_schwab() output
+# byte-identically.  F1 MoneyLink date-drop bug is PRESERVED here — it lives
+# downstream in _normalize_transactions_df and is out of scope for 4a.
+#
+# ENGINE DISPATCH:
+#   reader_engine is set to "legacy" in settings.yaml until the dual-run
+#   equality gate passes human review.  Flip to "config" after the gate.
+#
+# FORMAT: csv — file_path passed to reader.read() is the DATA DIRECTORY.
+# Each sheet_cfg declares file_glob + select to locate individual CSV files.
+#
+# SNAPSHOT DATE STRATEGY: header_regex
+#   Engine reads the first line of the latest positions CSV and extracts
+#   the date from "as of HH:MM AM/PM ET, MM/DD/YYYY" or "YYYY/MM/DD".
+#   Falls back to read_timestamp when no match (mirrors legacy SchwabReader
+#   _parse_positions_date fallback).
+#
+# HOOK CHAIN:
+#   holdings_from_sheet_hook: schwab_holdings_from_csv
+#     Receives the raw positions CSV DataFrame (after pd.read_csv skiprows=2).
+#     Applies column alias, cash extraction, row parsing, FX (×7.0), cash
+#     reinsert as CASH_USD, and snapshot_date from metadata['positions_date'].
+#     Byte-identical to legacy SchwabReader._read_positions() POST-read logic
+#     fused with schwab_transformer.transform_holdings().
+#
+#   transactions_from_sheet_hook: schwab_transactions_from_csv
+#     Receives the concatenated transactions CSV DataFrame.
+#     Applies date parse, symbol norm, action→type map, reinvest split (2 rows),
+#     and final drop_duplicates — byte-identical to legacy chain including
+#     sync_schwab drop_duplicates.
+#
+# strip_whitespace_columns / strip_column_names are left at False defaults
+# so _process_sheet is a pass-through (hooks receive raw DFs unmodified).
+
+identity:
+  source_key: schwab
+  source_system: Schwab_CSV
+  display_label: "Schwab (US Stocks/ETFs)"
+  display_name: "Schwab"
+  asset_prefixes:
+    - US_STK_
+    - US_ETF_
+    - CASH_USD
+  allowed_extensions:
+    - .csv
+  category: reader
+  validator: validate_schwab_format
+
+parsing:
+  format: csv
+  snapshot_date:
+    strategy: header_regex
+  sheets:
+    - name: positions
+      target: holdings
+      file_glob: "Individual-Positions-*.csv"
+      select: latest
+      skiprows: 2
+    - name: transactions
+      target: transactions
+      file_glob: "Individual_*_Transactions_*.csv"
+      select: all
+      skiprows: 0
+  holdings_from_sheet_hook: schwab_holdings_from_csv
+  transactions_from_sheet_hook: schwab_transactions_from_csv

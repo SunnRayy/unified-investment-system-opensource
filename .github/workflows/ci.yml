@@ -1,0 +1,151 @@
+name: CI
+
+# Runs on every push/PR — secret-free, safe for external forks (no GCP auth,
+# no deploy). deploy.yml's own "test" job (the same steps, kept there too so
+# a push to the `deploy` branch is still gated on tests before deploying) is
+# the one place that actually talks to Cloud Run, and only fires on that
+# branch. This workflow is the public-facing counterpart: it's what a PR
+# from a fork sees.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Initialize test database
+        env:
+          UIS_SKIP_DB_STARTUP_VALIDATION: "1"
+        run: |
+          mkdir -p data
+          python main.py --init
+
+      - name: Run tests
+        env:
+          UIS_SKIP_DB_STARTUP_VALIDATION: "1"
+        run: |
+          bash scripts/run-tests.sh
+
+  # ---------------------------------------------------------------------------------
+  # Frontend. Added 2026-08-21 (Program BIL / WS-0, ADR-028). Before this job the vitest
+  # suite had ZERO CI coverage — it ran only when someone remembered to run it locally.
+  #
+  # ⚠ HONEST STATEMENT OF WHAT THIS GATES, because `npm test` currently exits 1:
+  #
+  #   `npm run build`      — hard gate. Any failure fails the job.
+  #   `npm run i18n:check` — hard gate. Catalog parity + the converted-file literal ratchet.
+  #   `npm test`           — RATCHET, not a pass/fail gate. The suite carries 28 failures
+  #                          that predate this workflow (11 files; they shipped with the
+  #                          2026-08-18 open-source release and are recorded in
+  #                          docs/plans/2026-08-21-bil-autonomous-state.md). The job fails
+  #                          if the failure count GROWS past KNOWN_FAILING_TESTS and warns
+  #                          if it shrinks (lower the number in that case).
+  #
+  # This is deliberately not `continue-on-error: true` — that would make the step's status
+  # decorative and let a real regression through unnoticed. It is also not a list of
+  # skipped tests: nothing here deletes, skips or xfails a failing test. The failures stay
+  # loud in the log; what is pinned is only their COUNT. When the underlying 28 are fixed,
+  # drop KNOWN_FAILING_TESTS to 0 and this becomes an ordinary hard gate.
+  # ---------------------------------------------------------------------------------
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ux-command-center
+    env:
+      # Pre-existing failures. Baseline was 35 on `bil` @ be3cc02 (2026-08-21); lowered to
+      # 28 on 2026-08-30 when the owner ruled the 7 failing `operations-redesign.test.tsx`
+      # cases obsolete and they were deleted (35 − 7 = 28, no other file changed).
+      # See docs/plans/2026-08-21-bil-autonomous-state.md § Recorded baselines.
+      KNOWN_FAILING_TESTS: "28"
+      # Sanity floor: if collection breaks, vitest can report "0 failed" honestly.
+      MIN_TOTAL_TESTS: "200"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: ux-command-center/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: i18n parity + literal ratchet
+        run: npm run i18n:check
+
+      - name: Run tests
+        # Non-zero exit is expected while KNOWN_FAILING_TESTS > 0; the next step is the gate.
+        run: |
+          npx vitest run --reporter=default --reporter=json \
+            --outputFile.json=vitest-report.json || true
+
+      - name: Gate test results against the recorded baseline
+        run: |
+          node -e '
+            const fs = require("fs");
+            const known = Number(process.env.KNOWN_FAILING_TESTS);
+            const floor = Number(process.env.MIN_TOTAL_TESTS);
+            if (!fs.existsSync("vitest-report.json")) {
+              console.error("No vitest-report.json — the test run did not produce a report.");
+              process.exit(1);
+            }
+            const r = JSON.parse(fs.readFileSync("vitest-report.json", "utf8"));
+            const { numTotalTests: total, numPassedTests: passed, numFailedTests: failed } = r;
+            console.log(`vitest: ${passed} passed, ${failed} failed, ${total} total (baseline: ${known} failing)`);
+            const offenders = r.testResults
+              .map(s => [s.name.split("/ux-command-center/").pop(),
+                         s.assertionResults.filter(a => a.status === "failed").length])
+              .filter(([, n]) => n > 0)
+              .sort((a, b) => b[1] - a[1]);
+            for (const [file, n] of offenders) console.log(`  ${String(n).padStart(3)} failing  ${file}`);
+            if (total < floor) {
+              console.error(`FAIL: only ${total} tests collected (floor ${floor}) — the suite did not run.`);
+              process.exit(1);
+            }
+            if (failed > known) {
+              console.error(`FAIL: ${failed} failing tests, baseline is ${known}. ${failed - known} new failure(s).`);
+              process.exit(1);
+            }
+            if (failed < known) {
+              console.log(`::notice::${known - failed} baseline failure(s) fixed. Lower KNOWN_FAILING_TESTS to ${failed} in .github/workflows/ci.yml.`);
+            }
+          '
+
+  leak-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Scan public-artifact surface for owner-identifying data
+        run: |
+          python tools/release/leak_gate.py

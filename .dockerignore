@@ -1,0 +1,26 @@
+data/
+.env
+__pycache__/
+*.py[cod]
+node_modules/
+.git/
+output/
+*.duckdb
+.worktrees/
+backend.log
+*.log
+.pytest_cache/
+tests/
+docs/
+
+# Seed packs: only the public profiles may ever reach a Docker build context.
+# A private profile (e.g. seeds/private-ray/) is gitignored and CI checkouts
+# never have it, but a LOCAL `docker build` run from a working tree that
+# happens to have one sitting there must not bake it into the image —
+# explicit allowlist rather than trusting the working tree to be clean.
+seeds/*
+!seeds/example/
+!seeds/example/**
+!seeds/empty/
+!seeds/empty/**
+!seeds/README.md

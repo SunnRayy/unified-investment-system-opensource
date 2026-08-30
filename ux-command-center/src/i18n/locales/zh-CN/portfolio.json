@@ -1,0 +1,160 @@
+{
+  "dashboard": {
+    "actionCenter": {
+      "noActiveFlags": "暂无待处理提醒",
+      "title": "行动中心"
+    },
+    "allocation": {
+      "classesUnit": "类别",
+      "legendCurrent": "当前",
+      "legendTarget": "目标",
+      "openCompass": "打开资产配置报告 →",
+      "subClass": "子类",
+      "subClassesUnit": "子类",
+      "summary": "{{count}} 个{{unit}} · 相对目标的偏离",
+      "title": "资产配置",
+      "tolerance": "容差±5.0%",
+      "topClass": "大类",
+      "total": "总计"
+    },
+    "decisionHubLink": "决策中枢 →",
+    "hero": {
+      "allClear": "全部正常",
+      "cached": "缓存",
+      "cashBuffer": "现金缓冲",
+      "cashTargetLine": "目标：{{target}} 个月 · 已覆盖 {{pct}}%",
+      "change": "变动",
+      "days30": "30天",
+      "detailsLink": "详情 →",
+      "displayingCny": "组合价值均以人民币显示",
+      "displayingUsd": "以美元显示（约）",
+      "fallback": "备用",
+      "live": "实时",
+      "marketStatus": "市场状态",
+      "moSuffix": "个月",
+      "netWorth": "净资产",
+      "noData": "无数据",
+      "notAvailable": "N/A",
+      "redCount": "{{count}} 项预警",
+      "signals": "信号",
+      "since": "起始",
+      "totalCount": "／共 {{count}} 项",
+      "usdCnyLabel": "USD/CNY {{rate}}",
+      "vsLastMonth": "较上月",
+      "xirr": "XIRR",
+      "ytd": "YTD"
+    },
+    "intelligence": {
+      "noInsights": "暂无近期洞察",
+      "title": "智能洞察"
+    },
+    "movers": {
+      "colAsset": "资产",
+      "colPnl": "盈亏",
+      "colSubClass": "子类",
+      "colTopClass": "类别",
+      "failedToLoad": "涨跌幅数据加载失败",
+      "noData": "暂无涨跌幅数据",
+      "tabs": {
+        "12M": "12M",
+        "30D": "30D",
+        "3M": "3M",
+        "6M": "6M",
+        "7D": "7D",
+        "ALL": "ALL"
+      },
+      "title": "涨跌幅榜"
+    },
+    "netWorthTrend": {
+      "annualizedSigma": "年化 σ",
+      "gainLabel": "{{count}}个月涨幅",
+      "monthRolling": "近{{count}}个月滚动",
+      "noHistory": "暂无业绩历史数据",
+      "peak": "峰值",
+      "periods": {
+        "1Y": "1Y",
+        "2Y": "2Y",
+        "5Y": "5Y",
+        "ALL": "ALL"
+      },
+      "title": "净资产走势",
+      "trough": "谷值",
+      "volatility": "波动率"
+    },
+    "recentActivity": {
+      "noActivity": "暂无近期动态",
+      "subtitle": "最新决策与事件",
+      "title": "近期动态",
+      "viewAll": "查看全部 →"
+    }
+  },
+  "wealthOS": {
+    "activeAssets": "持有资产数",
+    "annualizedReturn": "年化收益率（XIRR）",
+    "columns": {
+      "assetClass": "资产类别",
+      "assetName": "资产名称",
+      "currentValue": "当前市值",
+      "holdingPeriod": "持有期",
+      "profitLoss": "盈亏",
+      "returnLifetime": "收益率（全周期）",
+      "status": "状态",
+      "totalInvested": "累计投入",
+      "unrealizedCurrentLots": "浮动盈亏（现有份额）"
+    },
+    "combinedRealized": "已实现盈亏与浮动盈亏合计",
+    "comingSoon": "即将上线",
+    "costBasisUnknown": "持仓成本未知——来源数据未记录",
+    "currentHoldingDistribution": "当前持仓分布",
+    "errors": {
+      "assetsLoad": "组合资产加载失败，服务器返回错误。",
+      "load": "WealthOS 数据加载失败。"
+    },
+    "exportAiContext": "导出 AI 上下文",
+    "filter": "筛选",
+    "hideTable": "隐藏表格",
+    "illiquidTitle": "固定资产／不可再平衡",
+    "loading": "组合数据加载中...",
+    "logPnl": {
+      "freshTitle": "此数值为你手动录入——点击可编辑",
+      "logPnl": "录入盈亏",
+      "logged": "已录入",
+      "loggedStale": "已录入 · 待核对",
+      "noLedgerTitle": "没有券商或基金流水覆盖该资产——录入你了解的信息",
+      "staleTitle": "余额在你录入后已发生变动——该成本可能已过时"
+    },
+    "logPnlDialog": {
+      "ariaLabel": "录入盈亏",
+      "asOfLabel": "截至日期（选填）",
+      "cancel": "取消",
+      "cashEquivalentHint": "仅作参考记录——该持仓为现金等价物，没有计价基础，也没有浮动盈亏。",
+      "clear": "清除",
+      "costLabel": "成本——你投入的金额",
+      "costPlaceholder": "例如：185000",
+      "editTitle": "编辑已录入的盈亏",
+      "errorClearFailed": "清除失败。",
+      "errorNeitherFigure": "请填写成本、利润，或两者都填。如需删除该记录，请使用「清除」。",
+      "errorNotNumbers": "金额必须为数字（或留空）。",
+      "errorSaveFailed": "保存失败。",
+      "intro": "该资产在所有数据源中都没有成本和交易记录，因此盈亏未知，显示为“—”。请填写你了解的信息——两项均为选填，金额单位为<strong>人民币</strong>。",
+      "noteLabel": "备注（选填）",
+      "notePlaceholder": "例如：Q3 票息",
+      "profitHint": "这是一个累计总额，因此只计入全周期盈亏——月度和年度视图不会计入，因为一个滚动累计总额无法说明某个月份具体赚了多少。",
+      "profitLabel": "累计已实现盈利",
+      "profitPlaceholder": "例如：4200",
+      "save": "保存",
+      "saving": "保存中…",
+      "staleWarning": "你上次录入时，该持仓价值为<strong1>¥{{marketValueAtLog}}</strong1>，现在为<strong2>¥{{currentMarketValue}}</strong2>（{{sign}}{{pct}}%）。如果你追加或取出过资金，请更新成本以匹配——否则这部分差额会被计入盈亏。",
+      "supersededWarning": "该资产现在已有券商或基金数据源的交易记录，真实台账将接管展示，这条手动录入会被忽略。清除它是安全的。",
+      "unrealizedHint": "得出浮动盈亏：当前市值 − 成本。"
+    },
+    "notAvailable": "N/A",
+    "openValueTrapReview": "打开价值陷阱复盘",
+    "overallPerformance": "组合整体表现",
+    "requiresFullHistory": "需要完整的交易历史",
+    "returnPct": "收益率 {{pct}}%",
+    "reviewDue": "待复盘",
+    "title": "全周期资产表现",
+    "totalLifetimeGain": "累计收益"
+  }
+}

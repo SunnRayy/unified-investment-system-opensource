@@ -1,0 +1,119 @@
+known_etf:
+- AGG
+- ARKF
+- ARKG
+- ARKK
+- ARKQ
+- ARKW
+- BIL
+- BND
+- DGRO
+- DIA
+- DVY
+- EEM
+- EFA
+- EMB
+- ETHA
+- FBTC
+- GLD
+- HDV
+- HYG
+- IAU
+- IBIT
+- ICSH
+- IEF
+- IEFA
+- IEMG
+- IJH
+- IJR
+- IVV
+- IWM
+- JNK
+- LQD
+- MDY
+- MINT
+- MUB
+- NEAR
+- NOBL
+- PFF
+- QQQ
+- SCHD
+- SCHO
+- SDY
+- SGOV
+- SHV
+- SHY
+- SLV
+- SPXL
+- SPXS
+- SPY
+- SQQQ
+- TIP
+- TLT
+- TNA
+- TQQQ
+- TZA
+- VCIT
+- VCSH
+- VEA
+- VGK
+- VIG
+- VNQ
+- VOO
+- VTI
+- VWO
+- VYM
+- XLB
+- XLE
+- XLF
+- XLI
+- XLK
+- XLP
+- XLRE
+- XLU
+- XLV
+- XLY
+symbol_norm:
+- from: BRK/B
+  to: BRK-B
+- from: BRK/A
+  to: BRK-A
+- from: BRKB
+  to: BRK-B
+- from: BRKA
+  to: BRK-A
+action_map:
+- raw: Buy
+  type: buy
+- raw: Sell
+  type: sell
+- raw: Cash Dividend
+  type: dividend
+- raw: Qualified Dividend
+  type: dividend
+- raw: Non-Qualified Div
+  type: dividend
+- raw: Special Qual Div
+  type: dividend
+- raw: NRA Tax Adj
+  type: tax_adjustment
+- raw: Foreign Tax Paid
+  type: tax_adjustment
+- raw: Reinvest Dividend
+  type: reinvest_dividend
+- raw: Reinvest Shares
+  type: reinvest_dividend
+- raw: Stock Split
+  type: stock_split
+- raw: Journal
+  type: other
+- raw: Wire Transfer
+  type: other
+- raw: ACH
+  type: other
+- raw: MoneyLink Transfer
+  type: other
+- raw: Credit Interest
+  type: other
+- raw: Security Transfer
+  type: transfer

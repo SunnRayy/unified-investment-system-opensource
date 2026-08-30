@@ -1,0 +1,45 @@
+rules:
+  - pattern: "US_STK_*"
+    authorities: [Schwab_CSV, Broker_IBKR]
+    priority: 8
+    note: "Schwab_CSV authoritative for US Stocks"
+
+  - pattern: "US_ETF_*"
+    authorities: [Schwab_CSV, Broker_IBKR]
+    priority: 8
+    note: "Schwab_CSV authoritative for US ETFs"
+
+  - pattern: "CASH_USD"
+    authorities: [Schwab_CSV, Broker_IBKR]
+    priority: 8
+    note: "Schwab_CSV authoritative for USD Cash"
+
+  - pattern: "CN_FUND_*"
+    authority: "CN_Fund_Excel"
+    priority: 8
+    note: "CN_Fund_Excel authoritative for CN Funds"
+
+  - pattern: "GOLD_*"
+    authority: "Gold_Excel"
+    priority: 8
+    note: "Gold_Excel authoritative for Gold"
+
+  - pattern: "ALTS_Paper_Gold"
+    authority: "Gold_Excel"
+    priority: 8
+    note: "Gold_Excel authoritative for Paper Gold"
+
+  - pattern: "INS_*"
+    authority: "Insurance_Excel"
+    priority: 8
+    note: "Insurance_Excel authoritative for Insurance"
+
+  - pattern: "RSU_*"
+    authority: "RSU_Excel"
+    priority: 5
+    note: "RSU_Excel authoritative for RSUs"
+
+  - pattern: "*"
+    authority: "Financial_Summary_Excel"
+    priority: 9
+    note: "Financial_Summary_Excel catch-all for CASH_Deposit_*, Property_*, Wealth_*, Pension_* assets not covered by specific reader rules"

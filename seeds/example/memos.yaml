@@ -1,0 +1,44 @@
+# Example memo registry (Program OSR WS-3a) — fictional theses referencing
+# the persona household's actual holdings (tools/demo_data/persona.yaml), so
+# the memo UI isn't empty in the demo. Not real investment advice.
+
+memo_registry:
+  - memo_id: "2026-Q2-EX1"
+    title: "US core index thesis — VOO/AAPL (Q2 2026)"
+    status: active
+    falsification_summary: >-
+      Thesis breaks if AAPL services-revenue growth decelerates below 5% YoY
+      for two consecutive quarters, or if VOO's forward PE stays above its
+      10-year mean for more than a full year without an earnings catch-up.
+    doc_link: null
+  - memo_id: "2026-Q2-EX2"
+    title: "CN core-satellite fund thesis — 110020/161725 (Q2 2026)"
+    status: active
+    falsification_summary: >-
+      Core CSI300 tracker (110020) validated if it stays within +/-2% of its
+      target allocation band; the 白酒 satellite (161725) is falsified if
+      sector regulatory risk materially changes distribution channel
+      economics.
+    doc_link: null
+  - memo_id: "2026-Q3-EX1"
+    title: "Gold + RSU sizing handbook (Q3 2026)"
+    status: active
+    falsification_summary: >-
+      Paper gold allocation (ALTS_Paper_Gold) revisited if it exceeds 15% of
+      net worth; RSU_AMZN sell-to-cover cadence revisited if vest-quarter
+      concentration risk exceeds the position-sizing policy.
+    doc_link: null
+
+memo_asset_map:
+  - memo_id: "2026-Q2-EX1"
+    asset_id: "US_STK_VOO"
+  - memo_id: "2026-Q2-EX1"
+    asset_id: "US_STK_AAPL"
+  - memo_id: "2026-Q2-EX2"
+    asset_id: "CN_FUND_110020"
+  - memo_id: "2026-Q2-EX2"
+    asset_id: "CN_FUND_161725"
+  - memo_id: "2026-Q3-EX1"
+    asset_id: "ALTS_Paper_Gold"
+  - memo_id: "2026-Q3-EX1"
+    asset_id: "RSU_AMZN"

@@ -1,0 +1,109 @@
+{
+  "appName": "Huinsight",
+  "actions": {
+    "logout": "Logout"
+  },
+  "currency": {
+    "rateApprox": "approx · 1 USD = {{rate}} CNY",
+    "rateApproxAsOf": "approx · 1 USD = {{rate}} CNY · as of {{date}}",
+    "rateApproxFallback": "approx · 1 USD = {{rate}} CNY (fallback)",
+    "switchToCny": "Switch to CNY",
+    "switchToUsd": "Switch to USD"
+  },
+  "dashboard": {
+    "exportAiContext": "Export AI Context",
+    "filterDataError": "Some dashboard data failed to load. The server returned an error.",
+    "hoursAgo": "{{count}}h ago",
+    "lastSynced": "Last synced: {{time}}",
+    "marketRefreshFailed": "Market refresh failed",
+    "marketRefreshed": "Market sentiment refreshed",
+    "minutesAgo": "{{count}}m ago",
+    "never": "Never",
+    "priceRefreshFailed": "Price refresh failed",
+    "pricesRefreshed": "Prices refreshed: {{count}} assets updated",
+    "refreshMarkets": "Refresh Markets",
+    "refreshPrices": "Refresh Prices",
+    "streamConnectionLost": "Stream connection lost",
+    "syncAll": "Sync All",
+    "syncFiles": "Sync Files",
+    "syncTerminal": "Sync Terminal",
+    "syncingEllipsis": "Syncing..."
+  },
+  "filters": {
+    "demo": "Demo",
+    "demoModeAria": "Demo mode",
+    "demoModeTitle": "Demo mode: blur ¥ amounts",
+    "illiquid": "Illiquid",
+    "includeIlliquidAria": "Include illiquid assets",
+    "includeIlliquidTitle": "Include non-rebalanceable assets (Real Estate & Insurance)"
+  },
+  "login": {
+    "authenticate": "Huinsight · Authenticate",
+    "connectionError": "Connection error. Please check your network.",
+    "footer": "Huinsight — self-hosted personal finance dashboard",
+    "incorrectPassword": "Incorrect password. Please try again.",
+    "passwordPlaceholder": "Password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "subtitle": "Sign in to your account"
+  },
+  "nav": {
+    "aiAdvisor": "AI Advisor",
+    "aiModels": "AI Models",
+    "aiPrompts": "AI Prompts",
+    "assetAudit": "Asset Audit",
+    "assetCaseFiles": "Asset Case Files",
+    "assetClassAudit": "Asset Class Audit",
+    "balanceSheet": "Balance Sheet",
+    "cashFlowClassification": "Cash Flow Classification",
+    "compassReport": "Allocation Report",
+    "dataSources": "Data Sources",
+    "decisionHub": "Decision Hub",
+    "forecast": "Forecast",
+    "incomeExpense": "Income & Expense",
+    "marketSentiment": "Market Sentiment",
+    "monthlyAttribution": "Monthly Attribution",
+    "performance": "Performance",
+    "portfolioAudit": "Portfolio Audit",
+    "reviewCenter": "Review Center",
+    "riskMatrix": "Risk Matrix",
+    "riskProfiles": "Risk Profiles",
+    "rules": "Rules",
+    "settings": "Settings",
+    "strategyAlignment": "Strategy Alignment",
+    "syncHistory": "Sync History",
+    "taxonomy": "Taxonomy",
+    "tierAudit": "Tier Audit",
+    "transactions": "Transactions",
+    "unifiedPortfolio": "Unified Portfolio",
+    "valuation": "Valuation",
+    "valueTrapReviews": "Value-Trap Reviews",
+    "wealthOS": "WealthOS"
+  },
+  "profile": {
+    "avatarAlt": "Profile",
+    "setYourName": "Set your name"
+  },
+  "section": {
+    "aiAdvisors": "AI Advisors",
+    "management": "Management",
+    "operations": "Operations",
+    "portfolio": "Portfolio",
+    "reports": "Reports",
+    "system": "System"
+  },
+  "settings": {
+    "chinese": "中文",
+    "english": "English",
+    "language": "Language",
+    "languageCode": "EN",
+    "toggleLanguageAria": "Switch to Chinese",
+    "toggleLanguageTitle": "Switch to Chinese"
+  },
+  "theme": {
+    "day": "Day",
+    "night": "Night",
+    "switchToDay": "Switch to Day mode",
+    "switchToNight": "Switch to Night mode"
+  }
+}
