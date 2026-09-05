@@ -1,0 +1,60 @@
+# Supported Python: 3.9-3.13, tested on 3.9.6 and 3.13.7.
+#
+# Pinned to the exact versions this project's test suite and app are
+# validated against. Program OSR WS-7 finding, 2026-08-17: a fresh
+# `pip install -r requirements.txt` under an unpinned resolver picked newer
+# numpy/scipy on a newer Python and changed at least one numeric function's
+# behavior (test_sharpe_ratio returned None instead of a float). Unpinned
+# installs are how "works on my machine" gets baked into a public repo —
+# treat any version bump here as a deliberate, tested upgrade, the same
+# discipline the fastapi/starlette pins below already established.
+#
+# numpy/scipy need a Python-version split, not a single hard pin: 2026-08-17
+# regression (caught by the owner running quickstart by hand) — numpy==2.0.2
+# has no Python 3.13 wheel, so pip falls back to a source build that needs a
+# Fortran compiler most machines don't have, and a newcomer on any current
+# Python (3.13 is `python3` on a stock macOS install) hit a 50+ line meson
+# traceback on the very first command. Environment markers over a hard
+# 3.9-3.12 range deliberately: a contributor shouldn't need to install an
+# old Python just to try the project. Both branches are still exact pins
+# (cp313 wheels confirmed via `pip install --dry-run` before landing), so
+# reproducibility holds within each Python version, just not across the 3.13
+# boundary — numpy/scipy don't guarantee identical numerics across major
+# versions regardless of what this file pins.
+numpy==2.0.2; python_version < "3.13"
+numpy==2.5.2; python_version >= "3.13"
+scipy==1.13.1; python_version < "3.13"
+scipy==1.18.0; python_version >= "3.13"
+pandas==2.3.3
+duckdb==1.4.3
+pyyaml==6.0.3
+ruamel.yaml==0.19.1
+yfinance==1.1.0
+forex-python==1.9.2
+requests==2.32.5
+beautifulsoup4==4.14.3
+# Pin the validated FastAPI/Starlette stack. Unpinned, CI fresh-installs the
+# latest on every deploy; starlette 1.x (2026-06) changed app.routes nesting so
+# included sub-router paths no longer appear in a top-level app.routes walk.
+# The whole suite + app are validated on this stack; treat a starlette 1.x bump
+# as a separate, tested upgrade rather than silent drift on deploy.
+fastapi==0.128.0
+starlette==0.49.3
+uvicorn==0.39.0
+httpx==0.28.1
+pytest-asyncio==1.2.0
+pytest-xdist==3.8.0
+statsmodels==0.14.6
+sse-starlette==3.2.0
+openpyxl==3.1.5
+litellm==1.83.1
+json-repair==0.44.1
+python-dotenv==1.0.1
+google-auth==2.50.0
+# Not in the pinned-venv freeze this pass was validated against (only
+# exercised on Cloud Run, not the local/demo path) — left unpinned rather
+# than guessing a version. Needs its own verification pass.
+google-cloud-storage
+akshare==1.18.48
+python-multipart==0.0.20
+bcrypt==5.0.0

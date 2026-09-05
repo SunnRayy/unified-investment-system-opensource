@@ -1,0 +1,210 @@
+name: CI
+
+# Runs on every push/PR — secret-free, safe for external forks (no GCP auth,
+# no deploy). deploy.yml's own "test" job (the same steps, kept there too so
+# a push to the `deploy` branch is still gated on tests before deploying) is
+# the one place that actually talks to Cloud Run, and only fires on that
+# branch. This workflow is the public-facing counterpart: it's what a PR
+# from a fork sees.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Initialize test database
+        env:
+          UIS_SKIP_DB_STARTUP_VALIDATION: "1"
+        run: |
+          mkdir -p data
+          python main.py --init
+
+      - name: Run tests
+        env:
+          UIS_SKIP_DB_STARTUP_VALIDATION: "1"
+        run: |
+          bash scripts/run-tests.sh
+
+  # ---------------------------------------------------------------------------------
+  # Frontend. Added 2026-08-21 (Program BIL / WS-0, ADR-028). Before this job the vitest
+  # suite had ZERO CI coverage — it ran only when someone remembered to run it locally.
+  #
+  # ⚠ HONEST STATEMENT OF WHAT THIS GATES, because `npm test` currently exits 1:
+  #
+  #   `npm run build`      — hard gate. Any failure fails the job.
+  #   `npm run i18n:check` — hard gate. Catalog parity + the converted-file literal ratchet.
+  #   `npm test`           — RATCHET, not a pass/fail gate. The suite carries 28 failures
+  #                          that predate this workflow (11 files; they shipped with the
+  #                          2026-08-18 open-source release and are recorded in
+  #                          docs/plans/2026-08-21-bil-autonomous-state.md). The job fails
+  #                          if the failure count GROWS past KNOWN_FAILING_TESTS and warns
+  #                          if it shrinks (lower the number in that case).
+  #
+  # This is deliberately not `continue-on-error: true` — that would make the step's status
+  # decorative and let a real regression through unnoticed. It is also not a list of
+  # skipped tests: nothing here deletes, skips or xfails a failing test. The failures stay
+  # loud in the log; what is pinned is only their COUNT. When the underlying 28 are fixed,
+  # drop KNOWN_FAILING_TESTS to 0 and this becomes an ordinary hard gate.
+  # ---------------------------------------------------------------------------------
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ux-command-center
+    env:
+      # Pre-existing failures. Baseline was 35 on `bil` @ be3cc02 (2026-08-21); lowered to
+      # 28 on 2026-08-30 when the owner ruled the 7 failing `operations-redesign.test.tsx`
+      # cases obsolete and they were deleted (35 − 7 = 28, no other file changed).
+      # See docs/plans/2026-08-21-bil-autonomous-state.md § Recorded baselines.
+      KNOWN_FAILING_TESTS: "28"
+      # Sanity floor: if collection breaks, vitest can report "0 failed" honestly.
+      MIN_TOTAL_TESTS: "200"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: ux-command-center/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: i18n parity + literal ratchet
+        run: npm run i18n:check
+
+      - name: Run tests
+        # Non-zero exit is expected while KNOWN_FAILING_TESTS > 0; the next step is the gate.
+        run: |
+          npx vitest run --reporter=default --reporter=json \
+            --outputFile.json=vitest-report.json || true
+
+      - name: Gate test results against the recorded baseline
+        run: |
+          node -e '
+            const fs = require("fs");
+            const known = Number(process.env.KNOWN_FAILING_TESTS);
+            const floor = Number(process.env.MIN_TOTAL_TESTS);
+            if (!fs.existsSync("vitest-report.json")) {
+              console.error("No vitest-report.json — the test run did not produce a report.");
+              process.exit(1);
+            }
+            const r = JSON.parse(fs.readFileSync("vitest-report.json", "utf8"));
+            const { numTotalTests: total, numPassedTests: passed, numFailedTests: failed } = r;
+            console.log(`vitest: ${passed} passed, ${failed} failed, ${total} total (baseline: ${known} failing)`);
+            const offenders = r.testResults
+              .map(s => [s.name.split("/ux-command-center/").pop(),
+                         s.assertionResults.filter(a => a.status === "failed").length])
+              .filter(([, n]) => n > 0)
+              .sort((a, b) => b[1] - a[1]);
+            for (const [file, n] of offenders) console.log(`  ${String(n).padStart(3)} failing  ${file}`);
+            if (total < floor) {
+              console.error(`FAIL: only ${total} tests collected (floor ${floor}) — the suite did not run.`);
+              process.exit(1);
+            }
+            if (failed > known) {
+              console.error(`FAIL: ${failed} failing tests, baseline is ${known}. ${failed - known} new failure(s).`);
+              process.exit(1);
+            }
+            if (failed < known) {
+              console.log(`::notice::${known - failed} baseline failure(s) fixed. Lower KNOWN_FAILING_TESTS to ${failed} in .github/workflows/ci.yml.`);
+            }
+          '
+
+  # The leak gate protects the maintainer's private data on its way OUT of the
+  # source repository. It reads tools/release/leak_patterns.txt, which is
+  # deliberately never exported — the file necessarily contains the exact
+  # strings it forbids, so publishing it would defeat its own purpose.
+  #
+  # That makes this job meaningless in the published repository, and until
+  # 2026-08-31 it was worse than meaningless: it ran there, could not find its
+  # patterns file, and put a permanent failing X on the front page of a project
+  # whose entire pitch is data-integrity engineering.
+  #
+  # "Missing patterns file" alone is NOT a safe reason to skip: in the source
+  # repository it would mean the gate had been silently disarmed, which is the
+  # single worst outcome for a check whose whole job is catching a leak before
+  # it ships. So the skip is conditioned on a positive identification of the
+  # published export instead.
+  #
+  # tools/release/patch_staging.py is the discriminator. It is export-EXCLUDEd
+  # for the same reason as the patterns file — it contains the real strings it
+  # substitutes away — so the two are always absent together in the export and
+  # always present together in the source. Patterns missing while patch_staging
+  # is present means someone deleted, moved or renamed the patterns file, and
+  # the job fails loudly rather than passing quietly.
+  dangling-links:
+    # A link that 404s on the front page tells a newcomer the project is broken
+    # before they read any code. This was audited by hand on 2026-08-17 and had
+    # decayed to ten dangling links by 2026-09-05 — including "Deploying to
+    # Cloud Run" in both READMEs and both quickstarts. In the published repo the
+    # checkout IS the exported tree, so it is checked directly.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Every internal link in a shipped doc must resolve
+        run: python scripts/check-dangling-links.py .
+
+  leak-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Decide whether this repository has anything to gate
+        id: patterns
+        run: |
+          patterns=tools/release/leak_patterns.txt
+          private_tooling=tools/release/patch_staging.py
+
+          if [ -f "$patterns" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          elif [ -f "$private_tooling" ]; then
+            echo "::error::$patterns is missing but $private_tooling is present." \
+                 "This is the source repository with its leak gate disarmed —" \
+                 "the patterns file was deleted, moved or renamed. Restore it." >&2
+            exit 1
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Neither the leak patterns nor the private release" \
+                 "tooling is present, so this is the published export. The gate" \
+                 "runs in the source repository, before this export is built."
+          fi
+
+      - name: Set up Python
+        if: steps.patterns.outputs.present == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Scan public-artifact surface for owner-identifying data
+        if: steps.patterns.outputs.present == 'true'
+        run: |
+          python tools/release/leak_gate.py

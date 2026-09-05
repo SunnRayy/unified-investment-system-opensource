@@ -1,0 +1,41 @@
+{
+  "pageTitle": "Income & Expense",
+  "latestLabel": "Latest: {{date}}",
+  "kpi": {
+    "latestMonthIncome": "Latest Month Income",
+    "latestMonthExpense": "Latest Month Expense",
+    "latestMonthInvestment": "Latest Month Investment",
+    "latestMonthNet": "Latest Month Net",
+    "latestMonthFallback": "latest month",
+    "savingsRateLabel": "Savings Rate ({{month}})",
+    "savingsRateSubtext": "Income minus expenses ÷ income on the backend's Income & Expense classification — reimbursements and redemptions are excluded, so it can differ from Net ÷ Income above. 12m: {{ttmSaved}} saved · {{ttmInvested}} reached an investment account."
+  },
+  "trends": {
+    "title": "Monthly Trends",
+    "last12m": "Last 12m",
+    "last36m": "Last 36m",
+    "allTime": "All Time",
+    "noData": "No trend data available",
+    "axisThousands": "¥{{value}}k"
+  },
+  "averages": {
+    "title": "Averages",
+    "avgIncome": "Avg Income",
+    "avgExpense": "Avg Expense",
+    "avgInvestment": "Avg Investment",
+    "avgNet": "Avg Net",
+    "months": "Months"
+  },
+  "detail": {
+    "title": "Latest Month Detail",
+    "income": "Income",
+    "noIncomeRecords": "No income records",
+    "expense": "Expense",
+    "noExpenseRecords": "No expense records",
+    "investment": "Investment",
+    "noInvestmentRecords": "No investment records"
+  },
+  "errors": {
+    "load": "Unable to load income/expense data. Please refresh."
+  }
+}

@@ -1,0 +1,51 @@
+# Config-driven reader config for Financial_Summary_Excel (B2 — holdings parsing).
+#
+# category = "historical" — this source provides historical balance-sheet
+# snapshots (deposits, property, pension, cash) rather than real-time reader
+# holdings.  It is in HISTORICAL_HOLDING_SOURCES not READER_HOLDING_SOURCES.
+#
+# SCOPE BOUNDARY (B2 sitting #2):
+#   This config migrates ONLY the holdings-table melt to the config engine.
+#   The two metadata tables (balance_sheet_monthly, income_expense_monthly)
+#   are written by _persist_financial_summary() via transform_holdings() /
+#   transform_transactions() and are left COMPLETELY UNCHANGED.  That path
+#   runs in both flag branches and will be removed in B5.
+#
+# HOOK: melt_financial_summary_holdings
+#   The 资产负债 balance sheet uses a wide layout with one row per month and
+#   one column per asset.  The holdings_from_sheet_hook receives the raw sheet
+#   DF (read with header_row=3) and applies the same reader trim + dict-melt
+#   as the legacy FinancialSummaryReader → melt_balance_sheet_to_holdings()
+#   chain.  The hook emits the final 12-column holdings DF with per-row
+#   snapshot_date taken directly from the '日期' column — the engine does NOT
+#   apply snapshot-stamping or output_columns on the result.
+#
+# strip_whitespace_columns / strip_column_names are left at their False
+# defaults because the legacy reader does NOT strip — required for byte-identity.
+
+identity:
+  source_key: financial_summary
+  source_system: Financial_Summary_Excel
+  display_label: "Financial Summary (Historical)"
+  display_name: "Financial Summary"
+  asset_prefixes:
+    - CASH_
+    - Property_
+    - Wealth_
+    - Pension_
+  allowed_extensions:
+    - .xlsx
+    - .xls
+  category: historical
+  validator: validate_financial_summary_format
+
+parsing:
+  format: excel
+  snapshot_date:
+    strategy: file_mtime   # not used for holdings (hook sets per-row 日期); required by schema
+  sheets:
+    - name: 资产负债
+      target: holdings
+      header_row: 3        # legacy reads balance sheet with header at row 4 (0-indexed 3)
+      # no rename/melt/value_maps/id_template — the hook owns the dict-melt
+  holdings_from_sheet_hook: melt_financial_summary_holdings

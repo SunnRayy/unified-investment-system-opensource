@@ -1,0 +1,124 @@
+{
+  "breadcrumb": "报告 / 估值",
+  "title": "估值看板",
+  "subtitle": "PE · PB · 股息率信号跟踪",
+  "export": "导出",
+  "refreshData": "刷新数据",
+  "refreshingLabel": "刷新中…",
+  "loadingData": "加载估值数据…",
+  "dataUnavailable": "数据暂不可用",
+  "accumulating": "积累中",
+  "accumulatingDays": "积累中 · {{days}}d",
+  "percentileYears": "第{{n}}分位 · {{years}}y",
+  "signalPill": {
+    "missingThreshold": "缺少阈值配置",
+    "percentileMissingFallback": "百分位数据缺失，以历史均值估算，仅供参考"
+  },
+  "errors": {
+    "loadFailed": "加载失败",
+    "deleteFailed": "删除失败: {{message}}"
+  },
+  "refresh": {
+    "failNote": " · {{count}} 项失败 ({{tickers}})",
+    "resultSummary": "已刷新 {{count}} 项 · 状态: {{status}}{{failNote}}",
+    "inProgress": "刷新进行中，请稍候…",
+    "dailyLimitReached": "已达每日限额（最多3次）",
+    "errorPrefix": "刷新错误: {{message}}"
+  },
+  "statusBlock": {
+    "refreshedItems": "已刷新 <strong>{{count}} 项</strong> <sep>·</sep> <ok>正常</ok>",
+    "readersErrors": "6 个数据源 · 0 个错误 · {{fallback}}",
+    "oneFallback": "1 项回退",
+    "zeroFallbacks": "0 项回退",
+    "us10y": "美国10年期",
+    "rateAdjust": "利率调整 {{factor}}×",
+    "cn10y": "中国10年期",
+    "usdCny": "美元/人民币 {{rate}}",
+    "usdCnyUnknown": "美元/人民币 —",
+    "signalsFlagged": "已标记信号",
+    "highTickers": "HIGH · {{tickers}}",
+    "none": "无",
+    "regime": "市场状态",
+    "neutral": "中性",
+    "marketSentimentCache": "market_sentiment_cache",
+    "runId": "run_id <strong>val.{{value}}</strong>",
+    "cacheAsOf": "缓存截至 <strong>{{value}}</strong>",
+    "tzShanghai": "tz Asia/Shanghai"
+  },
+  "sections": {
+    "holdingsTitle": "持仓",
+    "holdingsHint": "按信号严重程度排序 · 仅显示已跟踪项",
+    "benchmarkTitle": "基准指数",
+    "benchmarkHint": "参考偏离背景 · 未持有",
+    "watchlistTitle": "观察列表",
+    "watchlistHint": "未持有 · 跟踪入场信号",
+    "addWatchItem": "添加观察项"
+  },
+  "holdings": {
+    "empty": "无持仓数据 · 点击「刷新数据」加载",
+    "cols": {
+      "tickerName": "代码 / 名称",
+      "type": "类型",
+      "currentValuation": "当前估值",
+      "percentile": "历史%位",
+      "signal": "信号",
+      "source": "来源"
+    },
+    "peTtmDistorted": "PE-TTM失真",
+    "peTtmDistortedTitle": "PE-TTM历史数据因低盈利期严重失真（历史中位数~80x），当前TTM与历史中位数比较无实际意义。信号基于Forward PE",
+    "vooFwdNote": "Fwd PE {{value}} — 合理区 (17-21×)",
+    "vooFwdNoteTitle": "TTM PE偏高信号基于历史TTM区间；Forward PE处于合理区间",
+    "footnote": "¹ 信号基于研究参考阈值（GuruFocus / FactSet / 东吴证券），非系统历史分位计算。历史%位列为系统实测值（数据积累中）。",
+    "untracked": "未跟踪持仓",
+    "noValuationSource": "无估值数据源 · 待映射"
+  },
+  "trackedIndex": {
+    "empty": "无跟踪指数数据 · 刷新后自动填充关联持仓指数",
+    "cols": {
+      "index": "指数",
+      "linkedFund": "关联基金",
+      "peTtm": "PE-TTM",
+      "pb": "PB",
+      "percentile": "历史%位",
+      "signal": "信号",
+      "source": "来源"
+    },
+    "footnote": "¹ 信号基于研究参考阈值（乐咕乐股 / 东吴证券）。历史%位格式：第N分位 · Xy（数据年限）。不满1年显示「积累中」。"
+  },
+  "watchlist": {
+    "empty": "观察列表为空 · 点击「+ 添加观察项」",
+    "cols": {
+      "name": "名称",
+      "type": "类型",
+      "currentValuation": "当前估值",
+      "percentile": "历史%位",
+      "signal": "信号",
+      "source": "来源"
+    },
+    "awaitingRefresh": "等待刷新",
+    "remove": "移除"
+  },
+  "assetTypes": {
+    "usStock": "美股个股 (US_STOCK)",
+    "usIndex": "美股指数 ETF (US_INDEX)",
+    "hkIndex": "港股指数 ETF (HK_INDEX)",
+    "cnIndex": "A股宽基指数 (CN_INDEX)",
+    "cnMarket": "A股市场板块 (CN_MARKET)"
+  },
+  "addModal": {
+    "title": "添加观察项",
+    "ticker": "代码 *",
+    "tickerPlaceholder": "e.g. QQQ · 3033.HK · 沪深300",
+    "name": "名称 *",
+    "namePlaceholder": "例如 Nasdaq 100 ETF",
+    "type": "类型",
+    "note": "备注（可选）",
+    "notePlaceholder": "e.g. 关注买入窗口",
+    "cancel": "取消",
+    "adding": "添加中…",
+    "add": "添加",
+    "resultSeeded": "✓ 已添加，历史数据后台回填中…",
+    "resultDailyRefresh": "✓ 已添加，每日刷新时积累数据",
+    "addFailed": "添加失败"
+  }
+}

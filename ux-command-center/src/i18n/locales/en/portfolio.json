@@ -1,0 +1,160 @@
+{
+  "dashboard": {
+    "hero": {
+      "netWorth": "NET WORTH",
+      "days30": "30D",
+      "ytd": "YTD",
+      "xirr": "XIRR",
+      "notAvailable": "N/A",
+      "vsLastMonth": "VS LAST MONTH",
+      "change": "CHANGE",
+      "since": "SINCE",
+      "cashBuffer": "CASH BUFFER",
+      "moSuffix": "mo",
+      "cashTargetLine": "target: {{target}} mo · {{pct}}% covered",
+      "marketStatus": "MARKET STATUS",
+      "detailsLink": "Details →",
+      "signals": "SIGNALS",
+      "redCount": "{{count}} red",
+      "allClear": "All clear",
+      "totalCount": "/ {{count}} total",
+      "noData": "No data",
+      "fallback": "fallback",
+      "cached": "cached",
+      "live": "live",
+      "displayingUsd": "Displaying in USD (approx)",
+      "displayingCny": "All portfolio values shown in CNY",
+      "usdCnyLabel": "USD/CNY {{rate}}"
+    },
+    "decisionHubLink": "Decision Hub →",
+    "actionCenter": {
+      "title": "Action Center",
+      "noActiveFlags": "No active flags"
+    },
+    "movers": {
+      "title": "Top Movers",
+      "failedToLoad": "Failed to load movers",
+      "noData": "No movers data",
+      "colAsset": "ASSET",
+      "colSubClass": "SUB-CLASS",
+      "colTopClass": "CLASS",
+      "colPnl": "P&L",
+      "tabs": {
+        "7D": "7D",
+        "30D": "30D",
+        "3M": "3M",
+        "6M": "6M",
+        "12M": "12M",
+        "ALL": "ALL"
+      }
+    },
+    "intelligence": {
+      "title": "Intelligence",
+      "noInsights": "No recent insights"
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "subtitle": "latest decisions & events",
+      "viewAll": "View all →",
+      "noActivity": "No recent activity"
+    },
+    "allocation": {
+      "title": "Asset Allocation",
+      "summary": "{{count}} {{unit}} · drift vs target",
+      "classesUnit": "classes",
+      "subClassesUnit": "sub-classes",
+      "topClass": "Top-class",
+      "subClass": "Sub-class",
+      "openCompass": "Open Compass →",
+      "total": "TOTAL",
+      "legendTarget": "Target",
+      "legendCurrent": "Current",
+      "tolerance": "tolerance ±5.0%"
+    },
+    "netWorthTrend": {
+      "title": "Net Worth Trend",
+      "monthRolling": "{{count}}-month rolling",
+      "noHistory": "No performance history available",
+      "gainLabel": "{{count}}M GAIN",
+      "peak": "PEAK",
+      "trough": "TROUGH",
+      "volatility": "VOLATILITY",
+      "annualizedSigma": "annualized σ",
+      "periods": {
+        "1Y": "1Y",
+        "2Y": "2Y",
+        "5Y": "5Y",
+        "ALL": "ALL"
+      }
+    }
+  },
+  "wealthOS": {
+    "loading": "Loading portfolio data...",
+    "title": "Lifetime Asset Performance",
+    "comingSoon": "Coming soon",
+    "hideTable": "Hide Table",
+    "filter": "Filter",
+    "exportAiContext": "Export AI Context",
+    "totalLifetimeGain": "Total Lifetime Gain",
+    "returnPct": "{{pct}}% return",
+    "combinedRealized": "Combined realized & unrealized",
+    "annualizedReturn": "Annualized Return (XIRR)",
+    "notAvailable": "N/A",
+    "requiresFullHistory": "Requires full transaction history",
+    "overallPerformance": "Overall portfolio performance",
+    "activeAssets": "Active Assets",
+    "currentHoldingDistribution": "Current holding distribution",
+    "columns": {
+      "assetName": "Asset Name",
+      "assetClass": "Asset Class",
+      "holdingPeriod": "Holding Period",
+      "status": "Status",
+      "totalInvested": "Total Invested",
+      "currentValue": "Current Value",
+      "profitLoss": "Profit/Loss",
+      "unrealizedCurrentLots": "Unrealized (current lots)",
+      "returnLifetime": "Return % (lifetime)"
+    },
+    "reviewDue": "Review due",
+    "openValueTrapReview": "Open value-trap review",
+    "costBasisUnknown": "Cost basis unknown — not recorded in the source",
+    "logPnl": {
+      "staleTitle": "The balance has moved since you entered this — the cost may be out of date",
+      "freshTitle": "You entered this figure — click to edit",
+      "loggedStale": "Logged · check",
+      "logged": "Logged",
+      "noLedgerTitle": "No broker or fund ledger covers this asset — log what you know",
+      "logPnl": "Log P&L"
+    },
+    "logPnlDialog": {
+      "ariaLabel": "Log profit and loss",
+      "editTitle": "Edit logged P&L",
+      "intro": "This asset has no cost and no transactions in any source, so its profit is unknown and shows as “—”. Enter what you know — both fields are optional, and amounts are in <strong>CNY</strong>.",
+      "costLabel": "Cost — what you put in",
+      "costPlaceholder": "e.g. 185000",
+      "unrealizedHint": "Gives an unrealized figure: current value − cost.",
+      "cashEquivalentHint": "Stored for reference only — this is a cash-equivalent holding, so it has no price basis and no unrealized gain.",
+      "profitLabel": "Profit earned to date",
+      "profitPlaceholder": "e.g. 4200",
+      "profitHint": "A cumulative total, so it counts toward lifetime P&L only — monthly and yearly views leave it out, because one running total cannot say what a single month earned.",
+      "asOfLabel": "As of (optional)",
+      "noteLabel": "Note (optional)",
+      "notePlaceholder": "e.g. Q3 coupon",
+      "staleWarning": "This holding was worth <strong1>¥{{marketValueAtLog}}</strong1> when you last entered these figures, and is now <strong2>¥{{currentMarketValue}}</strong2> ({{sign}}{{pct}}%). If you added money or took some out, update the cost to match — otherwise the difference is being counted as profit or loss.",
+      "supersededWarning": "This asset now has transactions from a broker/fund source, so the real ledger takes over and this entry is being ignored. Clearing it is safe.",
+      "errorNotNumbers": "Amounts must be numbers (or left blank).",
+      "errorNeitherFigure": "Enter a cost, a profit, or both. To remove the entry, use Clear.",
+      "errorSaveFailed": "Unable to save.",
+      "errorClearFailed": "Unable to clear.",
+      "clear": "Clear",
+      "cancel": "Cancel",
+      "saving": "Saving…",
+      "save": "Save"
+    },
+    "illiquidTitle": "Illiquid / Non-rebalanceable",
+    "errors": {
+      "assetsLoad": "Unable to load portfolio assets. The server returned an error.",
+      "load": "Unable to load WealthOS data."
+    }
+  }
+}

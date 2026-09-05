@@ -1,0 +1,57 @@
+.DS_Store
+__pycache__/
+.venv/
+*.duckdb
+*.db
+*.log
+.worktrees/
+.uis/
+node_modules/
+output/
+data/
+*.pyc
+.env
+.vite/
+*.lock
+
+# Design HTML prototypes — large generated files, excluded from tracking
+# Non-HTML design assets (css, jsx, js, md, png, svg) remain tracked.
+ux-command-center/designs/*.html
+ux-command-center/designs/**/*.html
+
+# Auto-generated per-session handover (ux-command-center only)
+# Root HANDOVER-auto.md stays tracked intentionally.
+ux-command-center/HANDOVER-auto.md
+
+# vitest JSON report — written by the CI frontend job's baseline gate (ci.yml)
+ux-command-center/vitest-report.json
+
+# Agent scratch worktrees (not project files)
+.claude/worktrees/
+
+# Backend log file (dev artifact)
+backend.log
+
+# OSR demo-data generator output (regenerable, not committed — see tools/demo_data/generate.py)
+tools/demo_data/out/
+
+# OSR private seed pack — the project owner's real reader-mapping vocabulary.
+# Never committed; restored from a private GCS bucket in production
+# (src/api/main.py's lifespan, src/storage/gcs.py's seed-pack functions).
+seeds/private-ray/
+
+# OSR plugin hooks (WS-2 step 2) — a user's local extension point, not part
+# of the shared repo. See plugins/README.md.
+plugins/hooks/*.py
+!plugins/hooks/README.md
+
+# OSR real configs (WS-4b) — owner-specific data (real finance_dir path, a
+# headshot photo, real product/fund names). The committed .example.yaml
+# twins are the public templates; src.config._resolve_config_file falls
+# back to them when the real file is absent (clean clone / Docker image).
+# In production, restored from a private GCS bucket at boot
+# (src/api/main.py's lifespan, src/storage/gcs.py's download_settings_from_gcs
+# / download_reference_sheet_from_gcs / download_verification_from_gcs).
+config/settings.yaml
+config/reference_sheet.yaml
+config/verification.yaml

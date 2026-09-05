@@ -1,0 +1,44 @@
+# Worked example — Program OSR WS-2. See docs/adding-a-source.md.
+#
+# This is the ENTIRE declarative side of adding a new data source: identity
+# metadata (how the UI labels it, what file types it accepts) plus a parsing
+# pipeline (one CSV, one sheet, one hook). No code under src/sources/ was
+# touched to make this work — plugin_hook.py in this same directory is the
+# only executable piece, and it lives entirely outside that tree.
+#
+# To wire this into a real Huinsight install:
+#   1. Copy this file to config/readers/demo_broker.yaml
+#   2. Copy plugin_hook.py to plugins/hooks/demo_broker.py
+#   3. Add to config/settings.yaml's source_registry:
+#        demo_broker:
+#          enabled: true
+#          data_dir: /path/to/your/demo-broker-exports/
+#   4. Drop holdings.csv (or your real export, same columns) in that data_dir.
+# The orchestrator's registry-driven P2 dispatch (ADR-018,
+# src/sync/orchestrator.py's _dispatch_phase2_readers) picks up any reader
+# YAML with no specialized function automatically — no other wiring needed.
+
+identity:
+  source_key: demo_broker
+  source_system: Demo_Broker_CSV
+  display_label: "Demo Broker (worked example)"
+  display_name: "Demo Broker"
+  account_name: "Demo Broker"
+  asset_prefixes:
+    - DEMO_
+  allowed_extensions:
+    - .csv
+  category: reader
+  validator: null
+
+parsing:
+  format: csv
+  snapshot_date:
+    strategy: file_mtime
+  sheets:
+    - name: holdings
+      target: holdings
+      file_glob: "*.csv"
+      select: latest
+      skiprows: 0
+  holdings_from_sheet_hook: demo_broker_holdings_from_csv

@@ -1,0 +1,45 @@
+[tool.ruff]
+target-version = "py39"
+line-length = 120
+
+[tool.ruff.lint]
+# E = pycodestyle errors, F = pyflakes (unused imports, undefined names)
+# E501 excluded: line length enforced by scripts/verify.sh file-size check instead
+# E402 excluded: module-level import ordering — pre-existing throughout codebase
+# E401 excluded: multiple imports on one line — cosmetic pre-existing pattern
+select = ["E", "F"]
+ignore = ["E501", "E402", "E401"]
+
+[tool.pytest.ini_options]
+markers = [
+    "critical: mark test as critical (Tier 1)",
+    "pipeline: mark test as pipeline (Tier 2)",
+    "requires_live_db: needs a real, populated (non-synthetic) database — skipped by default. Not a test of the code; see the module docstring for what it actually checks and run explicitly with -m requires_live_db against your own populated instance if you need it."
+]
+
+# V5.0 development scope — runs only tests relevant to DSA analysis migration.
+# Expand testpaths and remove ignores as each phase touches more modules:
+#   Phase 3+: remove --ignore for test_context_builder.py, test_decision_scorer.py
+#   Phase 4+: add tests/api to testpaths
+# To run full suite: pytest tests/ -q (ignores this scope)
+testpaths = [
+    "tests/core",
+    "tests/market_data",
+    "tests/analysis",
+    "tests/services",
+]
+addopts = """
+  -n auto
+  -m "not requires_live_db"
+  --ignore=tests/core/test_config.py
+  --ignore=tests/core/test_main.py
+  --ignore=tests/services/test_behavioral_metrics.py
+  --ignore=tests/services/test_brief_generator.py
+  --ignore=tests/services/test_context_builder.py
+  --ignore=tests/services/test_context_builder_memos.py
+  --ignore=tests/services/test_portfolio_semantics.py
+  --ignore=tests/services/test_rebalanceable_filter.py
+  --ignore=tests/services/test_strategy_reviewer.py
+  --ignore=tests/services/test_transaction_source_selector.py
+  --ignore=tests/services/test_context_generator.py
+"""

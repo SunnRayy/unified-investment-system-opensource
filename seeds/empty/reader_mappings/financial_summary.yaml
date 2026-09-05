@@ -1,0 +1,5 @@
+# Empty seed profile — see seeds/README.md. Valid, loads, produces nothing.
+fs_column:
+  mapped: []
+  ignored: []
+ie_column: []

@@ -1,0 +1,124 @@
+{
+  "accumulating": "Accumulating",
+  "accumulatingDays": "Accumulating · {{days}}d",
+  "addModal": {
+    "add": "Add",
+    "addFailed": "Add failed",
+    "adding": "Adding…",
+    "cancel": "Cancel",
+    "name": "Name *",
+    "namePlaceholder": "e.g. Nasdaq 100 ETF",
+    "note": "Note (optional)",
+    "notePlaceholder": "e.g. watch the buy-entry window",
+    "resultDailyRefresh": "✓ Added — will accumulate data on the daily refresh",
+    "resultSeeded": "✓ Added — historical data backfilling in the background…",
+    "ticker": "Ticker *",
+    "tickerPlaceholder": "e.g. QQQ · 3033.HK · CSI 300",
+    "title": "Add Watch Item",
+    "type": "Type"
+  },
+  "assetTypes": {
+    "cnIndex": "CN Broad Index (CN_INDEX)",
+    "cnMarket": "CN Market Sector (CN_MARKET)",
+    "hkIndex": "HK Index ETF (HK_INDEX)",
+    "usIndex": "US Index ETF (US_INDEX)",
+    "usStock": "US Stock (US_STOCK)"
+  },
+  "breadcrumb": "Reports / Valuation",
+  "dataUnavailable": "Data unavailable",
+  "errors": {
+    "deleteFailed": "Delete failed: {{message}}",
+    "loadFailed": "Failed to load"
+  },
+  "export": "Export",
+  "holdings": {
+    "cols": {
+      "currentValuation": "Current Valuation",
+      "percentile": "Historical %ile",
+      "signal": "Signal",
+      "source": "Source",
+      "tickerName": "Ticker / Name",
+      "type": "Type"
+    },
+    "empty": "No holdings data · click \"Refresh Data\" to load",
+    "footnote": "¹ Signal is based on research-reference thresholds (GuruFocus / FactSet / Soochow Securities), not a system-computed historical percentile. The Historical %ile column is a system-measured value (data still accumulating).",
+    "noValuationSource": "No valuation source · awaiting mapping",
+    "peTtmDistorted": "PE-TTM distorted",
+    "peTtmDistortedTitle": "PE-TTM historical data is severely distorted by a low-earnings period (historical median ~80x) — comparing current TTM to the historical median is not meaningful. Signal is based on Forward PE instead.",
+    "untracked": "Untracked Holdings",
+    "vooFwdNote": "Fwd PE {{value}} — fair-value band (17-21×)",
+    "vooFwdNoteTitle": "The elevated signal is based on the historical TTM range; Forward PE sits within the fair-value band."
+  },
+  "loadingData": "Loading valuation data…",
+  "percentileYears": "{{n}}{{suffix}} · {{years}}y",
+  "refresh": {
+    "dailyLimitReached": "Daily limit reached (3 max)",
+    "errorPrefix": "Refresh error: {{message}}",
+    "failNote": " · {{count}} failed ({{tickers}})",
+    "inProgress": "Refresh in progress, please wait…",
+    "resultSummary": "Refreshed {{count}} items · status: {{status}}{{failNote}}"
+  },
+  "refreshData": "Refresh Data",
+  "refreshingLabel": "Refreshing…",
+  "sections": {
+    "addWatchItem": "Add Watch Item",
+    "benchmarkHint": "Reference drift context · not held",
+    "benchmarkTitle": "Benchmark Indexes",
+    "holdingsHint": "Sorted by signal severity · showing tracked only",
+    "holdingsTitle": "Holdings",
+    "watchlistHint": "Not held · tracked for entry signal",
+    "watchlistTitle": "Watchlist"
+  },
+  "signalPill": {
+    "missingThreshold": "Missing threshold configuration",
+    "percentileMissingFallback": "Percentile data missing — estimated from historical average, for reference only"
+  },
+  "statusBlock": {
+    "cacheAsOf": "cache as of <strong>{{value}}</strong>",
+    "cn10y": "CN 10Y",
+    "highTickers": "HIGH · {{tickers}}",
+    "marketSentimentCache": "market_sentiment_cache",
+    "neutral": "Neutral",
+    "none": "none",
+    "oneFallback": "1 fallback",
+    "rateAdjust": "rate-adjust {{factor}}×",
+    "readersErrors": "6 readers · 0 errors · {{fallback}}",
+    "refreshedItems": "Refreshed <strong>{{count}} items</strong> <sep>·</sep> <ok>ok</ok>",
+    "regime": "Regime",
+    "runId": "run_id <strong>val.{{value}}</strong>",
+    "signalsFlagged": "Signals flagged",
+    "tzShanghai": "tz Asia/Shanghai",
+    "us10y": "US 10Y",
+    "usdCny": "USD/CNY {{rate}}",
+    "usdCnyUnknown": "USD/CNY —",
+    "zeroFallbacks": "0 fallbacks"
+  },
+  "subtitle": "PE · PB · Yield signal tracker",
+  "title": "Valuation Dashboard",
+  "trackedIndex": {
+    "cols": {
+      "index": "Index",
+      "linkedFund": "Linked Fund",
+      "pb": "PB",
+      "peTtm": "PE-TTM",
+      "percentile": "Historical %ile",
+      "signal": "Signal",
+      "source": "Source"
+    },
+    "empty": "No tracked-index data · auto-populates from linked holdings after refresh",
+    "footnote": "¹ Signal is based on research-reference thresholds (Legulegu / Soochow Securities). Historical %ile format: Nth percentile · Xy (years of data). Under 1 year of history shows \"Accumulating\"."
+  },
+  "watchlist": {
+    "awaitingRefresh": "awaiting refresh",
+    "cols": {
+      "currentValuation": "Current Valuation",
+      "name": "Name",
+      "percentile": "Historical %ile",
+      "signal": "Signal",
+      "source": "Source",
+      "type": "Type"
+    },
+    "empty": "Watchlist is empty · click \"+ Add Watch Item\"",
+    "remove": "Remove"
+  }
+}

@@ -1,0 +1,91 @@
+# config/verification.yaml — EXAMPLE TEMPLATE
+# Copy to config/verification.yaml and edit (that file is gitignored — see
+# docs/quickstart.md).
+#
+# Process-based verification, loss-side triggers, and measurement realignment
+# thresholds (PRD 2026-07-07, Cross-Cutting Requirement 2: config over constants).
+#
+# Every value here has a documented default in
+# src/services/verification_config.py::VerificationConfig — if this file
+# is missing, the loader falls back to those defaults so the system never fails
+# to start over a missing config file.
+#
+# 中文：config/verification.yaml——示例模板
+# 复制为 config/verification.yaml 后再编辑（该文件已被 gitignore——见
+# docs/quickstart.zh-CN.md）。
+#
+# 本文件配置的是基于流程的核验（process-based verification）、亏损侧
+# 触发条件，以及度量口径重新对齐的各项阈值（PRD 2026-07-07，横切需求 2：
+# 「配置优先于硬编码常量」）。
+#
+# 这里的每一个值，在 src/services/verification_config.py::VerificationConfig
+# 里都有对应的默认值文档——如果这个文件缺失，加载器会回退到那些默认值，
+# 所以系统永远不会因为缺少这份配置文件而启动失败。
+
+process_verification:
+  enabled: false            # feature flag — flip only after reviewing the backfill CSV
+  outcome_window_days: 180  # value-bucket outcome info minimum maturity (was 30)
+
+value_trap:
+  trigger_threshold_pct: -25.0
+  escalation_step_pp: 10.0
+  overdue_alert_days: 14
+
+staleness:
+  fast_hours: 24
+  # Asset-level freshness gate (src/services/freshness.py) uses days, not hours.
+  # F4.4 specifies 24h but 1d flags CN funds stale every Monday (T+1 settlement)
+  # and on market holidays. 3 calendar days covers weekends without hiding real
+  # feed outages. Tighten this to 1 once holiday/weekend cadence is handled.
+  fast_days: 3
+  slow_days: 7
+  # Cash-like assets are exempt from the value-trap scan (never evaluated, never deferred).
+  # Code-level defaults in freshness.py already cover CASH_*, Wealth_*, Bank Wealth, etc.
+  # Add portfolio-specific entries here without a code change.
+  cash_like_id_prefixes: []
+  cash_like_taxonomy_classes: []
+
+# Program OSR WS-5b: rebalanceable_filter.py's non-rebalanceable-history
+# substring markers. Generic category words (property/insurance/房产/保险/...)
+# are code defaults and need no entry here; add your own product-specific
+# balance-sheet column names (e.g. a named insurance policy) so
+# adjust_balance_sheet_payload correctly excludes them from the
+# rebalanceable-only net-worth view. UNIONed onto the code defaults, never
+# replaces them.
+balance_sheet:
+  non_rebalanceable_history_markers:
+    - "安泰人生"
+
+contrarian:
+  drawdown_window_trading_days: 10
+  drawdown_threshold_pct: 5.0
+  manual_alert_rate_pct: 30.0
+  manual_alert_monthly_count: 3
+
+# F3 North Star panel (Batch B6) — contributions, time-in-market, glide path.
+north_star:
+  target_net_worth_cny: 20000000.0
+  tim_trailing_months: 24     # trailing window for the time-in-market ratio
+  tim_band_pp: 10.0           # months count as "in market" if weight >= target - this many pp
+  glide_horizons_years: [10, 15, 20]
+
+# Asset-level default bucket classification (D1). Per-trade rule_bucket on
+# trade_logs is authoritative once set; this map only supplies defaults for
+# backfill and for resolving a bucket at the asset level (F2 exclusions,
+# F4.5 dashboard suppression later).
+#
+# asset_pattern is matched as a case-insensitive substring of the canonical
+# asset_id (see src/services/rule_buckets.py::classify_trade_bucket).
+# actions restricts which trade actions the entry applies to; an action not
+# listed falls through to the next bucket (or to 'value' if nothing matches).
+bucket_map:
+  compliance:
+    - {asset_pattern: "RSU_AMZN", actions: [sell]}
+  ratio:
+    - {asset_pattern: "GOLD", actions: [buy, sell]}
+    - {asset_pattern: "ALTS_Paper_Gold", actions: [buy, sell]}
+    - {asset_pattern: "IBIT", actions: [buy, sell]}
+    - {asset_pattern: "FBTC", actions: [buy, sell]}
+  liquidity:
+    - {asset_pattern: "SGOV", actions: [buy, sell]}
+  # value = default for everything unmatched.

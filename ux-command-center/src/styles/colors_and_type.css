@@ -1,0 +1,346 @@
+/*
+  Huinsight Design System — colors and type
+  Source of truth: ux-command-center/tailwind.config.js + theme/themeClasses.ts + index.html
+
+  Load this file first. Use the semantic helpers (.uis-h1, .uis-card, .uis-num, etc.)
+  or reach for the CSS variables directly (var(--color-primary)).
+
+  Day-first design system, Night mode via [data-theme="night"] OR <html class="dark">.
+*/
+
+/* ---------- Fonts ---------- */
+/* Webfonts are self-hosted — see src/styles/fonts.ts. Nothing is fetched at runtime. */
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Brand & status — identical in Day and Night */
+  --color-primary: #3b82f6;
+  /* Brand mark.
+     The container sits on --color-primary, the design system's blue, rather
+     than introducing a second brand colour: an ink-violet tile beside blue
+     primary buttons reads as two competing identities on the same screen.
+     --brand-mark-hole must track whatever the container is, because the pupil
+     reads as a gap punched through the iris, not as a coloured dot. */
+  --brand-spark: #dd9a2e;
+  --brand-mark-hole: var(--color-primary);
+  --color-primary-hover: #2563eb;
+  --color-investment: #6366f1;
+  --color-success: #22c55e;
+  --color-warning: #eab308;
+  --color-danger: #ef4444;
+
+  /* Day surfaces (default) */
+  --color-bg: #F9FAFB;
+  --color-card: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-sidebar: #FFFFFF;
+  --color-border: #e2e8f0;           /* slate-200 */
+  --color-border-soft: #f1f5f9;      /* slate-100 */
+
+  /* Text (Day) */
+  --color-fg-1: #0f172a;             /* slate-900 — headings */
+  --color-fg-2: #334155;             /* slate-700 — body */
+  --color-fg-3: #64748b;             /* slate-500 — secondary */
+  --color-fg-4: #94a3b8;             /* slate-400 — muted / ticks */
+  --color-fg-5: #cbd5e1;             /* slate-300 — hairlines */
+
+  /* Soft fills (Day) */
+  --fill-primary-soft: rgb(59 130 246 / 0.10);
+  --fill-success-soft: #dcfce7;      /* emerald-100 */
+  --fill-warning-soft: #fef3c7;      /* amber-100 */
+  --fill-danger-soft:  #ffe4e6;      /* rose-100 */
+  --fill-neutral-soft: #f1f5f9;      /* slate-100 */
+
+  /* Zone colors (sentiment scale) */
+  --zone-green:       #22c55e;
+  --zone-light-green: #4ade80;
+  --zone-yellow:      #eab308;
+  --zone-orange:      #f97316;
+  --zone-red:         #ef4444;
+
+  /* Text on zone soft fills (Day) */
+  --zone-green-fg:  #065f46;   /* emerald-800 */
+  --zone-yellow-fg: #92400e;   /* amber-800 */
+  --zone-orange-fg: #9a3412;   /* orange-800 */
+  --zone-red-fg:    #9f1239;   /* rose-800 */
+
+  /* Typography
+     CJK fallbacks are load-bearing, not decoration: neither Inter nor Roboto Mono ships a
+     single CJK glyph, and --font-mono is applied to .uis-num / .uis-cell. Without these,
+     Chinese in a table cell falls through to a bare `monospace`/`sans-serif` — a different
+     face with different metrics, mid-row. Ordered macOS → macOS legacy → Windows → Linux
+     (Noto Sans SC). See ADR-028; keep in sync with tailwind.config.js. */
+  --font-cjk: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC';
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono: 'Roboto Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas,
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', monospace;
+
+  /* Type scale (px values observed in product) */
+  --fs-h1: 24px;       /* text-2xl — page titles, hero KPIs */
+  --fs-h2: 20px;       /* text-xl — large KPIs on Compass */
+  --fs-h3: 14px;       /* text-sm — section headings */
+  --fs-body: 14px;     /* text-sm */
+  --fs-body-sm: 12px;  /* text-xs — default row text */
+  --fs-cell: 11px;     /* text-[11px] — table cells */
+  --fs-eyebrow: 10px;  /* text-[10px] — uppercase labels */
+
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* Radii */
+  --radius-sm: 4px;    /* rounded */
+  --radius-md: 6px;    /* rounded-md */
+  --radius-lg: 8px;    /* rounded-lg — nav items, small controls */
+  --radius-xl: 12px;   /* rounded-xl — cards (the default) */
+  --radius-full: 9999px;
+
+  /* Spacing scale (Tailwind defaults, documented) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;     /* page gutter */
+  --space-10: 40px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-primary-glow: 0 10px 15px -3px rgb(59 130 246 / 0.20), 0 4px 6px -4px rgb(59 130 246 / 0.20);
+
+  /* Chart palette (Dashboard) */
+  --chart-1: #135bec;
+  --chart-2: #60a5fa;
+  --chart-3: #1e293b;
+  --chart-4: #64748b;
+  --chart-5: #94a3b8;
+
+  /* Misc */
+  --scrollbar-thumb: #334155;
+  --scrollbar-thumb-hover: #475569;
+}
+
+/* ---------- Night mode ---------- */
+html.dark,
+[data-theme="night"] {
+  --color-bg: #0B0E14;
+  --color-card: #161B22;
+  --color-surface: #1c2128;
+  --color-sidebar: #0f1116;
+  --color-border: #21262d;
+  --color-border-soft: #1c2128;
+
+  --color-fg-1: #f1f5f9;   /* slate-100 */
+  --color-fg-2: #cbd5e1;   /* slate-300 */
+  --color-fg-3: #94a3b8;   /* slate-400 */
+  --color-fg-4: #64748b;   /* slate-500 */
+  --color-fg-5: #334155;   /* slate-700 */
+
+  --fill-success-soft: rgb(6 78 59 / 0.30);
+  --fill-warning-soft: rgb(120 53 15 / 0.30);
+  --fill-danger-soft:  rgb(136 19 55 / 0.30);
+  --fill-neutral-soft: rgb(30 41 59 / 0.50);
+
+  --zone-green-fg:  #34d399;
+  --zone-yellow-fg: #fbbf24;
+  --zone-orange-fg: #fb923c;
+  --zone-red-fg:    #fb7185;
+}
+
+/* ---------- Base ---------- */
+.uis-root,
+body.uis {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  color: var(--color-fg-1);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- Semantic typography ---------- */
+.uis-h1 {
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-fg-1);
+  line-height: 1.2;
+}
+.uis-h2 {
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  font-family: var(--font-mono);
+  color: var(--color-fg-1);
+}
+.uis-h3 {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--color-fg-1);
+}
+.uis-body {
+  font-size: var(--fs-body-sm);
+  color: var(--color-fg-2);
+  line-height: 1.55;
+}
+.uis-cell {
+  font-size: var(--fs-cell);
+  font-family: var(--font-mono);
+  color: var(--color-fg-2);
+}
+.uis-eyebrow {
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-fg-3);
+}
+.uis-breadcrumb {
+  font-size: var(--fs-body-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-fg-3);
+}
+.uis-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.uis-num--kpi {
+  font-size: var(--fs-h1);
+}
+.uis-num--cell {
+  font-size: var(--fs-cell);
+  font-weight: 500;
+}
+.uis-code,
+.uis-mono {
+  font-family: var(--font-mono);
+}
+
+/* Sentiment + P&L text */
+.uis-pos { color: var(--color-success); }
+.uis-neg { color: var(--color-danger); }
+.uis-neutral { color: var(--color-warning); }
+html.dark .uis-pos { color: #34d399; }
+html.dark .uis-neg { color: #fb7185; }
+
+/* ---------- Cards ---------- */
+.uis-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
+}
+.uis-card--lg { padding: var(--space-6); }
+.uis-card--tight { padding: var(--space-4); }
+
+/* ---------- Buttons ---------- */
+.uis-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-border-soft);
+  color: var(--color-fg-3);
+  transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
+  cursor: pointer;
+}
+.uis-btn:hover { background: #e2e8f0; }
+html.dark .uis-btn { background: var(--color-card); }
+html.dark .uis-btn:hover { background: var(--color-surface); }
+
+.uis-btn--primary {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: transparent;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  padding: 6px 16px;
+  box-shadow: var(--shadow-primary-glow);
+}
+.uis-btn--primary:hover { background: var(--color-primary-hover); }
+
+.uis-btn--danger {
+  background: var(--color-danger);
+  color: #fff;
+  border-color: transparent;
+  font-weight: 700;
+}
+.uis-btn--danger:hover { background: #dc2626; }
+
+/* ---------- Badges ---------- */
+.uis-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.02em;
+}
+.uis-badge--success { background: var(--fill-success-soft); color: var(--zone-green-fg); }
+.uis-badge--warning { background: var(--fill-warning-soft); color: var(--zone-yellow-fg); }
+.uis-badge--danger  { background: var(--fill-danger-soft);  color: var(--zone-red-fg); }
+.uis-badge--neutral { background: var(--fill-neutral-soft); color: var(--color-fg-3); }
+.uis-badge--primary { background: var(--fill-primary-soft); color: var(--color-primary); }
+
+/* ---------- Scrollbars ---------- */
+.uis-root ::-webkit-scrollbar,
+body.uis ::-webkit-scrollbar { width: 6px; height: 6px; }
+.uis-root ::-webkit-scrollbar-track,
+body.uis ::-webkit-scrollbar-track { background: transparent; }
+.uis-root ::-webkit-scrollbar-thumb,
+body.uis ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 10px; }
+.uis-root ::-webkit-scrollbar-thumb:hover,
+body.uis ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+
+/* ---------- Material Symbols helpers ---------- */
+/* Material Symbols base rule.
+ *
+ * This used to arrive inside Google's hosted stylesheet, which shipped BOTH the
+ * @font-face and this class definition. Self-hosting the font replaced only the
+ * first half, so the class lost its font-family and every icon rendered as its
+ * own ligature text — the literal words `dashboard`, `sync`, `bolt`. Caught by
+ * screenshotting the running app; nothing in the build, the tests or the served
+ * bytes looked wrong, because the font was present and correct and simply
+ * unreferenced.
+ *
+ * The family name carries fontsource's `Variable` suffix. The unsuffixed name
+ * follows it so a machine with Material Symbols installed locally still works,
+ * and so this keeps working if the font source is ever swapped back.
+ *
+ * `font-feature-settings: 'liga'` is what turns the text into glyphs at all.
+ */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined Variable', 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.filled-icon {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}

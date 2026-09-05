@@ -1,0 +1,839 @@
+{
+  "riskMatrix": {
+    "breadcrumbDashboard": "Dashboard",
+    "breadcrumbRiskMatrix": "Risk Matrix",
+    "title": "Risk Matrix & Sensitivity Analysis",
+    "lastCalculation": "Last AI-driven calculation: {{time}}",
+    "method": "Method: {{method}}",
+    "comingSoon": "Coming soon",
+    "share": "Share",
+    "exportAiContext": "Export AI Context",
+    "notAvailable": "N/A",
+    "risk": "RISK",
+    "portfolioVolatility": "Portfolio Volatility",
+    "annualizedStdDev": "Annualized standard deviation",
+    "diversificationScore": "Diversification Score",
+    "diversification": {
+      "good": "GOOD",
+      "avg": "AVG",
+      "low": "LOW"
+    },
+    "basedOnCorrelation": "Based on asset correlation",
+    "sharpeRatio": "Sharpe Ratio",
+    "riskAdjustedReturn": "Risk-adjusted return metric",
+    "valueAtRisk": "Value at Risk (95%)",
+    "dailyLossEstimate": "Daily potential loss estimate",
+    "correlationMatrix": "Asset Correlation Matrix",
+    "topClass": "Top Class",
+    "subClass": "Sub Class",
+    "lowConfidence": "LC",
+    "coverageWarning": "Most class pairs lack sufficient history for correlation. Results shown where available.",
+    "windowSummary": "Window: {{start}} to {{end}}, Min overlap: {{minOverlap}}, Jump exclusions: {{jumpExclusions}}, Winsorization: {{winsorLow}}%-{{winsorHigh}}%",
+    "correlationLegend": "0.00 = near-zero correlation computed from data; – = insufficient overlapping return periods.",
+    "loadingMatrix": "Loading correlation matrix...",
+    "portfolioBeta": "Portfolio Beta",
+    "vsSp500": "vs S&P 500",
+    "betaLower": "Lower correlation to broader market",
+    "betaHigher": "Higher correlation to broader market",
+    "betaModerate": "Moderate correlation to broader market",
+    "errors": {
+      "load": "Unable to load risk matrix data. Please refresh."
+    },
+    "matrixUnavailable": "The correlation matrix could not be loaded.",
+    "matrixInsufficientHistory": "Not enough shared history to correlate these classes yet.",
+    "matrixInsufficientHistoryHint": "A pair needs at least {{minOverlap}} overlapping snapshots. Correlations appear as more sync history accumulates."
+  },
+  "balanceSheet": {
+    "title": "Balance Sheet",
+    "latest": "Latest: {{date}}",
+    "totalAssets": "Total Assets",
+    "totalLiabilities": "Total Liabilities",
+    "netWorth": "Net Worth",
+    "snapshots": "Snapshots",
+    "netWorthTrend": "Net Worth Trend",
+    "noTrendData": "No trend data available",
+    "detailTable": "Detail Table",
+    "assets": "Assets",
+    "noAssetRecords": "No asset records",
+    "liabilities": "Liabilities",
+    "noLiabilityRecords": "No liability records",
+    "axisThousands": "¥{{value}}k",
+    "errors": {
+      "load": "Unable to load balance sheet data. Please refresh."
+    }
+  },
+  "forecast": {
+    "breadcrumb": "Reports / Forecast",
+    "title": "Forecast & Planning",
+    "subtitle": "How you get there, and what moves the date.",
+    "tabYourPath": "Your Path",
+    "tabGoals": "Goals",
+    "confirmDeleteGoal": "Are you sure you want to delete this goal?",
+    "errors": {
+      "load": "Unable to load analytics data. Please refresh.",
+      "createGoal": "Failed to create goal",
+      "updateGoal": "Failed to update goal"
+    },
+    "goals": {
+      "monitoredGoals": "Monitored Goals",
+      "newGoal": "New Goal",
+      "noActiveGoals": "No Active Goals",
+      "noActiveGoalsDesc": "Create your first financial goal to track projections, contribution pacing, and probability of success over time.",
+      "setUpAGoal": "Set up a goal",
+      "editGoal": "Edit Goal",
+      "deleteGoal": "Delete Goal",
+      "target": "Target",
+      "current": "Current",
+      "monthly": "Monthly",
+      "unavailable": "— unavailable",
+      "successProb": "Success Prob.",
+      "calculating": "Calculating...",
+      "progress": "Progress",
+      "monthsLeft": "Months Left",
+      "viewYourPath": "View Your Path",
+      "createNewGoal": "Create New Goal",
+      "goalName": "Goal Name",
+      "goalNamePlaceholder": "e.g. Dream House Downpayment",
+      "targetCny": "Target (¥)",
+      "targetDate": "Target Date",
+      "currentCny": "Current (¥)",
+      "monthlyInputCny": "Monthly Input (¥)",
+      "category": "Category",
+      "notesOptional": "Notes (Optional)",
+      "notesPlaceholder": "Add any details here...",
+      "cancel": "Cancel",
+      "saveGoal": "Save Goal",
+      "status": "Status",
+      "liveValueDisclaimer": "Current portfolio value and monthly contribution are computed live from your data and can't be edited here — see the Your Path tab.",
+      "saveChanges": "Save Changes",
+      "categories": {
+        "retirement": "Retirement",
+        "majorPurchase": "Major Purchase",
+        "education": "Education",
+        "emergencyFund": "Emergency Fund",
+        "other": "Other"
+      },
+      "statuses": {
+        "active": "Active",
+        "completed": "Completed",
+        "archived": "Archived"
+      }
+    },
+    "onTrackTiles": {
+      "title": "Are You On Track?",
+      "hint": "habits behind the number above — not a second forecast",
+      "timeInMarket": "Time in Market",
+      "loading": "Loading…",
+      "notEnoughData": "Not enough data yet.",
+      "monthsFullyInvested": "{{inMonths}}/{{totalMonths}} months fully invested",
+      "participation": "Contribution Participation",
+      "monthsWithContribution": "months with any investment contribution"
+    },
+    "advancedSimulation": {
+      "title": "Advanced: Custom Simulation",
+      "years": "Years",
+      "expectedReturn": "Expected Return %/yr",
+      "volatility": "Volatility %/yr",
+      "monthlyContribution": "Monthly Contribution ¥",
+      "defaultsHint": "defaults to live run-rate",
+      "perMonth": "/mo",
+      "running": "Running…",
+      "runSimulation": "Run Simulation",
+      "mean": "Mean",
+      "median": "Median",
+      "worst": "Worst (P1)",
+      "best": "Best (P99)"
+    },
+    "fanChart": {
+      "title": "Portfolio Projection to Goal",
+      "p10p90": "P10–P90",
+      "p25p75": "P25–P75",
+      "median": "Median",
+      "computing": "Computing your path…",
+      "noData": "No fan chart data available.",
+      "years": "years",
+      "goal": "Goal {{value}}",
+      "today": "today",
+      "medianYears": "median {{years}}y"
+    },
+    "yourPath": {
+      "errors": {
+        "levers": "Unable to load forecast levers. Please refresh.",
+        "contributions": "Unable to load contributions. Please refresh.",
+        "projection": "Unable to load the portfolio projection. Please refresh."
+      },
+      "stampBasis": "median-return basis",
+      "stampTz": "tz Asia/Shanghai",
+      "stampVersion": "your-path.v2"
+    },
+    "whereToFocus": {
+      "title": "Where To Focus",
+      "hint": "ranked by years saved",
+      "computing": "Computing levers…",
+      "unavailable": "Lever data unavailable.",
+      "currentPace": "Current Pace",
+      "currentPaceDetail": "{{money}}/mo · {{returnPct}} return · {{volPct}} vol",
+      "saveMore": "Save More",
+      "saveMoreDetail": "+{{pct}}% monthly → {{amount}}",
+      "ariaSave": "Increase monthly savings percent",
+      "cashFlowLink": "Cash Flow →",
+      "earnMore": "Earn More",
+      "earnMoreDetail": "+{{pp}}pp return → {{pct}}",
+      "higherVariance": "higher variance",
+      "ariaEarn": "Increase expected return",
+      "performanceRiskLink": "Performance & Risk →",
+      "deRisk": "De-risk",
+      "deRiskDetail": "−{{pp}}pp volatility → {{pct}}",
+      "freeSameReturn": "free — same return",
+      "ariaDerisk": "Decrease volatility",
+      "combined": "Combined",
+      "yearsSuffix": "y"
+    },
+    "contributionsRSU": {
+      "destLabels": {
+        "cnFund": "CN Fund",
+        "usSchwab": "US Schwab",
+        "gold": "Gold",
+        "bankWealth": "Bank Wealth",
+        "usIbkr": "US IBKR"
+      },
+      "netNewInvested": "Net New Invested",
+      "fixed12mBasis": "fixed 12m basis · {{pct}} of income invested",
+      "contributionRunRate": "Contribution Run-Rate",
+      "perMonth": "/mo",
+      "trailing12m": "trailing 12m",
+      "rsuVested": "RSU Vested",
+      "trailing12mInvested": "trailing 12m, invested",
+      "rsuRetained": "RSU Retained",
+      "trendTitle": "Net New Invested — Trend",
+      "range12m": "12M",
+      "range36m": "36M",
+      "rangeAll": "All",
+      "noHistory": "No contribution history available."
+    },
+    "answerSection": {
+      "methodology": "Methodology",
+      "methodologyTitle": "How this is computed",
+      "methodBasis": "<b>Basis</b> — the headline years figure is computed at the median, volatility-drag-adjusted return: <code>exp(ln(1+r) − σ²/2) − 1</code>, not the raw expected return.",
+      "methodLikelyRange": "<b>Likely range</b> — the 25th–75th percentile of <i>crossing time</i>: the year at which there is a 25%/75% probability the portfolio's value AT THAT TIME is at or above the goal. This is <b>not</b> first-passage time (the first time the portfolio ever touches the goal, which is always earlier).",
+      "methodApproximation": "It is an analytic approximation pinned to a 20,000-path Monte Carlo, not an exact confidence interval — typically 5–9% off at the tails, which is why the range is rounded to one decimal.",
+      "methodLiquidNw": "<b>Liquid NW</b> excludes property, insurance, and pension.",
+      "computing": "Computing your path…",
+      "unavailable": "Forecast data unavailable.",
+      "yearsTo": "Years to {{goalName}}",
+      "goalFallback": "goal",
+      "years": "years",
+      "goalNotReachable": "Goal not reachable on current inputs",
+      "likelyRange": "likely range {{low}}–{{high}} — 25th to 75th percentile crossing time",
+      "noRetirementGoal": "No retirement goal set — using a fallback target. Create one in Goals →",
+      "chipGoal": "Goal",
+      "chipLiquidNw": "Liquid NW",
+      "chipContribution": "Contribution",
+      "perMonth": "/mo",
+      "chipReturnVol": "Return / Vol"
+    }
+  },
+  "verification": {
+    "errors": {
+      "load": "Unable to load verification data. Please refresh.",
+      "run": "Verification action failed. Please try again."
+    },
+    "loading": "Loading verification data...",
+    "portfolio": "Portfolio",
+    "benchmark": "Benchmark",
+    "title": "Review Center",
+    "subtitle": "Verification Dashboard for adoption, verdicts, and drift.",
+    "running": "Running...",
+    "runVerification": "Run Verification",
+    "adoptionRate": "Adoption Rate",
+    "verdictHitRate": "Verdict Hit Rate",
+    "maxDrift": "Max Drift",
+    "totalInsights": "Total Insights",
+    "adoptionRateHistory": "Adoption Rate History",
+    "noAdoptionHistory": "No adoption history available",
+    "portfolioVsBenchmark": "Portfolio vs Benchmark",
+    "insufficientData": "Insufficient data. Run verification<br/><em>after</em> syncing performance data",
+    "verdictBreakdown": "Verdict Breakdown by Month",
+    "columns": {
+      "month": "Month",
+      "goodCalls": "Good Calls",
+      "regrets": "Regrets",
+      "missed": "Missed",
+      "totalScored": "Total Scored"
+    },
+    "notAvailable": "N/A",
+    "series": "Series",
+    "return": "Return"
+  },
+  "compass": {
+    "errors": {
+      "load": "Unable to load Allocation report. The server returned an error."
+    },
+    "loading": "Loading Allocation Report...",
+    "noData": "No data available.",
+    "breadcrumb": "Reports / Rebalancing",
+    "pageTitle": "Hierarchical Allocation Report",
+    "portfolioLine": "Portfolio: Unified Global Value Alpha (UGVA) • Last Analyzed: {{time}}",
+    "comingSoon": "Coming soon",
+    "export": "Export",
+    "sendToAiAdvisor": "Send to AI Advisor",
+    "totalNetWorth": "Total Net Worth",
+    "currentDriftIndex": "Current Drift Index",
+    "thresholdLine": "Threshold 5.00% · {{status}}",
+    "breached": "breached",
+    "ok": "ok",
+    "classesInDrift": "Classes In Drift",
+    "allWithinRange": "All within range",
+    "lastSync": "Last Sync",
+    "assetClassAllocation": "Asset Class Allocation & Drift Analysis",
+    "driftOverTolerance": "Drift > Tolerance",
+    "withinRange": "Within Range",
+    "pendingTradesTitle": "Show how pending (unverified) trades would affect allocation. These numbers are provisional and not yet verified.",
+    "includePendingTrades": "Include pending trades",
+    "includePendingTradesCn": "Show trades pending verification",
+    "provisional": "Provisional",
+    "provisionalBannerOne": "Includes <strong>{{count}}</strong> pending trade — figures below are estimated and subject to change once trades are verified.",
+    "provisionalBannerOther": "Includes <strong>{{count}}</strong> pending trades — figures below are estimated and subject to change once trades are verified.",
+    "aiAdvisor": "AI Advisor",
+    "classesOutsideToleranceOne": "{{count}} class outside tolerance — AI rotation analysis coming soon.",
+    "classesOutsideToleranceOther": "{{count}} classes outside tolerance — AI rotation analysis coming soon.",
+    "openInAiAdvisor": "Open in AI Advisor",
+    "columns": {
+      "assetClass": "Asset Class / Sub-Class",
+      "currentValue": "Current Value",
+      "currentPct": "Current %",
+      "provisionalPct": "Provisional %",
+      "pendingSuffix": "(pending)",
+      "deltaCny": "Delta (CNY)",
+      "targetPct": "Target %",
+      "drift": "Drift",
+      "status": "Status"
+    },
+    "est": "est.",
+    "allocationLens": "Allocation Lens",
+    "withinTolerance": "Within ±2.5% tolerance",
+    "overTarget": "Over target",
+    "underTarget": "Under target",
+    "currentVsTargetMix": "Current vs Target Mix",
+    "pctOfNetWorth": "% of net worth",
+    "current": "Current",
+    "now": "now",
+    "target": "Target",
+    "goal": "goal",
+    "driftVsTarget": "Drift vs Target",
+    "tolerance25": "tolerance ±2.5%",
+    "driftAxisLabel": "drift",
+    "allocationSnapshot": "Allocation Snapshot",
+    "copied": "Copied!",
+    "copyMarkdown": "Copy Markdown",
+    "pasteHint": "Paste into any LLM chat box for rebalancing advice",
+    "generated": "Generated {{time}}",
+    "footerTolerance": "Tolerance ±2.5% · 5-class taxonomy",
+    "footerVersion": "UGVA · {{version}}"
+  },
+  "unforcedErrors": {
+    "title": "Unforced Errors",
+    "subtitle": "Non-compliant actions & execution mistakes",
+    "loading": "Loading…",
+    "noneLoggedYet": "No unforced errors logged yet.",
+    "columns": {
+      "date": "Date",
+      "description": "Description",
+      "estCost": "Est. Cost",
+      "rule": "Rule"
+    },
+    "save": "Save",
+    "cancel": "Cancel",
+    "unknown": "unknown",
+    "editHistory": "Edit history:\n{{entries}}",
+    "editedTag": "(edited)",
+    "editEstimatedCost": "Edit estimated cost",
+    "logNewEntry": "Log a new entry",
+    "form": {
+      "date": "Date *",
+      "description": "Description *",
+      "descriptionPlaceholder": "What went wrong?",
+      "estCost": "Est. cost (¥)",
+      "optional": "Optional"
+    },
+    "saving": "Saving…",
+    "add": "Add",
+    "amountPlaceholder": "¥ amount",
+    "errors": {
+      "load": "Unable to load unforced errors. Please refresh.",
+      "updateCost": "Failed to update cost. Please try again.",
+      "saveEntry": "Failed to save entry. Check the form and try again."
+    }
+  },
+  "monthlyAttribution": {
+    "breadcrumb": "Reports › Monthly Attribution",
+    "title": "Monthly Attribution",
+    "priceOrFlows": "Was this month's change in value driven by <strong1>price action</strong1> or <strong2>capital flows</strong2>? Δmv = price + trade + transfer + income + residual.",
+    "from": "From",
+    "to": "To",
+    "optional": "(optional)",
+    "clearRange": "Clear range",
+    "recomputing": "Recomputing…",
+    "recompute": "Recompute",
+    "rangeInvalid": "\"To\" must be on or after \"From\" (and both on or after {{minMonth}}) — showing the last valid selection.",
+    "rangeMode": {
+      "title": "Range Mode",
+      "body": "Showing aggregated decomposition for <strong>{{rangeCaption}}</strong>. Per-month savings rate / invest ratio / net flows only apply to a single month — see the waterfall below for range totals."
+    },
+    "summaryTitle": "{{month}} Summary",
+    "loadingSummary": "Loading summary…",
+    "noSummaryData": "No summary data for {{month}} yet — attribution may not be computed for this month.",
+    "kpi": {
+      "totalDelta": "Total Δ",
+      "priceEffect": "Price Effect",
+      "netFlows": "Net Flows",
+      "netFlowsSub": "in {{in}} · out {{out}}",
+      "noClassifiedFlows": "no classified flows yet",
+      "incomeEffect": "Income Effect",
+      "savingsRate12m": "Savings Rate (12m)",
+      "savingsRateSub": "(income − expenses) ÷ income",
+      "savingsRateTooltip": "Savings rate — everything you did not spend: (income − expenses) ÷ income, over the trailing 12 data months of the Income & Expense ledger. Income basis excludes redemptions and the reimbursements/work-expenses round trip; expenses exclude money invested.",
+      "investmentRate12m": "Investment Rate (12m)",
+      "investmentRateSub": "net new money invested ÷ income",
+      "investmentRateTooltip": "Investment rate — the share of income that actually reached an investment account: (net new external money + retained RSU) ÷ the same income basis. The gap to the savings rate is cash saved but not yet deployed.",
+      "undeployedCash12m": "Undeployed Cash (12m)",
+      "undeployedCashSub": "saved, not yet invested",
+      "undeployedCashTooltip": "Saved but not yet deployed — the savings rate and the investment rate expressed as money: income − expenses − (net new external + retained RSU), same trailing 12 data months.",
+      "investRatio": "Invest Ratio",
+      "dqFlags": "DQ Flags"
+    },
+    "contributionsNote": "Portfolio contributions & savings come from your monthly Investment ledger (Income & Expense classification); the flow tags below are the per-transaction view.",
+    "waterfall": {
+      "title": "Waterfall",
+      "description": "Start/End = total market value at the month boundaries. <strong>Residual</strong> = the part of the change NOT explained by price, trades, transfers, or income — usually a data-coverage gap (a snapshot that predates late-month trades, a source transition, or an asset first seen this month). Hover a DQ badge in the table for the per-asset reason.",
+      "loading": "Loading waterfall…",
+      "noData": "No attribution data to chart yet."
+    },
+    "decomposition": {
+      "title": "Decomposition",
+      "loading": "Loading attribution…",
+      "unableToLoad": "Unable to load attribution rows.",
+      "noRows": "No attribution rows for {{caption}} at {{level}} level."
+    },
+    "reset": "Reset",
+    "flaggedAssets": "{{count}} asset(s) flagged this month: {{names}}",
+    "computing": "Computing…",
+    "computeAttribution": "Compute attribution",
+    "footer": {
+      "totalsDelta": "Totals Δ: <strong>{{value}}</strong>",
+      "price": "Price: {{value}}",
+      "trade": "Trade: {{value}}",
+      "transfer": "Transfer: {{value}}",
+      "income": "Income: {{value}}",
+      "residual": "Residual: {{value}}"
+    },
+    "columns": {
+      "mvEnd": "MV End ({{currency}})",
+      "delta": "Δ",
+      "dq": "DQ"
+    },
+    "flagged": "Flagged",
+    "effects": {
+      "price": "Price",
+      "trade": "Trade",
+      "transfer": "Transfer",
+      "income": "Income",
+      "residual": "Residual",
+      "start": "Start",
+      "end": "End"
+    },
+    "levels": {
+      "topClass": "Top Class",
+      "subClass": "Sub Class",
+      "asset": "Asset",
+      "total": "Total"
+    },
+    "errors": {
+      "loadMonth": "Failed to load attribution for this month. Please try again.",
+      "loadSummary": "Failed to load summary.",
+      "recompute": "Failed to recompute attribution. Please try again."
+    }
+  },
+  "northStar": {
+    "errors": {
+      "load": "Unable to load North Star panel. Please refresh."
+    },
+    "loading": "Loading North Star panel…",
+    "glidePathTo": "Glide path to {{target}}",
+    "insufficientData": "Insufficient data for a glide-path projection.",
+    "glideDemandParagraph": "What return each horizon would demand, against the <val>{{twr}}</val> your portfolio actually delivered. A horizon whose required return sits far above that is not a plan — it is a hope.",
+    "scenarioLabel": "Monthly contribution scenario (¥/mo)",
+    "recalculating": "recalculating…",
+    "allColumnsIdentical": "Run-rate and scenario are both ¥0 — all three columns show identical required returns. Enter a monthly contribution scenario above to see it diverge.",
+    "table": {
+      "horizon": "Horizon",
+      "atZero": "@ ¥0/mo",
+      "atRunRate": "@ run-rate ({{amount}}/mo)",
+      "runRateUnavailable": "Run-rate unavailable",
+      "noContributionData": "no contribution data",
+      "atScenario": "@ scenario ({{amount}}/mo)",
+      "horizonYears": "{{years}}y",
+      "equalsZero": "= ¥0/mo"
+    },
+    "footnote": {
+      "twrBasis": "TWR basis: {{basis}}",
+      "runRateBasis": "Run-rate basis: {{basis}}"
+    },
+    "runRateUnavailablePointer": "⚠ Run-rate unavailable{{status}}",
+    "unclassifiedFlows_one": "{{count}} flow still unclassified (doesn't affect the run-rate above; matters for attribution)",
+    "unclassifiedFlows_other": "{{count}} flows still unclassified (doesn't affect the run-rate above; matters for attribution)",
+    "timTitle": "Time in Market",
+    "timInsufficientData": "Insufficient data{{reason}}",
+    "timSummary": "{{inMonths}}/{{totalMonths}} months ≥ floor of {{floor}} (target {{target}} − {{bandPP}}pp)",
+    "quarterLabel": "Q{{q}}",
+    "tooltipData": "{{month}} · {{weight}}% invested · floor {{floor}} · target {{target}} · {{state}}",
+    "tooltipNoData": "{{month}}: no data",
+    "legend": {
+      "atAboveTarget": "at/above target",
+      "inBand": "in band",
+      "belowFloor": "below floor",
+      "noData": "no data"
+    },
+    "historyFooter": "history: {{months}} months — stabilizes as snapshots accrue",
+    "timState": {
+      "aboveTarget": "above target",
+      "inBand": "in band",
+      "belowFloor": "below floor",
+      "noData": "no data"
+    }
+  },
+  "marketSentiment": {
+    "stale": "stale",
+    "refreshFailedDetail": "⚠ Refresh failed: {{detail}}",
+    "lastGoodData": "Last good data: ",
+    "asOf": "As of: ",
+    "fetchFailed": "Failed to fetch sentiment.",
+    "staleIndicators_one": "{{count}} indicator showing last-good cached value",
+    "staleIndicators_other": "{{count}} indicators showing last-good cached value",
+    "unavailableIndicators": "{{count}} unavailable (no prior data)",
+    "refreshFailedToast": "Refresh failed: {{detail}}. Showing cached data.",
+    "unknownError": "Unknown error",
+    "never": "Never",
+    "title": "Market Sentiment",
+    "lastUpdated": "Last updated: {{date}}",
+    "staleTotal": "{{count}} stale",
+    "refreshing": "Refreshing...",
+    "refresh": "Refresh",
+    "noData": "No sentiment data available. Click Refresh to fetch.",
+    "equityMacro": "Equity Macro",
+    "goldMarket": "Gold Market",
+    "cryptoMarket": "Crypto Market"
+  },
+  "strategyAlignment": {
+    "errors": {
+      "load": "Failed to load strategy alignment data.",
+      "run": "Failed to run strategy review."
+    },
+    "loading": "Loading Strategy Alignment...",
+    "title": "Strategy Alignment",
+    "subtitle": "Compare actual allocations against strategic targets and Huinsight portfolio scope.",
+    "running": "Running...",
+    "runReview": "Run Review",
+    "runReviewNow": "Run Review Now",
+    "notAvailable": "N/A",
+    "emptyState": {
+      "title": "No review data available",
+      "hint": "Click \"Run Review\" to analyze strategy alignment."
+    },
+    "status": {
+      "aligned": "Aligned",
+      "drifting": "Drifting",
+      "misaligned": "Misaligned"
+    },
+    "strategicTargets": "Strategic Targets",
+    "uisPortfolioScope": "Huinsight Portfolio Scope",
+    "reviewDate": "Review date: {{date}}",
+    "excludedFromScope": "Excluded from this scope",
+    "behavioralProfile": {
+      "title": "Behavioral Profile",
+      "subtitle": "Latest behavioral metrics computed from investor activity."
+    },
+    "allocationDrift": {
+      "title": "Allocation Drift",
+      "subtitle": "Actual vs strategic target allocations."
+    },
+    "actual": "Actual",
+    "target": "Target",
+    "class": "Class",
+    "drift": "Drift",
+    "tradingFrequency": {
+      "title": "Trading Frequency",
+      "philosophyThreshold": "Philosophy threshold: <{{threshold}} trades/month",
+      "days30": "30-Day Trades",
+      "days60": "60-Day Trades",
+      "days90": "90-Day Trades"
+    },
+    "contrarian": {
+      "title": "Contrarian Score",
+      "subtitle": "Sell timing signal quality against market context.",
+      "limitedData": "Limited data",
+      "limitedDataDetail": "Available market candles do not provide enough signal to score recent sells reliably.",
+      "reviewedSells": "Reviewed sells: {{sellCount}} | panic sells flagged: {{panicCount}}",
+      "outOf100": "out of 100",
+      "panicSells_one": "{{count}} panic sell / {{total}} total",
+      "panicSells_other": "{{count}} panic sells / {{total}} total"
+    }
+  },
+  "decisionHub": {
+    "errors": {
+      "load": "Unable to load Decision Hub data. Please refresh."
+    },
+    "loading": "Loading Decision Hub...",
+    "title": "Decision Hub",
+    "subtitle": "Central log of AI insights, trade execution, and risk alerts.",
+    "tabs": {
+      "timeline": "Timeline",
+      "scorecard": "Scorecard",
+      "intelligence": "Intelligence"
+    },
+    "stats": {
+      "totalDecisions": "Total Decisions",
+      "adoptionRate": "Adoption Rate",
+      "pendingActions": "Pending Actions",
+      "driftAlerts": "Drift Alerts"
+    },
+    "timelineFilters": {
+      "all": "Alls",
+      "insight": "Insights",
+      "trade": "Trades",
+      "drift": "Drifts"
+    },
+    "linked": "Linked:",
+    "reason": "Reason:",
+    "noDecisions": "No decisions found for this filter.",
+    "scorecard": {
+      "empty": "No scored trades yet",
+      "emptyHint": "Run <code>--sync-verifications</code> to populate.",
+      "cols": {
+        "date": "Date",
+        "asset": "Asset",
+        "action": "Action",
+        "source": "Source",
+        "link": "Link",
+        "verification": "Verification",
+        "verificationNote": "Verification Note",
+        "outcomePct": "Outcome %",
+        "verdict": "Verdict",
+        "grade": "Grade"
+      },
+      "matched": "matched",
+      "unmatched": "unmatched",
+      "noReview": "No review recorded for this trade"
+    },
+    "intelligence": {
+      "decisionPatterns": "Decision Patterns",
+      "noData": "No intelligence data available yet.",
+      "growthTimeline": "Growth Timeline",
+      "noGrowthLessons": "No growth lessons available.",
+      "rawInsightSections": "Raw Insight Sections",
+      "noRawSections": "No raw Insight.md excerpts available.",
+      "entries": "{{count}} entries",
+      "sourceMix": "Source Mix",
+      "sourceMixDetail": "{{adopted}} adopted / {{pending}} pending / {{rejected}} rejected / {{linkedTrades}} linked trades",
+      "leaderboard": "Leaderboard",
+      "noLeaderboard": "No sources with scored trades yet. Suggestion source data is needed.",
+      "scoredFraction": "{{scored}}/{{total}} scored"
+    },
+    "verdict": {
+      "goodCall": "Good Call",
+      "regret": "Regret",
+      "missed": "Missed",
+      "dodged": "Dodged"
+    },
+    "verification": {
+      "manuallyVerified": "Manually verified",
+      "verifiedBySync": "Verified by sync",
+      "noMatchingTransaction": "No matching transaction found",
+      "pending": "Pending verification"
+    },
+    "funnel": {
+      "totalInsights": "Total Insights",
+      "allRecommendations": "all recommendations",
+      "adopted": "Adopted",
+      "adoptionRatePct": "{{pct}}% adoption rate",
+      "scored": "Scored",
+      "withVerification": "with verification",
+      "goodCalls": "Good Calls",
+      "hitRatePct": "{{pct}}% hit rate",
+      "linkedTrades": "{{count}} linked trades",
+      "goodCallCount": "{{count}} Good Call{{s}}",
+      "regretCount": "{{count}} Regret{{s}}",
+      "missedCount": "{{count}} Missed",
+      "bulletDodgedCount": "{{count}} Bullet Dodged"
+    },
+    "alerts": {
+      "title": "Active Alerts",
+      "all": "All",
+      "none": "No active alerts."
+    }
+  },
+  "valueTrapReviews": {
+    "breadcrumb": "AI Advisors / Value-Trap Reviews",
+    "title": "Value-Trap Reviews",
+    "subtitle": "Loss-side mandatory review trigger (F2) — every value-bucket asset whose current-lot unrealized loss crosses the configured threshold, excluding compliance and ratio-managed assets.",
+    "runScanNow": "Run Scan Now",
+    "scanning": "Scanning…",
+    "loading": "Loading value-trap reviews…",
+    "loadingContext": "Loading context…",
+    "openCaseFile": "Open case file →",
+    "noOpenReviews": "No open reviews — no evaluated asset is below the trigger threshold.",
+    "noRulingsYet": "No rulings yet — reviews appear here once a Hold, Trim, or Liquidate decision is saved.",
+    "noScanYet": "No scan has been run yet. Click <b>Run Scan Now</b> to see deferred assets.",
+    "overdue": "OVERDUE",
+    "statusOpen": "Open",
+    "statusRuled": "Ruled",
+    "reArmsAt": "re-arms at {{value}}",
+    "staleBanner": "Price data stale as of <b>{{priceDate}}</b> — refresh before ruling. Save is blocked while price is stale.",
+    "errors": {
+      "load": "Unable to load value-trap reviews. Please refresh.",
+      "loadContext": "Failed to load context",
+      "scanFailed": "Value-trap scan failed. Please try again.",
+      "submitRuling": "Failed to submit ruling.",
+      "draftFailed": "Draft failed."
+    },
+    "tabs": {
+      "open": "Open",
+      "ruled": "Ruled",
+      "all": "All",
+      "deferred": "Deferred"
+    },
+    "scanTiles": {
+      "evaluated": "Evaluated",
+      "thisScan": "this scan",
+      "triggered": "Triggered",
+      "newOpenReview": "new open review",
+      "deferred": "Deferred",
+      "staleValuation": "stale valuation",
+      "exempt": "Exempt",
+      "cashLike": "cash-like",
+      "excluded": "Excluded",
+      "ruleBucket": "rule bucket"
+    },
+    "reconciliation": {
+      "evaluated": "{{count}} evaluated",
+      "deferred": "{{count}} deferred",
+      "exempt": "{{count}} exempt",
+      "excluded": "{{count}} excluded",
+      "zeroCost": "{{count}} zero-cost",
+      "holdingsScanned": "{{count}} holdings scanned",
+      "lastRun": "last run {{ts}}"
+    },
+    "reviewCols": {
+      "asset": "Asset",
+      "lossPct": "Loss %",
+      "escalation": "Escalation",
+      "daysOpen": "Days Open",
+      "status": "Status"
+    },
+    "factsStrip": {
+      "currentValue": "Current Value",
+      "snapshot": "snapshot {{date}}",
+      "quantity": "Quantity",
+      "costUnit": "Cost / Unit",
+      "priceAsOf": "price as of {{date}}",
+      "freshness": "Freshness",
+      "fresh": "✓ fresh",
+      "staleMark": "✗ stale",
+      "unrealized": "Unrealized",
+      "threshold": "threshold {{value}}",
+      "daysOpen": "Days Open"
+    },
+    "memoCard": {
+      "valueMemo": "Value memo:",
+      "notBackfilled": "Memo linkage not backfilled",
+      "verifyManually": "Verify manually before ruling — this asset predates automatic memo linkage.",
+      "verifiedManuallyAck": "I've verified manually — no linked memo applies, or its content is reflected in the answers below.",
+      "confirmNoMemoTitle": "Use only after manual check confirms no memo exists",
+      "confirming": "Confirming…",
+      "ownerConfirmsNoMemo": "Owner confirms no memo exists"
+    },
+    "lotDetail": {
+      "title": "Lot detail",
+      "openLots_one": "{{count}} open lot · avg cost {{avgCost}}",
+      "openLots_other": "{{count}} open lots · avg cost {{avgCost}}",
+      "reconciles": " (reconciles to displayed cost)",
+      "cols": {
+        "date": "Date",
+        "qty": "Qty",
+        "price": "Price ({{currency}})"
+      },
+      "showingLots": "Showing {{shown}} of {{total}} open lots",
+      "firstShown": " (first 200 shown)"
+    },
+    "decisionHistory": {
+      "title": "Decision history",
+      "showing": "showing {{count}} of {{total}}",
+      "cols": {
+        "date": "Date",
+        "action": "Action",
+        "qty": "Qty",
+        "price": "Price",
+        "bucket": "Bucket",
+        "status": "Status"
+      }
+    },
+    "deferredPanel": {
+      "none": "No deferred assets in the last scan.",
+      "cols": {
+        "asset": "Asset",
+        "lastPriceDate": "Last Price Date",
+        "freshness": "Freshness",
+        "dataFixId": "Data-Fix ID",
+        "dueDate": "Due Date",
+        "status": "Status"
+      },
+      "staleDays": "{{days}}d stale",
+      "overdue": "overdue",
+      "withinDueDate": "within due date",
+      "showingAssets": "Showing {{count}} of {{count}} deferred assets. A data_fix auto-closes when the feed recovers."
+    },
+    "structuredReview": {
+      "title": "Structured review",
+      "draftBlockedStale": "Blocked while price is stale",
+      "draftClearFields": "Clear all three fields to re-draft",
+      "draftHint": "Fill all three fields with an AI-generated draft based on Huinsight context",
+      "drafting": "Drafting…",
+      "draftWithAI": "Draft with AI",
+      "noLlmKey": "No LLM key configured — draft unavailable. Answer manually below."
+    },
+    "questions": {
+      "q1Title": "Thesis restated — what was the original case, and does it still hold?",
+      "q1Placeholder": "Restate the original thesis in your own words…",
+      "q2Title": "Falsification check — what would prove the thesis wrong, and has that happened?",
+      "q2Hint": "price, loss %, and threshold are inadmissible as falsification evidence",
+      "q2Placeholder": "Reference the linked memo's falsification conditions…",
+      "q3Title": "Would you buy today, at this price, knowing what you know now?",
+      "q3Hint": "cost basis is inadmissible in this answer",
+      "q3Placeholder": "Answer independent of what you originally paid…"
+    },
+    "rulingCard": {
+      "ruling": "Ruling",
+      "selectRuling": "Select ruling…",
+      "nextReviewDate": "Next review date",
+      "cancel": "Cancel",
+      "saving": "Saving…",
+      "saveRuling": "Save Ruling",
+      "adversarialAck": "I acknowledge this triggers an adversarial review before liquidation is final."
+    },
+    "rulingOptions": {
+      "hold": "Hold (thesis still intact)",
+      "trim": "Trim",
+      "liquidate": "Liquidate"
+    },
+    "saveExplain": {
+      "stalePrice": "Blocked — stale price. Refresh price data to proceed.",
+      "selectRuling": "Select a ruling to enable Save.",
+      "holdNeedsDate": "Next review date is required for Hold.",
+      "liquidateNeedsAck": "Adversarial-review acknowledgement is required for Liquidate.",
+      "linkageAckRequired": "Memo linkage acknowledgement is required before ruling."
+    },
+    "stampVersion": "value-trap.v1",
+    "stampContract": "frozen contract: value-trap-reviews.md",
+    "stampMechanism": "anti-disposition-effect mechanism"
+  }
+}

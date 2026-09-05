@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Pre-push hook — DB cleanup on each major update (release/deploy).
+#
+# When pushing to the `deploy` branch (a release), prune DuckDB backups (GCS + local)
+# down to one-per-day for the newest N DATES, so storage stays bounded well under
+# 1 GiB AND the restore window spans real time rather than one busy afternoon.
+#
+# SAFE BY DESIGN: prune only. It never compacts the DB or restarts any service — those
+# are deliberate manual ops (scripts/maint_db.py --compact-cloud / --compact-local),
+# since compaction stops the local server / restarts Cloud Run. A prune failure (e.g.
+# missing gcloud auth on this machine) WARNS but never blocks the push.
+#
+# Install (per machine): cp scripts/git-hooks/pre-push .git/hooks/ && chmod +x .git/hooks/pre-push
+set -uo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+PY="$REPO_ROOT/.venv/bin/python"
+[ -x "$PY" ] || PY=python3
+
+deploy_push=0
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  [ "$remote_ref" = "refs/heads/deploy" ] && deploy_push=1
+done
+
+[ "$deploy_push" -eq 1 ] || exit 0
+
+echo "[pre-push] deploy detected → pruning DuckDB backups (one per day, newest 8 dates, GCS + local)…"
+if "$PY" "$REPO_ROOT/scripts/maint_db.py" --prune-backups --execute; then
+  echo "[pre-push] backup prune complete."
+else
+  # Loud on purpose. This warning existed before and was ignored through three
+  # consecutive releases while GCS backups grew to 46 objects / 4.9 GiB — a
+  # single grey line scrolling past in a push log is indistinguishable from
+  # success. A prune failure still must NOT block a release, so this shouts
+  # instead of exiting non-zero.
+  {
+    echo ""
+    echo "  ############################################################"
+    echo "  ##  BACKUP PRUNE FAILED — storage is NOT being reclaimed  ##"
+    echo "  ############################################################"
+    echo "  The push continues; the prune did not run."
+    echo "  Fix and run:  .venv/bin/python scripts/maint_db.py --prune-backups --execute"
+    echo "  Most likely: gcloud is not authenticated on this machine."
+    echo ""
+  } >&2
+fi
+exit 0

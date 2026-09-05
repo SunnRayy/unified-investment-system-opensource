@@ -1,0 +1,3 @@
+# Empty seed profile — see seeds/README.md. Valid, loads, produces nothing.
+memo_registry: []
+memo_asset_map: []

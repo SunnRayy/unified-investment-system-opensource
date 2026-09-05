@@ -1,0 +1,10 @@
+# Example unforced-errors log (Program OSR WS-3a) — the execution-failure
+# journal feature demonstrated with an invented incident, not the owner's
+# real trading history.
+
+unforced_errors:
+  - error_date: "2026-05-15"
+    description: "Example: single limit order missed a deadline-adjacent liquidation quota (no market-order backstop)."
+    est_cost_cny: null
+    root_cause: "Deadline-adjacent liquidation used a single upside limit order instead of a two-tier protocol."
+    linked_rule: "two-tier order protocol (market backstop + limit interceptor)"

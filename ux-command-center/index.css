@@ -1,0 +1,19 @@
+@import url('./src/styles/colors_and_type.css');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: Inter, sans-serif;
+    background-color: #f9fafb;
+    color: #111827;
+  }
+}
+
+body[data-demo="true"] .money-value,
+body[data-demo="true"] .recharts-tooltip-wrapper,
+body[data-demo="true"] .recharts-yAxis .recharts-cartesian-axis-tick-value {
+  filter: blur(6px);
+  user-select: none;
+}

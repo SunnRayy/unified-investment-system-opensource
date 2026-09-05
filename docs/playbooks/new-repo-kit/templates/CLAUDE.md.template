@@ -1,0 +1,51 @@
+# CLAUDE.md — {{PROJECT_NAME}}
+
+Guidance for Claude Code in this repo. Keep this under ~150 lines: orientation, not documentation.
+
+## Project Overview
+
+{{ONE_PARAGRAPH: what this system does, the core domain, and the single invariant that must always
+be true.}}
+
+> **Single source of truth for current state:** [`docs/project-status.md`](docs/project-status.md)
+> **Rules (non-negotiable):** [`AGENTS.md`](AGENTS.md)
+> **Naming convention:** AGENTS.md → "Naming convention"
+
+## Common Commands
+
+```bash
+{{DEV_HARNESS}} start            # start all services
+{{DEV_HARNESS}} verify           # fast gate (scripts/verify.sh + fast tests)
+{{DEV_HARNESS}} verify --full    # full gate (all tests + integrity)
+bash scripts/verify.sh           # static gate only (exit 0/1/2/3)
+{{TEST_CMD}}                     # run tests
+```
+
+## Key Modules
+
+| Module | Purpose |
+|--------|---------|
+| {{MODULE_1}} | {{PURPOSE_1}} |
+| {{MODULE_2}} | {{PURPOSE_2}} |
+
+## Critical-Path Files (changes trigger full review)
+
+```
+{{CRITICAL_PATH_FILE_1}}
+{{CRITICAL_PATH_FILE_2}}
+```
+
+## Safety Rules (CRITICAL — never skip)
+
+1. {{DATA_SAFETY_RULE — e.g. "Never run --init on a populated DB."}}
+2. Before any destructive action (schema drop, data delete, file overwrite in {{DATA_DIR}}), STOP and
+   ask for explicit confirmation. The `guard-destructive.sh` hook backs this, but don't rely on it.
+
+## Workflow
+
+- Non-trivial task → use the `lead-planner` skill: plan → self-review → lock → delegate → verify.
+- Before critical-path changes → `pre-development-gate` skill.
+- End of session → `session-close` skill.
+
+**Do NOT** update this file to reflect progress — that belongs in `docs/project-status.md`. Only facts
+and enforceable rules belong here.

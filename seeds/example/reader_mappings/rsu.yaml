@@ -1,0 +1,4 @@
+id_field_map:
+- field: asset_name
+  label: Amazon RSU
+  code: AMZN

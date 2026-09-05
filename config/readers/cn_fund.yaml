@@ -1,0 +1,63 @@
+# Config-driven reader config for CN_Fund_Excel (B2 sitting #3 — full parsing).
+#
+# DISPLAY NAME NOTE: display_name ("CN Funds") is used in the operations
+# freshness panel (_SOURCE_DISPLAY_NAMES).  account_name ("CN Fund") is the
+# default account string returned by _default_account() — the only case where
+# these two values diverge across all 6 readers.
+#
+# ENGINE DISPATCH (B2 sitting #3):
+#   reader_engine is set to "legacy" in settings.yaml until the dual-run
+#   equality gate passes human review.  Flip to "config" after the gate.
+#
+# HOOK CHAIN:
+#   pre_read_hook: cn_fund_raw_process
+#     Runs the raw-tab processor before reading the organized sheets.
+#     This is a side-effect hook that writes back to the workbook (wb.save()).
+#     MUST be disabled (set to None) in tests — the dual-run test does this.
+#
+#   holdings_from_sheet_hook: cn_fund_holdings_from_sheet
+#     Receives the raw 基金持仓汇总 sheet DF and applies the QDII window
+#     (max_date − 2d), dedup, canonical_id normalization, and final column
+#     ordering.  Byte-identical to the legacy CNFundReader + transform_holdings
+#     chain.
+#
+#   transactions_from_sheet_hook: cn_fund_transactions_from_sheet
+#     Receives the raw 基金交易记录 sheet DF, applies column rename,
+#     normalize_fund_code, memo-override transaction-type resolution, and
+#     final column ordering.  Byte-identical to legacy reader + transformer.
+#
+# strip_whitespace_columns / strip_column_names are left at their False
+# defaults so _process_sheet is a pass-through and the hooks receive the
+# raw sheets unmodified (required for byte-identity).
+#
+# converters NOTE: the legacy transactions read uses converters={'基金代码': str},
+# but the engine reads without converters (基金代码 comes in as int64).
+# normalize_fund_code handles int/float/str identically, so canonical_ids
+# are byte-identical.  The dual-run gate confirms this empirically.
+
+identity:
+  source_key: cn_fund
+  source_system: CN_Fund_Excel
+  display_label: "基金 (CN Funds)"
+  display_name: "CN Funds"
+  account_name: "CN Fund"
+  asset_prefixes:
+    - CN_FUND_
+  allowed_extensions:
+    - .xlsx
+    - .xls
+  category: reader
+  validator: validate_cn_fund_format
+
+parsing:
+  format: excel
+  snapshot_date:
+    strategy: file_mtime   # unused — holdings carry per-row snapshot_date from the sheet
+  sheets:
+    - name: 基金持仓汇总
+      target: holdings
+    - name: 基金交易记录
+      target: transactions
+  pre_read_hook: cn_fund_raw_process
+  holdings_from_sheet_hook: cn_fund_holdings_from_sheet
+  transactions_from_sheet_hook: cn_fund_transactions_from_sheet

@@ -1,0 +1,125 @@
+# Config-driven reader config for Insurance_Excel (B1).
+#
+# Legacy implementation: src/sources/insurance_reader.py
+#
+# Key notes:
+# - Holdings: strip whitespace from all object columns BEFORE filtering
+#   (保单状态 "有效    " must become "有效" so the filter works)
+# - Holdings filter: 保单状态 != 退保  applied BEFORE rename
+# - Premiums: strip_column_names strips "日期       " → "日期"
+# - Premiums: melt wide→long, filter amount.fillna(0) > 0
+# - ID for premiums: id_template "INS_{policy_name}" with NO field map —
+#   legacy uses f"INS_{str(x).strip()}" so raw policy_name is used directly.
+#   The canonical_id for holdings also uses raw product_name with strip.
+
+identity:
+  source_key: insurance
+  source_system: Insurance_Excel
+  display_label: "保险 (Insurance)"
+  display_name: "Insurance"
+  asset_prefixes:
+    - INS_
+  allowed_extensions:
+    - .xlsx
+    - .xls
+  category: reader
+  validator: validate_insurance_format
+
+parsing:
+  format: excel
+  snapshot_date:
+    strategy: file_mtime
+
+  sheets:
+    # -----------------------------------------------------------------------
+    # Holdings sheet — 保险汇总
+    # -----------------------------------------------------------------------
+    - name: 保险汇总
+      target: holdings
+
+      # Strip whitespace from all string cells FIRST (before filter).
+      # Legacy does this so "有效    " → "有效" and "退保" matches correctly.
+      strip_whitespace_columns: true
+
+      # Filter: keep rows where 保单状态 != 退保 (before rename)
+      filter_rows:
+        - column: 保单状态
+          op: ne
+          value: 退保
+
+      rename:
+        产品名称: product_name
+        保险公司: insurer
+        产品类型: product_type
+        开始日期: start_date
+        保障期限: coverage_term
+        缴费期限: payment_term
+        年保费: annual_premium
+        保额: coverage
+        保障范围: coverage_scope
+        保单状态: status
+        现金价值: cash_value
+
+      # id_template: INS_{product_name}
+      # No id_field_maps — legacy: f"INS_{str(product_name).strip()}"
+      # After strip_whitespace_columns, product_name cells are already stripped.
+      id_template: "INS_{product_name}"
+      id_field_maps: {}
+
+      # market_value := cash_value when absent (legacy transformer behavior).
+      # Declarative — the engine has no insurance-specific code.
+      copy_column:
+        market_value: cash_value
+
+      output_columns:
+        - asset_id
+        - product_name
+        - insurer
+        - product_type
+        - annual_premium
+        - coverage
+        - coverage_scope
+        - status
+        - snapshot_date
+        - source_system
+        # market_value last — legacy appends it after the base list; the
+        # output_columns intersection drops it automatically if absent.
+        - market_value
+
+    # -----------------------------------------------------------------------
+    # Transactions sheet — 保费记录
+    # -----------------------------------------------------------------------
+    - name: 保费记录
+      target: transactions
+
+      # Strip whitespace from column names — "日期       " → "日期"
+      strip_column_names: true
+
+      # Melt: wide (one col per policy) → long (one row per payment)
+      # id_var: 日期 (after strip_column_names)
+      # var_name: policy_name, value_name: amount
+      # rename id_var → payment_date
+      # filter: amount.fillna(0) > 0
+      melt:
+        id_var: 日期
+        var_name: policy_name
+        value_name: amount
+        rename_id_var_to: payment_date
+        min_value: 0.0
+
+      # id_template: INS_{policy_name}
+      # No id_field_maps — raw policy_name used directly (legacy: str(x).strip(),
+      # but strip_column_names already stripped column names so policy_name
+      # values are already clean policy column names).
+      id_template: "INS_{policy_name}"
+      id_field_maps: {}
+
+      constants:
+        transaction_type: premium_payment
+
+      output_columns:
+        - asset_id
+        - payment_date
+        - transaction_type
+        - amount
+        - source_system

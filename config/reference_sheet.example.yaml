@@ -1,0 +1,146 @@
+# Huinsight Reference-Data sheet configuration — EXAMPLE TEMPLATE
+# ---------------------------------------------------------------------------
+# Copy to config/reference_sheet.yaml and edit for your own holdings (that
+# file is gitignored — see docs/quickstart.md). This example matches the
+# synthetic demo persona (tools/demo_data/persona.yaml).
+#
+# Each item defines one row in the generated UIS_Reference_Data.xlsx.
+# The sheet is written to finance_dir (beside the owner's FS Excel) on every
+# --sync-v3, so the owner can link FS cells → this file rather than entering
+# values by hand.
+#
+# Adding an asset = adding a YAML item. Example: to add a second RSU grant
+# from a different employer, copy the Amazon block below and change
+# asset_id + fs_label.
+# IBKR can be appended to the source_systems list on the 美股基金 item later.
+#
+# Fields per item:
+#   fs_label       — display label (matches the FS column label; stable; links won't break)
+#   source         — one of:
+#       type: source_sum   → SUM(market_value) WHERE source_system IN (source_systems)
+#       type: asset        → single asset by asset_id
+#       type: price_row    → derived price/rate row (no holdings query)
+#   emit           — which columns to populate (cny, usd, qty, price, fx)
+#                    cny  = market_value in CNY
+#                    usd  = USD value (for sum rows: SUM(qty*market_price_unit) for USD assets;
+#                            for asset rows: quantity*market_price_unit in USD)
+#                    qty  = raw quantity (e.g., gold grams)
+#                    price= market_price_unit (native currency)
+#                    fx   = USD/CNY exchange rate
+# ---------------------------------------------------------------------------
+#
+# 中文：Huinsight「参考数据表」配置——示例模板
+# ---------------------------------------------------------------------------
+# 复制为 config/reference_sheet.yaml，再按你自己的持仓编辑（该文件已被
+# gitignore——见 docs/quickstart.zh-CN.md）。这份示例对应的是合成的演示
+# persona（tools/demo_data/persona.yaml）。
+#
+# 每一个 item 对应生成出来的 UIS_Reference_Data.xlsx 里的一行。这张表在
+# 每次 --sync-v3 时都会写入 finance_dir（挨着所有者的 FS Excel），这样
+# 所有者就可以把 FS 表格里的单元格链接到这个文件，而不用手动录入数值。
+#
+# 新增一个资产 = 新增一个 YAML item。例如要添加另一个雇主发放的第二笔
+# RSU，复制下面的 Amazon 区块，改 asset_id + fs_label 即可。
+# IBKR 之后可以追加到「美股基金」这一项的 source_systems 列表里。
+#
+# ⚠ 重要：下面 fs_label 里出现的中文字符串（如「投资资产_股票基金_A股
+# 基金」）不是展示文案，而是用来匹配所有者真实 Excel 表头的数据匹配键
+# （data-matching key）——绝不能修改或「翻译」它们，哪怕看起来像是可以
+# 顺手改得更好看。改动一个字符，对应列的接入就会静默失败（见
+# docs/i18n-glossary.md「Never translate: data-matching keys」一节）。
+#
+# 各字段说明：
+#   fs_label       ——展示标签（要匹配 FS 表格的列标签；保持稳定，链接才不会失效）
+#   source         ——三选一：
+#       type: source_sum   → 按 source_system 求和：SUM(market_value) WHERE source_system IN (source_systems)
+#       type: asset        → 按 asset_id 取单个资产
+#       type: price_row    → 派生出的价格／汇率行（不查询持仓）
+#   emit           ——要填充哪些列（cny、usd、qty、price、fx）
+#                    cny   = 以 CNY 计的 market_value
+#                    usd   = 以 USD 计的价值（求和行：对 USD 币种资产求 SUM(qty*market_price_unit)；
+#                            单资产行：quantity*market_price_unit，以 USD 计）
+#                    qty   = 原始数量（例如黄金克数）
+#                    price = market_price_unit（原始币种）
+#                    fx    = USD/CNY 汇率
+# ---------------------------------------------------------------------------
+
+items:
+  # ── A股基金: entire CN Fund platform (天天基金 / 蛋卷) ──────────────────
+  - fs_label: "投资资产_股票基金_A股基金"
+    source:
+      type: source_sum
+      source_systems:
+        - "CN_Fund_Excel"
+    emit:
+      cny: true
+
+  # ── 美股基金: Schwab account (stocks + ETFs + cash + bonds/crypto) ─────────
+  - fs_label: "投资资产_股票基金_美股基金_Schwab"
+    source:
+      type: source_sum
+      source_systems:
+        - "Schwab_CSV"
+    emit:
+      cny: true
+      usd: true   # SUM(qty * market_price_unit) for USD-currency holdings
+
+  # ── 美股基金: IBKR account — blank until you enable the IBKR reader ────────
+  # Broker_IBKR rows stay zero/blank until source_registry.ibkr.enabled: true.
+  - fs_label: "投资资产_股票基金_美股基金_IBKR"
+    source:
+      type: source_sum
+      source_systems:
+        - "Broker_IBKR"
+    emit:
+      cny: true
+      usd: true   # SUM(qty * market_price_unit) for USD-currency holdings
+
+  # ── RSU vests ────────────────────────────────────────────────────────────
+  - fs_label: "投资资产_公司RSU_Amazon Stock"
+    source:
+      type: asset
+      asset_id: "RSU_AMZN"
+    emit:
+      cny: true
+      usd: true   # quantity * market_price_unit (USD)
+
+  # ── 纸黄金 (paper gold) — CNY market value ───────────────────────────────
+  - fs_label: "投资资产_黄金_纸黄金(元)"
+    source:
+      type: asset
+      asset_id: "ALTS_Paper_Gold"
+    emit:
+      cny: true
+
+  # ── 纸黄金 quantity in grams ──────────────────────────────────────────────
+  - fs_label: "投资资产_黄金_纸黄金(克)"
+    source:
+      type: asset
+      asset_id: "ALTS_Paper_Gold"
+    emit:
+      qty: true
+
+  # ── 长期保险_安泰人生: sum of all insurance holdings ────────────────────────
+  - fs_label: "投资资产_长期保险_安泰人生"
+    source:
+      type: source_sum
+      source_systems:
+        - "Insurance_Excel"
+    emit:
+      cny: true
+
+  # ── Price / rate rows ─────────────────────────────────────────────────────
+  - fs_label: "USD Rate"
+    source:
+      type: price_row
+      price_type: "fx_usdcny"
+    emit:
+      fx: true
+
+  - fs_label: "Amazon Stock Price"
+    source:
+      type: price_row
+      price_type: "market_price"
+      ticker: "AMZN"
+    emit:
+      price: true

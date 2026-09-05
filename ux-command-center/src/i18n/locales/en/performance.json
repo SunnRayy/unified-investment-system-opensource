@@ -1,0 +1,132 @@
+{
+  "title": "Performance Analysis",
+  "liveFeed": "Live Feed: {{date}}",
+  "loadingEllipsis": "Loading...",
+  "errorLoadingData": "Error loading data.",
+  "insufficientData": "Insufficient data",
+  "exportAiContext": "Export AI Context",
+  "errors": {
+    "overview": "Unable to load overview data. Please refresh.",
+    "returns": "Unable to load returns data. Please refresh.",
+    "attribution": "Unable to load attribution data. Please refresh.",
+    "risk": "Unable to load risk metrics data. Please refresh."
+  },
+  "periods": {
+    "allTime": "All Time",
+    "last36m": "Last 36M",
+    "last12m": "Last 12M"
+  },
+  "tabs": {
+    "overview": "Overview",
+    "returns": "Returns",
+    "attribution": "Attribution",
+    "risk": "Risk Metrics"
+  },
+  "waterfall": {
+    "total": "Total",
+    "lifetimePl": "Lifetime P&L"
+  },
+  "overview": {
+    "lifetimePlContribution": "Lifetime P&L Contribution",
+    "cumulative": "(Cumulative)",
+    "totalLifetimePl": "Total Lifetime P&L",
+    "portfolioValue": "Portfolio Value",
+    "unrealizedPl": "Unrealized P&L",
+    "realizedPlFifo": "Realized P&L (FIFO)",
+    "lifetimePl": "Lifetime P&L",
+    "assetsTracked": "{{count}} assets tracked · Last sync: {{date}}",
+    "performanceByClass": "Performance by Asset Class",
+    "realizedPl": "Realized P&L",
+    "topBottomPerformers": "Top / Bottom Investment Performers",
+    "rankTop": "Top {{n}}",
+    "rankBottom": "Bot {{n}}",
+    "columns": {
+      "class": "Class",
+      "value": "Value",
+      "costBasis": "Cost Basis",
+      "returnPct": "Return %",
+      "weightPct": "Weight %",
+      "rank": "Rank",
+      "asset": "Asset",
+      "cost": "Cost",
+      "marketValue": "Market Value"
+    }
+  },
+  "returns": {
+    "netWorthOverTime": "Portfolio Net Worth Over Time",
+    "axisWan": "¥{{value}}w",
+    "noHistoryData": "No history data available.",
+    "twrCumulative": "TWR Cumulative",
+    "twrCumulativeDesc": "Time-weighted return since inception. Eliminates cash flow effects — reflects portfolio management skill.",
+    "twrYtd": "TWR YTD",
+    "twrYtdDesc": "Time-weighted return since January 1 this year.",
+    "twr1y": "TWR 1Y",
+    "twr1yDesc": "Time-weighted return over the trailing 12 months.",
+    "mwrXirr": "MWR (XIRR)",
+    "mwrXirrDesc": "Money-weighted return (XIRR). Reflects actual investor experience including timing of deposits and withdrawals. Diverges from TWR when large cash flows occur."
+  },
+  "attribution": {
+    "noData": "No attribution data available",
+    "portfolioReturn": "Portfolio Return",
+    "benchmarkReturn": "Benchmark Return",
+    "excessReturn": "Excess Return",
+    "byClass": "Attribution by Class",
+    "allTime": "(All Time)",
+    "allocation": "Allocation",
+    "selection": "Selection",
+    "interaction": "Interaction",
+    "columns": {
+      "portW": "Port.W",
+      "benchW": "Bench.W",
+      "portR": "Port.R",
+      "benchR": "Bench.R",
+      "total": "Total"
+    },
+    "howToRead": {
+      "title": "How to Read Attribution",
+      "intro": "This view shows <strong>relative contribution vs benchmark</strong>, not absolute profit ranking.",
+      "formula": "Contribution = (Port.W - Bench.W) × (Class Return - Benchmark Return)",
+      "note1": "If a class loses money but you are underweight it, it can still show a positive contribution.",
+      "note2": "If a class makes money but you are underweight a strong benchmark class, it can show a negative contribution.",
+      "note3": "For absolute gain/loss by class, use the Performance by Class table in the Overview tab."
+    }
+  },
+  "risk": {
+    "noData": "No risk metrics data available",
+    "metrics": {
+      "sharpe": {
+        "title": "Sharpe Ratio",
+        "description": "Risk-adjusted return per unit of total volatility. > 1.0 is good."
+      },
+      "sortino": {
+        "title": "Sortino Ratio",
+        "description": "Risk-adjusted return per unit of downside volatility. > 2.0 is excellent."
+      },
+      "drawdown": {
+        "title": "Max Drawdown",
+        "description": "Largest peak-to-trough decline. Lower is better."
+      },
+      "calmar": {
+        "title": "Calmar Ratio",
+        "description": "Annualized return ÷ Max Drawdown. > 1.0 is good."
+      },
+      "volatility": {
+        "title": "Annual Volatility",
+        "description": "Annualized standard deviation of returns. Lower = less risk."
+      },
+      "return": {
+        "title": "Total Return",
+        "description": "Overall portfolio return since first data point."
+      }
+    },
+    "status": {
+      "excellent": "Excellent",
+      "monitor": "Monitor",
+      "warning": "Warning"
+    },
+    "limitedDataDrawdown": "May reflect limited data.",
+    "limitedDataVolatility": "High volatility may reflect limited data.",
+    "basedOnDataPoints": "Based on {{count}} data points",
+    "insufficientDataNote": " (Insufficient data — need 2+ months)"
+  }
+}

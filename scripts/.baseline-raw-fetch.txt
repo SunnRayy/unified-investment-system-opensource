@@ -1,0 +1,147 @@
+ux-command-center/src/services/api.ts:1002:        const res = await fetch(`${API_BASE}/wealthos/assets?include_non_rebalanceable=${includeNonRebalanceable}`);
+ux-command-center/src/services/api.ts:1008:        const res = await fetch(`${API_BASE}/wealthos/summary?include_non_rebalanceable=${includeNonRebalanceable}`);
+ux-command-center/src/services/api.ts:1031:        const res = await fetch(`${API_BASE}/performance/history?${params.toString()}`);
+ux-command-center/src/services/api.ts:1037:        const res = await fetch(`${API_BASE}/risk/metrics?include_non_rebalanceable=${includeNonRebalanceable}`);
+ux-command-center/src/services/api.ts:1043:        const res = await fetch(`${API_BASE}/risk/correlation?level=${level}&include_non_rebalanceable=${includeNonRebalanceable}`);
+ux-command-center/src/services/api.ts:1060:        const res = await fetch(`${API_BASE}/performance/summary?${params.toString()}`);
+ux-command-center/src/services/api.ts:1076:        const res = await fetch(`${API_BASE}/performance/gains?${params.toString()}`);
+ux-command-center/src/services/api.ts:1092:        const res = await fetch(`${API_BASE}/performance/by-class?${params.toString()}`);
+ux-command-center/src/services/api.ts:1108:        const res = await fetch(`${API_BASE}/performance/returns?${params.toString()}`);
+ux-command-center/src/services/api.ts:1118:        const res = await fetch(`${API_BASE}/performance/attribution?${params.toString()}`);
+ux-command-center/src/services/api.ts:1129:        const res = await fetch(`${API_BASE}/performance/risk-metrics?${params.toString()}`);
+ux-command-center/src/services/api.ts:1136:        const res = await fetch(`${API_BASE}/valuation/snapshot/latest`);
+ux-command-center/src/services/api.ts:1142:        const res = await fetch(`${API_BASE}/valuation/snapshot/history?ticker=${encodeURIComponent(ticker)}&days=${days}`);
+ux-command-center/src/services/api.ts:1148:        const res = await fetch(`${API_BASE}/valuation/refresh`, { method: 'POST' });
+ux-command-center/src/services/api.ts:1157:        const res = await fetch(`${API_BASE}/valuation/reference`);
+ux-command-center/src/services/api.ts:1167:        const res = await fetch(`${API_BASE}/valuation/reference/${encodeURIComponent(ticker)}/${encodeURIComponent(metric)}`, {
+ux-command-center/src/services/api.ts:1180:        const res = await fetch(`${API_BASE}/valuation/macro`);
+ux-command-center/src/services/api.ts:1192:        const res = await fetch(`${API_BASE}/valuation/watchlist`);
+ux-command-center/src/services/api.ts:1203:        const res = await fetch(`${API_BASE}/valuation/watchlist`, {
+ux-command-center/src/services/api.ts:1216:        const res = await fetch(`${API_BASE}/valuation/watchlist/${encodeURIComponent(ticker)}`, { method: 'DELETE' });
+ux-command-center/src/services/api.ts:1224:        const res = await fetch(`${API_BASE}/taxonomy/classes`);
+ux-command-center/src/services/api.ts:1231:        const res = await fetch(`${API_BASE}/taxonomy/classes`, {
+ux-command-center/src/services/api.ts:1241:        const res = await fetch(`${API_BASE}/taxonomy/classes/${id}`, {
+ux-command-center/src/services/api.ts:1250:        const res = await fetch(`${API_BASE}/taxonomy/classes/${id}`, { method: 'DELETE' });
+ux-command-center/src/services/api.ts:1255:        const res = await fetch(`${API_BASE}/taxonomy/rules`);
+ux-command-center/src/services/api.ts:1262:        const res = await fetch(`${API_BASE}/taxonomy/rules`, {
+ux-command-center/src/services/api.ts:1274:        const res = await fetch(`${API_BASE}/taxonomy/rules`, {
+ux-command-center/src/services/api.ts:1284:        const res = await fetch(`${API_BASE}/taxonomy/rules/${id}`, { method: 'DELETE' });
+ux-command-center/src/services/api.ts:1289:        const res = await fetch(`${API_BASE}/taxonomy/auto-tag`, { method: 'POST' });
+ux-command-center/src/services/api.ts:1295:        const res = await fetch(`${API_BASE}/taxonomy/tiers`);
+ux-command-center/src/services/api.ts:1302:        const res = await fetch(`${API_BASE}/taxonomy/audit`);
+ux-command-center/src/services/api.ts:1308:        const res = await fetch(`${API_BASE}/taxonomy/assets/${encodeURIComponent(assetId)}/tier`, {
+ux-command-center/src/services/api.ts:1320:        const res = await fetch(`${API_BASE}/risk-profiles`);
+ux-command-center/src/services/api.ts:1327:        const res = await fetch(`${API_BASE}/risk-profiles`, {
+ux-command-center/src/services/api.ts:1337:        const res = await fetch(`${API_BASE}/risk-profiles/${profileId}/allocations`);
+ux-command-center/src/services/api.ts:1344:        const res = await fetch(`${API_BASE}/risk-profiles/${profileId}/allocations`, {
+ux-command-center/src/services/api.ts:1353:        const res = await fetch(`${API_BASE}/risk-profiles/${id}/activate`, { method: 'POST' });
+ux-command-center/src/services/api.ts:1361:        const res = await fetch(`${API_BASE}/management/transactions?${query}`);
+ux-command-center/src/services/api.ts:1367:        const res = await fetch(`${API_BASE}/management/transactions/filters`);
+ux-command-center/src/services/api.ts:1373:        const res = await fetch(`${API_BASE}/management/import/preview`);
+ux-command-center/src/services/api.ts:1492:        const res = await fetch(`${API_BASE}/operations/portfolio-audit`);
+ux-command-center/src/services/api.ts:1498:        const res = await fetch(`${API_BASE}/operations/asset-class-audit?class=${encodeURIComponent(className)}`);
+ux-command-center/src/services/api.ts:1504:        const res = await fetch(`${API_BASE}/operations/asset-case-file?asset_id=${encodeURIComponent(assetId)}`);
+ux-command-center/src/services/api.ts:1510:        const res = await fetch(`${API_BASE}/operations/sync-history?limit=${limit}&filter=${filter}`);
+ux-command-center/src/services/api.ts:1516:        const res = await fetch(`${API_BASE}/operations/sync-history/${encodeURIComponent(runId)}`);
+ux-command-center/src/services/api.ts:1524:        const res = await fetch(`${API_BASE}/balance-sheet/summary`);
+ux-command-center/src/services/api.ts:1528:        const res = await fetch(`${API_BASE}/balance-sheet/history?limit=${limit}`);
+ux-command-center/src/services/api.ts:1532:        const res = await fetch(`${API_BASE}/balance-sheet/dates`);
+ux-command-center/src/services/api.ts:1539:        const res = await fetch(`${API_BASE}/income-expense/summary`);
+ux-command-center/src/services/api.ts:1543:        const res = await fetch(`${API_BASE}/income-expense/history?limit=${limit}`);
+ux-command-center/src/services/api.ts:1547:        const res = await fetch(`${API_BASE}/income-expense/dates`);
+ux-command-center/src/services/api.ts:1554:        const res = await fetch(`${API_BASE}/analytics/projection/defaults`);
+ux-command-center/src/services/api.ts:1560:        const res = await fetch(`${API_BASE}/analytics/projection?${urlParams.toString()}`);
+ux-command-center/src/services/api.ts:1564:        const res = await fetch(`${API_BASE}/analytics/cashflow-trends`);
+ux-command-center/src/services/api.ts:1568:        const res = await fetch(`${API_BASE}/analytics/cashflow-forecast?months=${months}`);
+ux-command-center/src/services/api.ts:1572:        const res = await fetch(`${API_BASE}/analytics/goals`);
+ux-command-center/src/services/api.ts:1576:        const res = await fetch(`${API_BASE}/analytics/goals`, {
+ux-command-center/src/services/api.ts:1584:        const res = await fetch(`${API_BASE}/analytics/goals/${id}`, { method: 'DELETE' });
+ux-command-center/src/services/api.ts:1589:        const res = await fetch(`${API_BASE}/analytics/goals/${id}/probability${qs ? '?' + qs : ''}`);
+ux-command-center/src/services/api.ts:1593:        const res = await fetch(`${API_BASE}/market/regime`);
+ux-command-center/src/services/api.ts:1616:        const res = await fetch(`${API_BASE}/market/sentiment`);
+ux-command-center/src/services/api.ts:1621:        const res = await fetch(`${API_BASE}/market/sentiment/refresh`, { method: 'POST' });
+ux-command-center/src/services/api.ts:1629:        const response = await fetch(`${API_BASE}/export/ai-context`);
+ux-command-center/src/services/api.ts:1720:        const res = await fetch(`${API_BASE}/audit/v2/reports?limit=${limit}`);
+ux-command-center/src/services/api.ts:1725:        const res = await fetch(`${API_BASE}/audit/v2/reports/${id}`);
+ux-command-center/src/services/api.ts:1730:        const res = await fetch(`${API_BASE}/audit/v2/integrity`);
+ux-command-center/src/services/api.ts:1735:        const res = await fetch(`${API_BASE}/audit/v2/on-demand`, { method: 'POST' });
+ux-command-center/src/services/api.ts:1740:        const res = await fetch(`${API_BASE}/audit/v2/latest`);
+ux-command-center/src/services/api.ts:1814:  fetch('/api/ai-advisor/settings/llm').then(r => r.json());
+ux-command-center/src/services/api.ts:1817:  fetch('/api/ai-advisor/settings/llm', {
+ux-command-center/src/services/api.ts:1827:  fetch('/api/ai-advisor/brief/generate', {
+ux-command-center/src/services/api.ts:1837:  fetch('/api/ai-advisor/brief/latest').then(r => r.json());
+ux-command-center/src/services/api.ts:1840:  fetch(`/api/ai-advisor/brief/history?limit=${limit}`).then(r => r.json());
+ux-command-center/src/services/api.ts:1843:  fetch(`/api/ai-advisor/brief/${id}`).then(r => r.json());
+ux-command-center/src/services/api.ts:1847:  return fetch(`/api/ai-advisor/context/preview?${qs}`).then(r => r.json());
+ux-command-center/src/services/api.ts:1859:  fetch('/api/ai-advisor/context/render', {
+ux-command-center/src/services/api.ts:1942:  fetch('/api/ai-advisor/review/questions', {
+ux-command-center/src/services/api.ts:1955:  fetch('/api/ai-advisor/review/generate', {
+ux-command-center/src/services/api.ts:1968:  const response = await fetch('/api/ai-advisor/review/latest');
+ux-command-center/src/services/api.ts:1974:  const response = await fetch(`/api/ai-advisor/review/${id}`);
+ux-command-center/src/services/api.ts:1982:  fetch(`/api/ai-advisor/review/history?limit=${limit}`).then(r => r.json());
+ux-command-center/src/services/api.ts:1985:  const response = await fetch(`/api/ai-advisor/review/${id}`, {
+ux-command-center/src/services/api.ts:1998:  const response = await fetch(`/api/ai-advisor/review/${id}`, { method: 'DELETE' });
+ux-command-center/src/services/api.ts:2042:  fetch(`/api/ai-advisor/behavioral-metrics/compute?window_days=${windowDays}`, { method: 'POST' })
+ux-command-center/src/services/api.ts:2046:  fetch('/api/ai-advisor/behavioral-metrics/latest').then(r => r.json());
+ux-command-center/src/services/api.ts:2053:  return fetch(`/api/ai-advisor/insights?${qs}`).then(r => r.json());
+ux-command-center/src/services/api.ts:2057:  fetch(`/api/ai-advisor/insights/${id}/promote`, { method: 'POST' }).then(r => r.json());
+ux-command-center/src/services/api.ts:2060:  fetch(`/api/ai-advisor/insights/${primaryId}/merge?duplicate_id=${duplicateId}`, { method: 'POST' }).then(r => r.json());
+ux-command-center/src/services/api.ts:2334:  const res = await fetch('/api/ai-advisor/analyze', {
+ux-command-center/src/services/api.ts:2350:  const res = await fetch(`/api/ai-advisor/analyze/history?${params}`);
+ux-command-center/src/services/api.ts:2359:  const res = await fetch(`/api/ai-advisor/analyze/${analysisId}`);
+ux-command-center/src/services/api.ts:2371:  const res = await fetch(`/api/ai-advisor/analyze/search?q=${encodeURIComponent(q)}`, { signal });
+ux-command-center/src/services/api.ts:2381:    fetch('/api/settings/llm').then(r => r.json()),
+ux-command-center/src/services/api.ts:2384:    fetch('/api/settings/llm', {
+ux-command-center/src/services/api.ts:2394:    fetch('/api/settings/llm/test', {
+ux-command-center/src/services/api.ts:2401:    const res = await fetch('/api/settings/prompts');
+ux-command-center/src/services/api.ts:2407:    const res = await fetch('/api/settings/prompts', {
+ux-command-center/src/services/api.ts:2424:    const res = await fetch('/api/settings/prompts/preview', {
+ux-command-center/src/services/api.ts:2434:    const res = await fetch('/api/settings/prompts/reset', {
+ux-command-center/src/services/api.ts:2444:    const res = await fetch('/api/settings/sources');
+ux-command-center/src/services/api.ts:2449:    const response = await fetch('/api/settings/sources/health');
+ux-command-center/src/services/api.ts:2454:    const response = await fetch('/api/market-data/status');
+ux-command-center/src/services/api.ts:2459:    const response = await fetch('/api/market-data/refresh', { method: 'POST' });
+ux-command-center/src/services/api.ts:2464:    const response = await fetch('/api/market-data/refresh/schedule');
+ux-command-center/src/services/api.ts:2469:    const response = await fetch('/api/market-data/refresh/schedule', {
+ux-command-center/src/services/api.ts:2477:    const res = await fetch('/api/settings/sources', {
+ux-command-center/src/services/api.ts:2490:    const res = await fetch(`/api/settings/sources/test/${reader}`, {
+ux-command-center/src/services/api.ts:2499:    const res = await fetch('/api/settings/sources/test-all', { method: 'POST' });
+ux-command-center/src/services/api.ts:2506:    const response = await fetch(`/api/settings/sources/upload/${reader}`, {
+ux-command-center/src/services/api.ts:2518:    const res = await fetch(`${API_BASE}/sync/start`, { method: 'POST' });
+ux-command-center/src/services/api.ts:2527:    const res = await fetch(`${API_BASE}/sync/start/${encodeURIComponent(reader)}`, { method: 'POST' });
+ux-command-center/src/services/api.ts:2536:    const res = await fetch(`${API_BASE}/settings/sources/files/${encodeURIComponent(reader)}`);
+ux-command-center/src/services/api.ts:2542:    const res = await fetch(`${API_BASE}/settings/sources/upload-history/${encodeURIComponent(reader)}?limit=${limit}`);
+ux-command-center/src/services/api.ts:2548:    const res = await fetch(`${API_BASE}/sync/status`);
+ux-command-center/src/services/api.ts:770:        const res = await fetch(`${API_BASE}/decisions/timeline?limit=${limit}&type=${type}`);
+ux-command-center/src/services/api.ts:776:        const res = await fetch(`${API_BASE}/decisions/stats`);
+ux-command-center/src/services/api.ts:782:        const res = await fetch(`${API_BASE}/decisions/scorecard?limit=${limit}`);
+ux-command-center/src/services/api.ts:788:        const res = await fetch(`${API_BASE}/decisions/intelligence`);
+ux-command-center/src/services/api.ts:794:        const res = await fetch(`${API_BASE}/decisions/funnel`);
+ux-command-center/src/services/api.ts:800:        const res = await fetch(`${API_BASE}/decisions/leaderboard`);
+ux-command-center/src/services/api.ts:806:        const res = await fetch(`${API_BASE}/decisions/alerts`);
+ux-command-center/src/services/api.ts:812:        const res = await fetch(`${API_BASE}/strategy/alignment`);
+ux-command-center/src/services/api.ts:818:        const res = await fetch(`${API_BASE}/strategy/review`, { method: 'POST' });
+ux-command-center/src/services/api.ts:824:        const res = await fetch(`${API_BASE}/strategy/memos${includeContent ? '?include_content=true' : ''}`);
+ux-command-center/src/services/api.ts:830:        const res = await fetch(`${API_BASE}/strategy/memos/${id}`);
+ux-command-center/src/services/api.ts:839:        const res = await fetch(`${API_BASE}/strategy/memos`, {
+ux-command-center/src/services/api.ts:852:        const res = await fetch(`${API_BASE}/strategy/memos/${id}`, {
+ux-command-center/src/services/api.ts:865:        const res = await fetch(`${API_BASE}/strategy/memos/${id}`, { method: 'DELETE' });
+ux-command-center/src/services/api.ts:870:        const res = await fetch(`${API_BASE}/strategy/memos/import-from-files`, { method: 'POST' });
+ux-command-center/src/services/api.ts:880:        const res = await fetch(`${API_BASE}/ai-advisor/assets/search?q=${encodeURIComponent(q)}`);
+ux-command-center/src/services/api.ts:886:        const res = await fetch(`${API_BASE}/ai-advisor/trades`, {
+ux-command-center/src/services/api.ts:899:        const res = await fetch(`${API_BASE}/ai-advisor/trades?limit=${limit}`);
+ux-command-center/src/services/api.ts:905:        const res = await fetch(`${API_BASE}/ai-advisor/trades/${id}`, { method: 'DELETE' });
+ux-command-center/src/services/api.ts:913:        const res = await fetch(`${API_BASE}/dashboard/actions`);
+ux-command-center/src/services/api.ts:919:        const res = await fetch(`${API_BASE}/verification/trends`);
+ux-command-center/src/services/api.ts:925:        const res = await fetch(`${API_BASE}/verification/latest`);
+ux-command-center/src/services/api.ts:931:        const res = await fetch(`${API_BASE}/verification/run`, { method: 'POST' });
+ux-command-center/src/services/api.ts:936:        const res = await fetch(`${API_BASE}/dashboard/kpi?include_non_rebalanceable=${includeNonRebalanceable}`);
+ux-command-center/src/services/api.ts:942:        const res = await fetch(`${API_BASE}/audit/logs?limit=${limit}`);
+ux-command-center/src/services/api.ts:948:        const res = await fetch(`${API_BASE}/audit/summary`);
+ux-command-center/src/services/api.ts:960:        const res = await fetch(`${API_BASE}/insights`);
+ux-command-center/src/services/api.ts:966:        const res = await fetch(`${API_BASE}/sync/start`, { method: 'POST' });
+ux-command-center/src/services/api.ts:972:        const res = await fetch(`${API_BASE}/circuit-breaker`);
+ux-command-center/src/services/api.ts:978:        const res = await fetch(`${API_BASE}/dashboard/allocation?include_non_rebalanceable=${includeNonRebalanceable}`);
+ux-command-center/src/services/api.ts:984:        const res = await fetch(`${API_BASE}/compass/summary?include_non_rebalanceable=${includeNonRebalanceable}`);
+ux-command-center/src/services/api.ts:990:        const res = await fetch(`${API_BASE}/compass/allocation?include_non_rebalanceable=${includeNonRebalanceable}`);
+ux-command-center/src/services/api.ts:996:        const res = await fetch(`${API_BASE}/compass/markdown`);
